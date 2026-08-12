@@ -6,11 +6,9 @@ Enforces grounding: refuses to answer if retrieved chunks don't address the ques
 """
 
 import logging
-from typing import List, Dict, Any, Tuple, Optional
+from typing import List, Dict, Any, Tuple
 import requests
 import json
-
-from retrieval import Chunk
 
 logger = logging.getLogger(__name__)
 
@@ -29,26 +27,25 @@ class OllamaGenerator:
     def __init__(
         self,
         ollama_host: str = "http://localhost:11434",
-        model: str = "qwen2.5:14b-instruct",
+        model: str = "llama3.1:latest",
         temperature: float = 0.3,
-        top_p: float = 0.9
+        top_p: float = 0.9,
+        timeout: int = 300,
+        max_chunks: int = 4,
+        max_chars_per_chunk: int = 1200,
+        num_predict: int = 400,
     ):
-        """
-        Initialize Ollama generator
-        
-        Args:
-            ollama_host: Ollama API endpoint
-            model: Model name (must be pulled in Ollama)
-            temperature: Randomness (0=deterministic, 1=creative)
-            top_p: Nucleus sampling parameter
-        """
         self.ollama_host = ollama_host
         self.model = model
         self.temperature = temperature
         self.top_p = top_p
+        self.timeout = timeout
+        self.max_chunks = max_chunks
+        self.max_chars_per_chunk = max_chars_per_chunk
+        self.num_predict = num_predict
         
-        # Verify Ollama is running
         self._verify_connection()
+        self._warmup_model()
     
     def _verify_connection(self) -> None:
         """Verify Ollama is running and model is available"""
@@ -65,6 +62,39 @@ class OllamaGenerator:
                 f"Cannot connect to Ollama at {self.ollama_host}. "
                 f"Please ensure Ollama is running: ollama serve"
             )
+
+    def _warmup_model(self) -> None:
+        """Load model into memory so the first user query is faster."""
+        try:
+            requests.post(
+                f"{self.ollama_host}/api/generate",
+                json={
+                    "model": self.model,
+                    "prompt": "ok",
+                    "stream": False,
+                    "options": {"num_predict": 1},
+                },
+                timeout=120,
+            )
+            logger.info(f"Warmed up model: {self.model}")
+        except requests.exceptions.RequestException as e:
+            logger.warning(f"Model warmup skipped: {e}")
+
+    @staticmethod
+    def _prepare_chunks_for_llm(
+        retrieved_chunks: List[Dict[str, Any]],
+        max_chunks: int,
+        max_chars_per_chunk: int,
+    ) -> List[Dict[str, Any]]:
+        """Keep only the top chunks and trim text to reduce LLM latency."""
+        prepared = []
+        for chunk in retrieved_chunks[:max_chunks]:
+            trimmed = dict(chunk)
+            text = chunk.get("text", "")
+            if len(text) > max_chars_per_chunk:
+                trimmed["text"] = text[:max_chars_per_chunk] + "\n[...truncated...]"
+            prepared.append(trimmed)
+        return prepared
     
     @staticmethod
     def _detect_language(text: str) -> str:
@@ -87,35 +117,31 @@ class OllamaGenerator:
         Returns: System prompt string
         """
         if language == "ar":
-            return """أنت مساعد متخصص في سياسات الموارد البشرية لمنظمة EMPHNET.
+            return """أنت مساعد متخصص في سياسات الموارد البشرية لمنظمة EMPHNET. أجب بناءً على النصوص المُسترجعة فقط.
 
-يجب عليك:
-1. الإجابة استنادًا بدقة على المستندات المسترجعة فقط
-2. عدم التكهن أو إضافة معلومات ليست في النصوص المسترجعة
-3. إذا لم تجد الإجابة في المستندات، قل: "لم أتمكن من العثور على هذا في دليل السياسات"
-4. تضمين رقم القسم والمقتطف الكامل من السياسة كمرجع
-5. الرد باللغة العربية
+قواعد صارمة:
+1. اقرأ جميع النصوص المُسترجعة قبل الإجابة.
+2. إذا وُجدت الإجابة في أي نص مُسترجع، قدّم كل التفاصيل (أرقام، شروط، خطوات). ممنوع قول "لا أعرف" إذا المعلومة موجودة.
+3. اقتبس الأرقام والمدد حرفياً (مثلاً: "14 يوماً").
+4. للأسئلة الإجرائية: اذكر الخطوات المرقمة بالترتيب من جميع النصوص ذات الصلة.
+5. لا تختلق معلومات غير موجودة في النصوص.
+6. الرد بالعربية.
 
-تنسيق الجواب:
-- الإجابة الرئيسية
-- [المرجع: اسم المستند • القسم • رقم الصفحة]
-- "المقتطف ذو الصلة: [النص الحرفي]"
-"""
+التنسيق:
+- إجابة مباشرة وواضحة مع كل التفاصيل
+- للإجراءات: قائمة خطوات مرقمة
+- اقتباس قصير من النص المصدر
+- مرجع القسم/الإجراء"""
         else:
-            return """You are a specialized HR policy assistant for EMPHNET.
+            return """You are an EMPHNET HR policy assistant. Answer ONLY from the retrieved text.
 
-Your responsibilities:
-1. Answer strictly based on the retrieved policy documents only
-2. Do NOT guess or add information not in the retrieved texts
-3. If the retrieved documents don't answer the question, say: "I couldn't find this in the policy manual"
-4. Always include the section number and exact excerpt from the policy as a reference
-5. Respond in English
+Rules:
+1. Use ALL details from the context: numbers, eligibility, steps.
+2. Never say "not found" if the answer is in the context.
+3. For how-to questions, list numbered steps from all relevant chunks.
+4. Do not invent information.
 
-Answer Format:
-- Main response
-- [Source: Document Name • Section • Page]
-- "Relevant excerpt: [verbatim text]"
-"""
+Format: direct answer, then brief quote and source reference."""
     
     def generate(
         self,
@@ -140,9 +166,14 @@ Answer Format:
         # Detect language
         language = self._detect_language(query)
         logger.info(f"Detected language: {language}")
-        
-        # Build context from retrieved chunks
-        context = self._format_context(retrieved_chunks, language)
+
+        llm_chunks = self._prepare_chunks_for_llm(
+            retrieved_chunks, self.max_chunks, self.max_chars_per_chunk
+        )
+        context = self._format_context(llm_chunks, language)
+        logger.info(
+            f"LLM context: {len(llm_chunks)} chunks, {len(context)} chars"
+        )
         
         # Build prompt
         system_prompt = self._build_system_prompt(language)
@@ -214,7 +245,7 @@ Answer Format:
 Context:
 {context}
 
-Please answer the question based only on the context provided above."""
+Answer the question using ONLY the context above. Synthesize information from all relevant chunks. For how-to questions, list all steps in order."""
     
     def _call_ollama(self, system_prompt: str, user_prompt: str) -> str:
         """Call Ollama API and return response"""
@@ -225,20 +256,29 @@ Please answer the question based only on the context provided above."""
             "prompt": user_prompt,
             "system": system_prompt,
             "stream": False,
+            "keep_alive": "10m",
             "temperature": self.temperature,
             "top_p": self.top_p,
+            "options": {
+                "num_predict": self.num_predict,
+                "num_ctx": 4096,
+            },
         }
         
-        logger.info(f"Calling Ollama ({self.model}) with query")
+        logger.info(f"Calling Ollama ({self.model}), timeout={self.timeout}s")
         
         try:
-            response = requests.post(url, json=payload, timeout=60)
+            response = requests.post(url, json=payload, timeout=self.timeout)
             response.raise_for_status()
             
             result = response.json()
             return result.get("response", "")
         except requests.exceptions.Timeout:
-            return "I'm taking too long to respond. Please try again."
+            return (
+                "The model is taking too long on this machine. "
+                "Try a smaller model (e.g. llama3.1:latest) in your .env file, "
+                "or ask a shorter question."
+            )
         except requests.exceptions.RequestException as e:
             logger.error(f"Ollama API error: {e}")
             return f"Error communicating with LLM: {str(e)}"
@@ -261,7 +301,9 @@ Please answer the question based only on the context provided above."""
         # Extract sources from retrieved chunks
         sources = []
         for chunk in retrieved_chunks:
-            metadata = chunk.get('metadata', {})
+            metadata = chunk.get('metadata')
+            if not isinstance(metadata, dict):
+                metadata = {}
             source_text = chunk.get('source', 'Unknown')
             text_excerpt = chunk.get('text', '')[:300] + "..."
             

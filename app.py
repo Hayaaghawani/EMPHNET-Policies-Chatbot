@@ -44,6 +44,7 @@ st.markdown("""
             padding: 1.5rem;
             border-radius: 0.5rem;
             margin-bottom: 1rem;
+            color: #1E1E1E;
         }
         .answer-box {
             background-color: #e8f5e9;
@@ -51,6 +52,7 @@ st.markdown("""
             border-radius: 0.5rem;
             margin-bottom: 1rem;
             border-left: 4px solid #4caf50;
+            color: #1E1E1E;
         }
         .source-box {
             background-color: #fff3e0;
@@ -58,6 +60,7 @@ st.markdown("""
             border-radius: 0.5rem;
             margin-top: 0.5rem;
             border-left: 4px solid #ff9800;
+            color: #1E1E1E;
         }
         .confidence-badge {
             display: inline-block;
@@ -79,8 +82,8 @@ def initialize_rag_system():
         chroma_db_path = os.getenv("CHROMA_DB_PATH", "chroma_storage")
         embedding_model = os.getenv("EMBEDDING_MODEL", "intfloat/multilingual-e5-large")
         ollama_host = os.getenv("OLLAMA_HOST", "http://localhost:11434")
-        ollama_model = os.getenv("OLLAMA_MODEL", "qwen2.5:14b-instruct")
-        top_k = int(os.getenv("TOP_K_RESULTS", "5"))
+        ollama_model = os.getenv("OLLAMA_MODEL", "llama3.1:latest")
+        top_k = int(os.getenv("TOP_K_RESULTS", "8"))
         
         # Initialize retriever
         st.status("🔧 Initializing Retriever...", expanded=False)
@@ -110,7 +113,11 @@ def initialize_rag_system():
         generator = OllamaGenerator(
             ollama_host=ollama_host,
             model=ollama_model,
-            temperature=0.3
+            temperature=0.3,
+            timeout=int(os.getenv("OLLAMA_TIMEOUT", "300")),
+            max_chunks=int(os.getenv("LLM_MAX_CHUNKS", "3")),
+            max_chars_per_chunk=int(os.getenv("LLM_MAX_CHARS_PER_CHUNK", "1000")),
+            num_predict=int(os.getenv("OLLAMA_NUM_PREDICT", "400")),
         )
         st.success(f"✓ LLM ready ({ollama_model})")
         

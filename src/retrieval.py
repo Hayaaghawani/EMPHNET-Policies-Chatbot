@@ -11,12 +11,11 @@ from pathlib import Path
 import json
 
 import chromadb
-from chromadb.config import Settings
 from sentence_transformers import SentenceTransformer
 from rank_bm25 import BM25Okapi
 import numpy as np
 
-from ingestion import Chunk, ChunkMetadata
+from .ingestion import Chunk, ChunkMetadata
 
 logger = logging.getLogger(__name__)
 
@@ -35,7 +34,7 @@ class HybridRetriever:
         chroma_db_path: str = "chroma_storage",
         embedding_model: str = "intfloat/multilingual-e5-large",
         embedding_device: str = "cpu",
-        top_k: int = 5
+        top_k: int = 8
     ):
         """
         Initialize hybrid retriever
@@ -53,7 +52,7 @@ class HybridRetriever:
         
         # Initialize embeddings
         logger.info(f"Loading embeddings model: {embedding_model}")
-        self.embeddings = SentenceTransformer(embedding_model, device=device)
+        self.embeddings = SentenceTransformer(embedding_model, device=self.device)
         
         # Initialize ChromaDB
         self.chroma_client = self._init_chroma()
@@ -64,13 +63,13 @@ class HybridRetriever:
         self.chunks_list = []
     
     def _init_chroma(self) -> chromadb.Client:
-        """Initialize ChromaDB with persistent storage"""
-        settings = Settings(
-            chroma_db_impl="duckdb+parquet",
-            persist_directory=str(self.chroma_db_path),
-            anonymized_telemetry=False,
-        )
-        return chromadb.Client(settings)
+        """Initialize ChromaDB with persistent storage using new API"""
+        # Ensure directory exists
+        self.chroma_db_path.mkdir(parents=True, exist_ok=True)
+        
+        # Use new ChromaDB persistent client API
+        client = chromadb.PersistentClient(path=str(self.chroma_db_path))
+        return client
     
     def load_or_create_collection(self, collection_name: str = "emphnet_policies") -> None:
         """
@@ -83,6 +82,8 @@ class HybridRetriever:
         try:
             self.collection = self.chroma_client.get_collection(collection_name)
             logger.info(f"Loaded existing collection: {collection_name}")
+            # Rebuild BM25 index from existing collection
+            self._rebuild_bm25_from_collection()
         except:
             # Create new collection with custom embedding function
             self.collection = self.chroma_client.create_collection(
@@ -111,13 +112,29 @@ class HybridRetriever:
         # Store chunks for BM25
         self.chunks_list = chunks
         
-        # Generate embeddings
+        # Generate embeddings (E5 models require "passage:" prefix)
         texts = [chunk.text for chunk in chunks]
-        embeddings = self.embeddings.encode(texts, show_progress_bar=True)
+        embeddings = self.embeddings.encode(
+            [self._format_passage(t) for t in texts],
+            show_progress_bar=True
+        )
         
         # Prepare data for ChromaDB
         ids = [f"chunk_{i}" for i in range(len(chunks))]
-        metadatas = [chunk.metadata.__dict__ for chunk in chunks]
+        # Convert metadata to simple types (strings/ints/floats only - ChromaDB limitation)
+        metadatas = []
+        for chunk in chunks:
+            meta = chunk.metadata if isinstance(chunk.metadata, dict) else chunk.metadata.__dict__
+            # Filter to only simple types, convert None to empty string
+            filtered_meta = {}
+            for k, v in meta.items():
+                if v is None:
+                    filtered_meta[k] = ""
+                elif isinstance(v, (str, int, float, bool)):
+                    filtered_meta[k] = v
+                else:
+                    filtered_meta[k] = str(v)
+            metadatas.append(filtered_meta)
         documents = texts
         
         # Add to ChromaDB
@@ -139,6 +156,43 @@ class HybridRetriever:
         corpus = [chunk.text.lower().split() for chunk in self.chunks_list]
         self.bm25_index = BM25Okapi(corpus)
     
+    def _rebuild_bm25_from_collection(self) -> None:
+        """Rebuild BM25 index from existing collection (used when loading from disk)"""
+        if not self.collection:
+            logger.warning("Collection not loaded, cannot rebuild BM25")
+            return
+        
+        try:
+            # Get all documents from the collection
+            all_docs = self.collection.get(include=["documents", "metadatas"])
+            if not all_docs or not all_docs.get("documents"):
+                logger.warning("No documents found in collection")
+                return
+            
+            documents = all_docs.get("documents", [])
+            metadatas = all_docs.get("metadatas", [])
+            self.chunks_list = []
+            for doc, meta in zip(documents, metadatas):
+                metadata = ChunkMetadata(**{k: (v if v != "" else None) for k, v in meta.items()})
+                self.chunks_list.append(Chunk(text=doc, metadata=metadata))
+            
+            # Build BM25 index
+            corpus = [doc.lower().split() for doc in documents]
+            self.bm25_index = BM25Okapi(corpus)
+            logger.info(f"Rebuilt BM25 index from {len(documents)} documents in collection")
+        except Exception as e:
+            logger.error(f"Error rebuilding BM25 index: {e}")
+    
+    @staticmethod
+    def _format_query(query: str) -> str:
+        """E5 embedding models require a query prefix."""
+        return f"query: {query}"
+
+    @staticmethod
+    def _format_passage(text: str) -> str:
+        """E5 embedding models require a passage prefix."""
+        return f"passage: {text}"
+
     def retrieve(
         self,
         query: str,
@@ -174,8 +228,8 @@ class HybridRetriever:
         
         logger.debug(f"Retrieving top {top_k} chunks for query: {query[:100]}...")
         
-        # Vector search
-        query_embedding = self.embeddings.encode([query])[0]
+        # Vector search (E5 models require "query:" prefix)
+        query_embedding = self.embeddings.encode([self._format_query(query)])[0]
         vector_results = self.collection.query(
             query_embeddings=[query_embedding.tolist()],
             n_results=top_k * 2  # Get more to re-rank
@@ -233,28 +287,35 @@ class HybridRetriever:
         return results
     
     @staticmethod
-    def _format_source(metadata: ChunkMetadata) -> str:
+    def _format_source(metadata) -> str:
         """Format metadata into human-readable source citation"""
-        parts = [metadata.document_title]
-        
-        if metadata.section_num:
-            parts.append(f"Section {metadata.section_num}")
-        
-        if metadata.subsection_num:
-            parts.append(f"Subsection {metadata.subsection_num}")
-        
-        if metadata.procedure_code:
-            parts.append(f"({metadata.procedure_code})")
-        
-        if metadata.page_number:
-            parts.append(f"p. {metadata.page_number}")
-        
+        if isinstance(metadata, dict):
+            meta = metadata
+        else:
+            meta = metadata.__dict__ if hasattr(metadata, '__dict__') else {}
+
+        parts = [meta.get('document_title', 'HR Policies & Procedures Manual')]
+
+        if meta.get('section_num'):
+            parts.append(f"Section {meta['section_num']:02d}")
+
+        if meta.get('policy_name'):
+            parts.append(meta['policy_name'])
+
+        if meta.get('procedure_code'):
+            parts.append(meta['procedure_code'])
+
+        if meta.get('subsection_num') and meta.get('subsection_title'):
+            parts.append(f"{meta['subsection_num']} {meta['subsection_title']}")
+
+        if meta.get('page_number'):
+            parts.append(f"p. {meta['page_number']}")
+
         return " • ".join(parts)
     
     def persist(self) -> None:
         """Persist ChromaDB collection to disk"""
-        logger.info(f"Persisting collection to {self.chroma_db_path}")
-        self.chroma_client.persist()
+        logger.info(f"Collection is automatically persisted by ChromaDB to {self.chroma_db_path}")
 
 
 def load_chunks_from_json(json_path: str) -> List[Chunk]:
