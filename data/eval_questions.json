@@ -1,0 +1,92 @@
+[
+  {
+    "id": 1,
+    "question": "What is the policy on sick leave?",
+    "language": "en",
+    "expected_sections": ["2.4"],
+    "expected_keywords": ["sick leave", "medical certificate", "days"],
+    "difficulty": "easy",
+    "category": "Leave & Absences"
+  },
+  {
+    "id": 2,
+    "question": "How much maternity leave are female employees entitled to?",
+    "language": "en",
+    "expected_sections": ["2.5"],
+    "expected_keywords": ["maternity leave", "weeks", "female", "pregnancy"],
+    "difficulty": "medium",
+    "category": "Leave & Absences"
+  },
+  {
+    "id": 3,
+    "question": "What are the requirements for annual leave request?",
+    "language": "en",
+    "expected_sections": ["2.3", "2.5"],
+    "expected_keywords": ["annual leave", "request", "approval", "notice"],
+    "difficulty": "medium",
+    "category": "Procedures"
+  },
+  {
+    "id": 4,
+    "question": "ما هي سياسة الإجازة المرضية؟",
+    "language": "ar",
+    "expected_sections": ["2.4"],
+    "expected_keywords": ["إجازة", "مرضي", "شهادة"],
+    "difficulty": "easy",
+    "category": "إجازات وغيابات"
+  },
+  {
+    "id": 5,
+    "question": "Who is responsible for approving leave requests?",
+    "language": "en",
+    "expected_sections": ["2.3"],
+    "expected_keywords": ["approval", "manager", "responsibility", "supervisor"],
+    "difficulty": "easy",
+    "category": "Responsibilities"
+  },
+  {
+    "id": 6,
+    "question": "What is the procedure for recruitment and selection?",
+    "language": "en",
+    "expected_sections": ["1.4", "1.5"],
+    "expected_keywords": ["recruitment", "selection", "vacancy", "application"],
+    "difficulty": "hard",
+    "category": "Recruitment"
+  },
+  {
+    "id": 7,
+    "question": "How long must an employee wait before taking annual leave after joining?",
+    "language": "en",
+    "expected_sections": ["2.3"],
+    "expected_keywords": ["annual leave", "probation", "waiting period"],
+    "difficulty": "medium",
+    "category": "Leave & Absences"
+  },
+  {
+    "id": 8,
+    "question": "ما هي متطلبات تقديم طلب الإجازة السنوية؟",
+    "language": "ar",
+    "expected_sections": ["2.3"],
+    "expected_keywords": ["إجازة سنوية", "طلب", "موافقة"],
+    "difficulty": "medium",
+    "category": "إجازات وإجراءات"
+  },
+  {
+    "id": 9,
+    "question": "What overtime policies apply to staff?",
+    "language": "en",
+    "expected_sections": ["3.4"],
+    "expected_keywords": ["overtime", "compensation", "extra hours"],
+    "difficulty": "medium",
+    "category": "Compensation"
+  },
+  {
+    "id": 10,
+    "question": "When should an employee report absence to work?",
+    "language": "en",
+    "expected_sections": ["2.5"],
+    "expected_keywords": ["absence", "report", "notification", "manager"],
+    "difficulty": "easy",
+    "category": "Procedures"
+  }
+]

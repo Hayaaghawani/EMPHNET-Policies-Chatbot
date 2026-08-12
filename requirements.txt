@@ -1,0 +1,28 @@
+# Core RAG Pipeline
+langchain==0.1.20
+langchain-community==0.0.38
+langchain-core==0.1.38
+
+# PDF Processing
+pypdf==4.0.1
+pdfplumber==0.10.3
+
+# Embeddings & Vector Store
+sentence-transformers==2.2.2
+chromadb==0.4.24
+
+# Semantic Search & BM25 (Hybrid Retrieval)
+rank-bm25==0.2.2
+
+# LLM & Ollama Integration
+ollama==0.6.2
+
+# UI Framework
+streamlit==1.28.1
+
+# Data Processing
+numpy==1.24.3
+pandas==2.1.3
+
+# Utilities
+python-dotenv==1.0.0
