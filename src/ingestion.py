@@ -5,6 +5,7 @@ Extracts text page-by-page, parses the real document hierarchy, and produces
 self-contained chunks suitable for RAG retrieval.
 """
 
+import hashlib
 import re
 import json
 import logging
@@ -54,6 +55,9 @@ class ChunkMetadata(DocumentMetadata):
     procedure_code: Optional[str] = None
     page_number: int = 0
     chunk_type: str = "text"
+    split_group_id: Optional[str] = None
+    split_part: Optional[int] = None
+    split_total: Optional[int] = None
 
 
 @dataclass
@@ -156,6 +160,8 @@ class HierarchicalPDFParser:
             return False
         if line.lower() in KNOWN_POLICY_TOPICS:
             return True
+        if line.upper() == line and len(line) <= 5:
+            return False
         # Title-case standalone header (e.g. "Hajj Vacation", "Sick Leave")
         if re.match(r'^[A-Z][A-Za-z\s&()/-]+$', line) and not line.endswith('.'):
             words = line.split()
@@ -220,6 +226,7 @@ class HierarchicalPDFParser:
     def _split_large_chunk(self, chunk: Chunk, max_size: int = 2000, overlap: int = 200) -> List[Chunk]:
         if len(chunk.text) <= max_size:
             return [chunk]
+
         splitter = RecursiveCharacterTextSplitter(
             chunk_size=max_size,
             chunk_overlap=overlap,
@@ -227,9 +234,50 @@ class HierarchicalPDFParser:
             separators=["\n\n", "\n", ". ", " ", ""],
         )
         parts = splitter.split_text(chunk.text)
+        if len(parts) <= 1:
+            return [chunk]
+
+        meta = chunk.metadata
+        group_key = "|".join(
+            str(x or "")
+            for x in (
+                meta.section_num,
+                meta.subsection_num,
+                meta.policy_name,
+                meta.procedure_code,
+                meta.chunk_type,
+            )
+        )
+        group_id = hashlib.md5(group_key.encode()).hexdigest()[:12]
+        topic_label = meta.policy_name or meta.procedure_code or meta.subsection_title or "this topic"
+
         result = []
-        for part in parts:
-            result.append(Chunk(text=part, metadata=chunk.metadata))
+        for i, part in enumerate(parts, 1):
+            part_meta = ChunkMetadata(
+                document_title=meta.document_title,
+                manual_code=meta.manual_code,
+                version=meta.version,
+                effective_date=meta.effective_date,
+                language=meta.language,
+                section_num=meta.section_num,
+                section_title=meta.section_title,
+                subsection_num=meta.subsection_num,
+                subsection_title=meta.subsection_title,
+                policy_name=meta.policy_name,
+                procedure_code=meta.procedure_code,
+                page_number=meta.page_number,
+                chunk_type=meta.chunk_type,
+                split_group_id=group_id,
+                split_part=i,
+                split_total=len(parts),
+            )
+            if i == 1:
+                body = part + f"\n[Part 1 of {len(parts)} — more points continue in related chunks]"
+            else:
+                body = (
+                    f"[Continued: {topic_label} — Part {i} of {len(parts)}]\n{part}"
+                )
+            result.append(Chunk(text=body, metadata=part_meta))
         return result
 
     def parse_sections(self, pages_text: List[Tuple[int, str]]) -> List[Chunk]:

@@ -20,6 +20,7 @@ logger = logging.getLogger(__name__)
 # Import RAG modules
 from src.retrieval import HybridRetriever, load_chunks_from_json
 from src.generation import OllamaGenerator
+from src.query_intent import analyze_query
 
 # Configure Streamlit page
 st.set_page_config(
@@ -118,6 +119,9 @@ def initialize_rag_system():
             max_chunks=int(os.getenv("LLM_MAX_CHUNKS", "3")),
             max_chars_per_chunk=int(os.getenv("LLM_MAX_CHARS_PER_CHUNK", "1000")),
             num_predict=int(os.getenv("OLLAMA_NUM_PREDICT", "400")),
+            list_max_chunks=int(os.getenv("LLM_LIST_MAX_CHUNKS", "6")),
+            list_max_chars_per_chunk=int(os.getenv("LLM_LIST_MAX_CHARS", "6000")),
+            list_num_predict=int(os.getenv("OLLAMA_LIST_NUM_PREDICT", "900")),
         )
         st.success(f"✓ LLM ready ({ollama_model})")
         
@@ -193,16 +197,15 @@ def main():
     # Process query
     if submit_button and question.strip():
         with st.spinner("⏳ Searching policy documents..."):
-            # Retrieve relevant chunks
-            retrieved_chunks = retriever.retrieve(question)
+            analysis = analyze_query(question, retriever.structure_index)
+            retrieved_chunks = retriever.retrieve(question, analysis=analysis)
             
             if not retrieved_chunks:
                 st.warning("No relevant policy sections found. Please rephrase your question.")
                 return
             
-            # Generate answer
             with st.spinner("💭 Generating answer..."):
-                result = generator.generate(question, retrieved_chunks)
+                result = generator.generate(question, retrieved_chunks, analysis=analysis)
         
         # Display answer
         st.markdown("### ✅ Answer")
@@ -235,6 +238,13 @@ def main():
         
         # Additional information
         with st.expander("📊 Retrieval Details"):
+            st.write(f"**Query intent:** {analysis.intent}")
+            if analysis.section_title:
+                st.write(f"**Matched section:** {analysis.section_title}")
+            if analysis.subsection_num:
+                st.write(f"**Matched subsection:** {analysis.subsection_num} {analysis.subsection_title or ''}")
+            if analysis.procedure_name:
+                st.write(f"**Matched procedure:** {analysis.procedure_name}")
             st.write(f"**Chunks retrieved:** {len(retrieved_chunks)}")
             st.write(f"**Average relevance score:** {sum(c.get('score', 0) for c in retrieved_chunks) / len(retrieved_chunks):.2%}")
             st.write(f"**Response language:** {result['language']}")

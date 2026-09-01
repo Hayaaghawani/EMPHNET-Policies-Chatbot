@@ -16,6 +16,7 @@ from rank_bm25 import BM25Okapi
 import numpy as np
 
 from .ingestion import Chunk, ChunkMetadata
+from .document_structure import DocumentStructureIndex, QueryAnalysis, analyze_query
 
 logger = logging.getLogger(__name__)
 
@@ -34,7 +35,7 @@ class HybridRetriever:
         chroma_db_path: str = "chroma_storage",
         embedding_model: str = "intfloat/multilingual-e5-large",
         embedding_device: str = "cpu",
-        top_k: int = 8
+        top_k: int = 5
     ):
         """
         Initialize hybrid retriever
@@ -61,6 +62,7 @@ class HybridRetriever:
         # BM25 index (built from collection)
         self.bm25_index = None
         self.chunks_list = []
+        self.structure_index: Optional[DocumentStructureIndex] = None
     
     def _init_chroma(self) -> chromadb.Client:
         """Initialize ChromaDB with persistent storage using new API"""
@@ -111,12 +113,13 @@ class HybridRetriever:
         
         # Store chunks for BM25
         self.chunks_list = chunks
-        
-        # Generate embeddings (E5 models require "passage:" prefix)
+        self.structure_index = DocumentStructureIndex(chunks)
+
+        # Generate embeddings (E5 models require "passage:" prefix on embed only)
         texts = [chunk.text for chunk in chunks]
         embeddings = self.embeddings.encode(
             [self._format_passage(t) for t in texts],
-            show_progress_bar=True
+            show_progress_bar=True,
         )
         
         # Prepare data for ChromaDB
@@ -168,13 +171,19 @@ class HybridRetriever:
             if not all_docs or not all_docs.get("documents"):
                 logger.warning("No documents found in collection")
                 return
-            
+
             documents = all_docs.get("documents", [])
             metadatas = all_docs.get("metadatas", [])
             self.chunks_list = []
             for doc, meta in zip(documents, metadatas):
-                metadata = ChunkMetadata(**{k: (v if v != "" else None) for k, v in meta.items()})
+                clean = {k: (v if v != "" else None) for k, v in meta.items()}
+                for int_key in ("section_num", "page_number", "split_part", "split_total"):
+                    if clean.get(int_key) is not None:
+                        clean[int_key] = int(clean[int_key])
+                metadata = ChunkMetadata(**clean)
                 self.chunks_list.append(Chunk(text=doc, metadata=metadata))
+
+            self.structure_index = DocumentStructureIndex(self.chunks_list)
             
             # Build BM25 index
             corpus = [doc.lower().split() for doc in documents]
@@ -185,20 +194,103 @@ class HybridRetriever:
     
     @staticmethod
     def _format_query(query: str) -> str:
-        """E5 embedding models require a query prefix."""
         return f"query: {query}"
 
     @staticmethod
     def _format_passage(text: str) -> str:
-        """E5 embedding models require a passage prefix."""
         return f"passage: {text}"
+
+    @staticmethod
+    def _meta_dict(metadata) -> dict:
+        if isinstance(metadata, dict):
+            return metadata
+        return metadata.__dict__ if hasattr(metadata, "__dict__") else {}
+
+    @staticmethod
+    def _metadata_match_score(meta: dict, analysis: QueryAnalysis) -> float:
+        """Boost score when chunk metadata matches section/subsection from the question."""
+        boost = 0.0
+        if analysis.section_num and meta.get("section_num") == analysis.section_num:
+            boost += 0.15
+        if analysis.subsection_title and (
+            (meta.get("subsection_title") or "").lower()
+            == analysis.subsection_title.lower()
+        ):
+            boost += 0.15
+        if analysis.policy_name and meta.get("policy_name") == analysis.policy_name:
+            boost += 0.2
+        return boost
+
+    def _expand_split_siblings(
+        self, results: List[Dict[str, Any]]
+    ) -> List[Dict[str, Any]]:
+        """If a split chunk is retrieved, include all parts of the same group."""
+        seen = {r["text"] for r in results}
+        expanded = list(results)
+        group_ids = {
+            self._meta_dict(r["metadata"]).get("split_group_id")
+            for r in results
+        }
+        group_ids.discard(None)
+        group_ids.discard("")
+
+        for group_id in group_ids:
+            for idx, chunk in enumerate(self.chunks_list):
+                meta = self._meta_dict(chunk.metadata)
+                if meta.get("split_group_id") != group_id:
+                    continue
+                if chunk.text in seen:
+                    continue
+                expanded.append({
+                    "text": chunk.text,
+                    "metadata": chunk.metadata,
+                    "score": 0.75,
+                    "source": self._format_source(chunk.metadata),
+                    "_split_sibling": True,
+                })
+                seen.add(chunk.text)
+
+        def sort_key(r):
+            meta = self._meta_dict(r["metadata"])
+            return (meta.get("split_part") or 0, -r.get("score", 0))
+
+        expanded.sort(key=sort_key)
+        return expanded
+
+    def _structural_candidates(self, analysis: QueryAnalysis) -> List[int]:
+        """Return chunks under the exact section/subsection/procedure target."""
+        if analysis.intent != "structural":
+            return []
+
+        indices: List[int] = []
+        for idx, chunk in enumerate(self.chunks_list):
+            meta = self._meta_dict(chunk.metadata)
+
+            if analysis.procedure_code:
+                if meta.get("procedure_code") != analysis.procedure_code:
+                    continue
+            else:
+                if analysis.section_num is not None:
+                    if meta.get("section_num") != analysis.section_num:
+                        continue
+                if analysis.subsection_num:
+                    if meta.get("subsection_num") != analysis.subsection_num:
+                        continue
+                if analysis.policy_name:
+                    if meta.get("policy_name") != analysis.policy_name:
+                        continue
+
+            indices.append(idx)
+
+        return indices
 
     def retrieve(
         self,
         query: str,
         top_k: Optional[int] = None,
         vector_weight: float = 0.8,
-        bm25_weight: float = 0.2
+        bm25_weight: float = 0.2,
+        analysis: Optional[QueryAnalysis] = None,
     ) -> List[Dict[str, Any]]:
         """
         Retrieve relevant chunks using hybrid search
@@ -220,19 +312,50 @@ class HybridRetriever:
             raise ValueError("Retriever not initialized. Call add_chunks first.")
         
         top_k = top_k or self.top_k
-        
-        # Normalize weights
+        if analysis is None:
+            if self.structure_index is None:
+                analysis = QueryAnalysis(intent="specific")
+            else:
+                analysis = analyze_query(query, self.structure_index)
+
+        # Structural queries: exact header match only (no cross-section bleed)
+        if analysis.intent == "structural":
+            structural_indices = self._structural_candidates(analysis)
+            if structural_indices:
+                results = []
+                for idx in structural_indices:
+                    chunk = self.chunks_list[idx]
+                    results.append({
+                        "text": chunk.text,
+                        "metadata": chunk.metadata,
+                        "score": 0.99,
+                        "source": self._format_source(chunk.metadata),
+                    })
+                results = self._expand_split_siblings(results)
+                logger.info(
+                    "Structural retrieval: section=%s sub=%s proc=%s -> %s chunks",
+                    analysis.section_num,
+                    analysis.subsection_num,
+                    analysis.procedure_code,
+                    len(results),
+                )
+                return results
         total = vector_weight + bm25_weight
         vector_weight /= total
         bm25_weight /= total
-        
+
+        logger.info(
+            "Specific retrieval: section=%s sub=%s proc=%s",
+            analysis.section_num,
+            analysis.subsection_num,
+            analysis.procedure_code,
+        )
         logger.debug(f"Retrieving top {top_k} chunks for query: {query[:100]}...")
-        
-        # Vector search (E5 models require "query:" prefix)
+
         query_embedding = self.embeddings.encode([self._format_query(query)])[0]
         vector_results = self.collection.query(
             query_embeddings=[query_embedding.tolist()],
-            n_results=top_k * 2  # Get more to re-rank
+            n_results=top_k * 2
         )
         
         # Extract vector similarities (ChromaDB returns distances, convert to similarity)
@@ -256,13 +379,29 @@ class HybridRetriever:
             for i, score in enumerate(bm25_scores_raw)
         }
         
-        # Combine scores
+        # Combine scores (+ metadata boost; stronger for list queries)
         combined_scores = {}
-        for doc_id in vector_scores:
-            combined_scores[doc_id] = (
-                vector_weight * vector_scores.get(doc_id, 0) +
-                bm25_weight * bm25_scores.get(doc_id, 0)
+        for doc_id in set(vector_scores) | set(bm25_scores):
+            chunk_idx = int(doc_id.split("_")[1])
+            chunk = self.chunks_list[chunk_idx]
+            meta = self._meta_dict(chunk.metadata)
+            base = (
+                vector_weight * vector_scores.get(doc_id, 0)
+                + bm25_weight * bm25_scores.get(doc_id, 0)
             )
+            boost = self._metadata_match_score(meta, analysis)
+            if analysis.intent == "structural":
+                boost *= 1.5
+            combined_scores[doc_id] = min(1.0, base + boost)
+
+        # List mode fallback: boost metadata matches inside hybrid results
+        if analysis.intent == "structural":
+            for idx in self._structural_candidates(analysis):
+                doc_id = f"chunk_{idx}"
+                if doc_id not in combined_scores:
+                    combined_scores[doc_id] = 0.85
+                else:
+                    combined_scores[doc_id] = min(1.0, combined_scores[doc_id] + 0.1)
         
         # Sort and return top_k
         sorted_results = sorted(
@@ -270,52 +409,56 @@ class HybridRetriever:
             key=lambda x: x[1],
             reverse=True
         )[:top_k]
-        
-        # Format results
+
         results = []
         for doc_id, score in sorted_results:
-            chunk_idx = int(doc_id.split('_')[1])
+            chunk_idx = int(doc_id.split("_")[1])
             chunk = self.chunks_list[chunk_idx]
-            
             results.append({
                 "text": chunk.text,
                 "metadata": chunk.metadata,
                 "score": score,
-                "source": self._format_source(chunk.metadata)
+                "source": self._format_source(chunk.metadata),
             })
-        
-        return results
+
+        head = self._expand_split_siblings(results[:2])
+        seen = {r["text"] for r in head}
+        merged = list(head)
+        for r in results[2:]:
+            if r["text"] not in seen:
+                merged.append(r)
+                seen.add(r["text"])
+        return merged
     
     @staticmethod
     def _format_source(metadata) -> str:
-        """Format metadata into human-readable source citation"""
-        if isinstance(metadata, dict):
-            meta = metadata
-        else:
-            meta = metadata.__dict__ if hasattr(metadata, '__dict__') else {}
+        meta = HybridRetriever._meta_dict(metadata)
+        parts = [meta.get("document_title", "HR Policies & Procedures Manual")]
 
-        parts = [meta.get('document_title', 'HR Policies & Procedures Manual')]
-
-        if meta.get('section_num'):
+        if meta.get("section_num"):
             parts.append(f"Section {meta['section_num']:02d}")
 
-        if meta.get('policy_name'):
-            parts.append(meta['policy_name'])
+        if meta.get("policy_name"):
+            parts.append(meta["policy_name"])
 
-        if meta.get('procedure_code'):
-            parts.append(meta['procedure_code'])
+        if meta.get("procedure_code"):
+            parts.append(meta["procedure_code"])
 
-        if meta.get('subsection_num') and meta.get('subsection_title'):
+        if meta.get("subsection_num") and meta.get("subsection_title"):
             parts.append(f"{meta['subsection_num']} {meta['subsection_title']}")
 
-        if meta.get('page_number'):
+        if meta.get("split_part") and meta.get("split_total"):
+            parts.append(f"part {meta['split_part']}/{meta['split_total']}")
+
+        if meta.get("page_number"):
             parts.append(f"p. {meta['page_number']}")
 
         return " • ".join(parts)
     
     def persist(self) -> None:
         """Persist ChromaDB collection to disk"""
-        logger.info(f"Collection is automatically persisted by ChromaDB to {self.chroma_db_path}")
+        logger.info(f"Persisting collection to {self.chroma_db_path}")
+        self.chroma_client.persist()
 
 
 def load_chunks_from_json(json_path: str) -> List[Chunk]:
@@ -324,10 +467,11 @@ def load_chunks_from_json(json_path: str) -> List[Chunk]:
         data = json.load(f)
     
     chunks = []
+    valid_fields = {f.name for f in ChunkMetadata.__dataclass_fields__.values()}
     for item in data:
-        metadata = ChunkMetadata(**item['metadata'])
-        chunk = Chunk(text=item['text'], metadata=metadata)
-        chunks.append(chunk)
+        meta = {k: v for k, v in item["metadata"].items() if k in valid_fields}
+        metadata = ChunkMetadata(**meta)
+        chunks.append(Chunk(text=item["text"], metadata=metadata))
     
     return chunks
 

@@ -1,0 +1,134 @@
+You are an expert RAG (Retrieval-Augmented Generation) Architect and Engineer. Your task is to diagnose, debug, and overhaul our RAG pipeline based on structural failures identified during domain-specific HR operations benchmarking.
+We ran a 10-question evaluation benchmark against our document indexing and retrieval pipeline for the **Human Resources Policies & Procedures Manual (ML-HR-01)**. While the LLM generator correctly follows safety guardrails by refusing to hallucinate missing data, the **retrieval system heavily fails** to retrieve the correct context chunks from the document store.
+Below are the failing benchmark logs, followed by expected oot causes and your task requirements.
+Test Benchmark Logs (Questions vs. Failed System Output)
+Case 1: Missed Page Content & Sub-criteria Retrieval
+* **Question:** What are the 4 main criteria used to evaluate employee performance during appraisals?
+* **Actual Output:** 
+  > The 4 main criteria... are: Job knowledge and technical skills, Communication and interpersonal skills, Problem-solving and analytical skills, Time management and productivity. However, these criteria are not explicitly stated in the provided context. The closest relevant information is from section (2) Subsection 2.4 • p. 52...
+* **Expected Ground Truth:** Soft Skills, Job Performance / SMART Goals, Job Responsibilities & Tasks, and Adherence to Organizational Policies & Values (Source: Section 02, pp. 53–54).
+
+#### Case 2: Missed Soft Skills List Retrieval
+* **Question:** What are the 6 elements that make up the "Soft Skills" evaluation criterion?
+* **Actual Output:**
+  > Unfortunately, the provided context does not explicitly mention the "Soft Skills" evaluation criterion or its 6 elements...
+* **Expected Ground Truth:** Reliability/Accountability, Civility and respect, Communication Skills, Relationship with co-workers, Taking Initiative, and Teamwork (Source: Section 02, p. 53).
+
+#### Case 3: Keyword / System Name Retrieval Failure
+* **Question:** What software system is used by GHD|EMPHNET for signing electronic documents?
+* **Actual Output:**
+  > The software system... is not explicitly mentioned in the provided text. However, Section 3 mentions "IT Property" and "ITS"... (Source: Section 03, p. 68)
+* **Expected Ground Truth:** DocuSign System (DSS) (Source: Section 03).
+
+#### Case 4: Acronym Lookup / Metadata Table Loss
+* **Question:** What do the acronyms "KE&NTL" and "T&ISTL" stand for in the document?
+* **Actual Output:**
+  > The acronyms "KE&NTL" and "T&ISTL" are not found in the provided context...
+* **Expected Ground Truth:** KE&NTL = Knowledge Exchange & Networking Team Leader; T&ISTL = Technology & Innovative Solutions Team Leader (Source: Table of Abbreviations / Matrices).
+
+#### Case 5: Granularity & Parent/Child Context Mismatch
+* **Question:** Under Section 07 (Personnel Management), what three standard procedures are detailed?
+* **Actual Output:**
+  > Here is the complete list of numbered points: 1. Initiate the request... 2. Send the request... [Returns internal steps of Procedure 24 instead of the 3 procedure names under Section 07] (Source: Section 07, p. 123).
+* **Expected Ground Truth:** Procedure 24: Issue Health Insurance; Procedure 25: Issue Experience/Employment/Salary Letters; Procedure 26: Issue Recommendation Letter.
+
+#### Case 6: Irrelevant Context & Deductive Hallucination
+* **Question:** How long is the standard probation period for newly recruited employees?
+* **Actual Output:**
+  > Answer: 6 months is not mentioned as the standard probation period, however, it is implied that the probation period is 12 months... (Source: Section 05, p. 90).
+* **Expected Ground Truth:** 3 months (Source: Section 01).
+
+---
+
+### expected Root Causes (maybe but do ur own reasoning also)
+
+1. **Chunking & Layout Loss:** Hard chunking severed section headers from child procedures and lost structural tables/acronym glossaries during indexing.
+2. **Dense Embeddings Weakness on Exact Keywords:** Dense vector search fails to match exact strings (`DocuSign`, `DSS`, `KE&NTL`, `T&ISTL`) and pulls generic semantically adjacent text instead.
+3. **Low Top-K Without Reranking:** The retrieval window is too small (`top_k` low), pulling top-ranking generic chunks (e.g., page 52 high-level summary) while dropping exact target chunks (e.g., pages 53–54 specific breakdown).
+4. **Lack of Parent/Child Retrieval Scaffolding:** Retrieving granular child steps without returning parent section metadata.
+
+### expected fixes (maybe but do ur own reasoning and problem-solving, some of them may already exist, some real enhancements i havent catched yet)
+
+1. **Implement Hybrid Search (Dense + Sparse/BM25):**
+   * Integrate keyword matching (BM25 or full-text search) alongside vector search using **Reciprocal Rank Fusion (RRF)** to resolve acronym and precise keyword lookups (DSS, KE&NTL).
+2. **Add a Reranking Stage:**
+   * Implement a Cross-Encoder Reranker (e.g., Cohere Rerank or BGE-Reranker) on retrieved top-$N$ candidates before passing context to the LLM.
+3. **Upgrade Chunking Strategy (Parent-Child / Hierarchical Chunking):**
+   * Refactor document indexing to capture structural headers and store small child chunks for retrieval, while returning larger parent context blocks or structural metadata to the prompt.
+4. **Refine Prompt Guardrails:**
+   * Tighten system prompt guidelines to stop the LLM from making speculative deductions ("implied 12 months") when fetched context is incomplete.
+
+other questions to consider:
+1-do u find the tables parsing effictive, especially the definitions table before section 1?
+2-do u find it good to document the above questions somewhere so if we did any future update or added documents, it we can re-evaluate the effictiveness of answering the old documents?
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+another testing inlucded:
+The evaluation exposed critical retrieval failures:
+1. **Context Overlap / False Matches:** Distinguishing "Working from Anywhere" from "Personal Hourly Leave" failed because both share system keywords ("Mena-Me").
+2. **Missing Conditional Logic & Truncation:** Chunk boundaries cut mid-procedure, dropping crucial "IF Yes / IF No" decision trees (e.g., Health Insurance duplicate coverage policy).
+3. **Keyword / Acronym Blindness:** Exact software names (DocuSign System / DSS) and internal team acronyms (KE&NTL, T&ISTL) are missed by vector search alone.
+4. **Metadata & Section Confusion:** The retriever mixes up sequential step workflows across different sections (e.g., pulling Attendance procedures when asked about Disciplinary penalties).
+5. **LLM Hallucination on Missing Context:** When context is partially retrieved, the LLM fills gaps with standard corporate terms (e.g., returning "Exceeds Expectations" instead of the manual's actual 3-tier percentage scale).
+
+---
+
+### Benchmark Failure Case Logs
+
+#### Case 7: Semantic Overlap Confusion (Remote Work vs. Personal Leave)
+* **Question:** If an employee asks to work remotely for a week, under what policy section can I approve this, through which system must it be submitted, and what type of leave does it count as?
+* **Actual Output:** Pulled Section 5.4/5.5 (Personal Leave / 3-hour short leave rules and vacation balance deductions) instead of the Working from Anywhere (WfA) policy.
+* **Expected Ground Truth:** Section 05 (WfA policy), submitted via Mena-Me HR System, managed as a flexible work arrangement (not deducted from annual leave).
+
+#### Case 8: Hallucinated Scale vs. Context Loss
+* **Question:** When preparing mid-year performance reviews, what rating scale choices do managers have to score employee SMART goals?
+* **Actual Output:** "Exceeds Expectations, Meets Expectations, Improvement Needed" (Source cited: p. 55 point 15).
+* **Expected Ground Truth:** "Met the goal (100%)", "Partially met the goal (1%-99%)", "Not met the goal (0%)" (Source: Section 02, pp. 53–54).
+
+#### Case 9: Procedure Cross-Contamination
+* **Question:** An employee submitted their resignation via DocuSign. What clearings/steps are required regarding IT property, and what system registers their exit clearance?
+* **Actual Output:** Cited Leave Request Procedure 18 (ML-HR-01.P18) for exit clearance.
+* **Expected Ground Truth:** End-of-Contract Clearance (ML-HR-01.P11) and DocuSign System (DSS) execution (Source: Section 03, p. 68).
+
+#### Case 10: Misrouted Policy Retrieval
+* **Question:** If an employee breaches company attendance or conduct policies, what progressive disciplinary steps are outlined?
+* **Actual Output:** Returned Procedure 17 (Monthly Attendance Sheet extraction steps: card/face detection log export).
+* **Expected Ground Truth:** Section 06 (Discipline, Grievance & Complaints) progressive warning/penalty guidelines.
+
+#### Case 11: Mid-Procedure Chunk Truncation
+* **Question:** What steps must HR follow to enroll a newly onboarded employee under the organization's health insurance plan, and what is the rule regarding duplicate coverage?
+* **Actual Output:** Combined Procedure 25 (Experience letters) with Procedure 24, stopped at Step 5, and claimed duplicate coverage rules were missing.
+* **Expected Ground Truth:** Procedure 24 (ML-HR-01.P24, p. 123): Check existing coverage $\rightarrow$ IF Yes: stop enrollment; IF No: send form for signature and coordinator approval.
+
+#### Case 12: Exact String / Acronym Lookup Failure
+* **Question:** What do the acronyms "KE&NTL" and "T&ISTL" stand for in the document?
+* **Actual Output:** "The acronyms 'KE&NTL' and 'T&ISTL' are not found in the provided context."
+* **Expected Ground Truth:** KE&NTL = Knowledge Exchange & Networking Team Leader; T&ISTL = Technology & Innovative Solutions Team Leader.
+
+---
+
+### Architecture & Implementation Directives
+
+Please inspect the ingestion script, vector database configuration, retrieval module, and prompt templates, and execute the following fixes:
+
+1. **Implement Structural & Parent-Child Chunking:**
+   * Transition from fixed-size character chunking to **Header-Aware / Hierarchical Chunking**.
+   * Index child nodes (150–300 tokens) for granular vector search, but always return the parent context block (500–1000 tokens) or complete procedure block (e.g., full ML-HR-01.P24) to the LLM.
+
+2. **Enable Hybrid Search (Dense Vectors + BM25 Sparse Keyword Search):**
+   * Integrate sparse keyword indexing (BM25 or full-text index) paired with dense embeddings using **Reciprocal Rank Fusion (RRF)**.
+   * Ensures exact acronyms (`KE&NTL`, `DSS`), code IDs (`P11`, `P24`), and specific terms are prioritized.
+
+3. **Enrich Metadata Enrichment at Ingestion:**
+   * Attach structural metadata to every chunk context payload:
+     * `section_number`, `section_title`, `procedure_id`, `page_number`.
+   * Pass metadata context to the LLM prompt to stop procedure cross-contamination.
+
+4. **Add a Reranking Stage:**
+   * Insert a Cross-Encoder Reranker (e.g., Cohere Rerank or `bge-reranker-large`) on top-$N$ retrieved candidates before prompt assembly to filter out false positives (e.g., filtering out hourly personal leave when searching for remote work).
+
+5. **Tighten LLM Generation Guardrails:**
+   * Update the system prompt to explicitly prevent domain hallucination:
+     > "You must base your answer strictly on the provided context. Do NOT use external corporate knowledge or standard HR terminology to fill gaps. If a specific metric, scale, or step is missing from the retrieved context, explicitly state that it is not in the context."
+
+     
+Please inspect our repository, pinpoint the relevant files (ingestion, vector store indexing, retrieval pipeline, and LLM orchestration), and provide the modified code implementation.
