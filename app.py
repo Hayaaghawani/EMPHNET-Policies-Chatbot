@@ -19,7 +19,7 @@ logger = logging.getLogger(__name__)
 
 # Import RAG modules
 from src.retrieval import HybridRetriever, load_chunks_from_json
-from src.generation import OllamaGenerator
+from src.generation import HybridGenerator
 from src.query_intent import analyze_query
 
 # Configure Streamlit page
@@ -109,9 +109,11 @@ def initialize_rag_system():
         
         st.success(f"✓ Retriever ready ({collection_count} chunks)")
         
-        # Initialize generator
+        # Initialize generator with HF priority and Ollama fallback.
         st.status("🔧 Initializing LLM...", expanded=False)
-        generator = OllamaGenerator(
+        generator = HybridGenerator(
+            hf_api_key=(os.getenv("HF_API_KEY") or "").strip().strip('"').strip("'"),
+            hf_model=os.getenv("HF_MODEL", "Qwen/Qwen3-32B"),
             ollama_host=ollama_host,
             model=ollama_model,
             temperature=0.3,
@@ -123,7 +125,8 @@ def initialize_rag_system():
             list_max_chars_per_chunk=int(os.getenv("LLM_LIST_MAX_CHARS", "6000")),
             list_num_predict=int(os.getenv("OLLAMA_LIST_NUM_PREDICT", "900")),
         )
-        st.success(f"✓ LLM ready ({ollama_model})")
+        priority = "HF" if os.getenv("HF_API_KEY") else "Ollama"
+        st.success(f"✓ LLM ready ({priority} priority, model: {ollama_model})")
         
         return retriever, generator
     

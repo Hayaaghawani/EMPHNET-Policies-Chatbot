@@ -1,262 +1,140 @@
-# EMPHNET HR Policies Chatbot - RAG Application
+# EMPHNET Policies Chatbot
 
-A **Retrieval-Augmented Generation (RAG) chatbot** that lets EMPHNET staff ask natural-language questions about the HR policy manual and receive answers grounded strictly in the document with citations.
+A retrieval-augmented generation (RAG) application for answering HR-policy questions from the EMPHNET policy manual while keeping answers grounded in the source text and citing the relevant sections.
 
-## Features
+## What this project does
 
-? **Local LLM** - No cloud dependencies, full privacy using Ollama + qwen2.5:14b  
-? **Multilingual** - Supports English and Arabic via sentence-transformers  
-? **Hybrid Retrieval** - Vector similarity + BM25 keyword search for better accuracy  
-? **Document Grounding** - Generates answers only from retrieved policy excerpts  
-? **Citation Support** - Returns section numbers and verbatim excerpts  
-? **Persistent Storage** - ChromaDB caches embeddings locally  
-? **Web UI** - Simple Streamlit interface  
+- Parses the HR policy PDF into structured chunks with metadata
+- Builds a hybrid retrieval index combining semantic vector search and BM25 keyword matching
+- Maps user questions to policy structure such as sections, subsections, policies, and procedures
+- Uses Ollama to generate responses grounded only in retrieved policy excerpts
+- Exposes the system through a simple Streamlit UI
 
-## Architecture
+## System overview
 
-```
-User Query (EN/AR)
-       ?
-  Streamlit UI
-       ?
-  Hybrid Retriever
-  +- Vector Search (sentence-transformers embeddings)
-  +- BM25 Search (keyword matching)
-       ?
-  Retrieved Context + Query
-       ?
-  Ollama LLM (qwen2.5:14b)
-       ?
-  Grounded Answer + Citations
-       ?
-  Streamlit Results Display
+```text
+User query (EN / AR)
+    ↓
+Streamlit UI (app.py)
+    ↓
+Query intent + document structure matching
+    ↓
+Hybrid retrieval (vector + BM25)
+    ↓
+Grounded answer generation via Ollama
+    ↓
+Answer + source citations
 ```
 
-## Prerequisites
+## Project layout
 
-### System Requirements
-- Windows 11 / macOS / Linux
+```text
+.
+├── app.py                     # Streamlit application entry point
+├── embed_chunks.py            # Rebuild the Chroma index from the inspection JSON
+├── src/
+│   ├── __init__.py            # Package metadata
+│   ├── config.py              # Environment variable parsing and settings
+│   ├── document_structure.py  # Section / subsection / policy detection logic
+│   ├── generation.py          # Ollama generation and compatibility wrapper
+│   ├── index_manager.py       # Explicit index lifecycle and verification
+│   ├── ingestion.py           # PDF parsing, chunking, metadata extraction
+│   ├── query_intent.py        # Query analysis exports
+│   └── retrieval.py           # Hybrid vector + BM25 retriever
+├── data/
+│   ├── pdf/                  # Policy PDF source files
+│   └── chunks_inspection.json # Generated inspection / chunk dataset
+├── chroma_storage/            # Persistent ChromaDB index
+├── tests/
+│   ├── integration/           # Integration checks for retrieval and index state
+│   └── unit/                 # Focused unit tests for config and generation
+├── .env.example               # Environment template
+├── .gitignore                 # Git exclusions
+├── README.md                  # Project overview
+├── requirements.txt           # Python dependencies
+└── venv/                      # Local virtual environment
+```
+
+## Requirements
+
 - Python 3.10+
-- 8GB+ RAM
-- 20GB disk space (for embeddings + Ollama model)
+- Ollama installed and running locally
+- The HR policy PDF available under data/pdf/
+- Access to the local model used by the project configuration
 
-### Required Software
-1. **Ollama** - Download from [ollama.ai](https://ollama.ai)
-   - After installation, pull the model:
-   ```bash
-   ollama pull qwen2.5:14b-instruct
-   ```
-   - Verify it's running: `ollama serve` (runs on `http://localhost:11434`)
+## Setup
 
-2. **Git** (for version control)
-
-## Quick Start
-
-### 1. Clone & Setup Environment
+1. Create and activate a virtual environment.
+2. Install dependencies:
 
 ```bash
-cd c:\Emphnet Policies Chatbot
-
-# Create virtual environment
-python -m venv venv
-
-# Activate virtual environment
-venv\Scripts\activate  # On Windows
-# OR
-source venv/bin/activate  # On macOS/Linux
-
-# Install dependencies
 pip install -r requirements.txt
 ```
 
-### 2. Prepare the PDF Document
+3. Configure your environment by copying the template:
 
-Place your HR policy manual at:
-```
-data/pdf/Human Resources Policies & Procedures Manual (ML-HR-01, V.01).docx.pdf
-```
-
-If the filename differs, update the path in `src/ingestion.py` line 166.
-
-### 3. Configure Environment
-
-Create a `.env` file from the template:
 ```bash
-copy .env.example .env  # Windows
-# OR
-cp .env.example .env  # macOS/Linux
+copy .env.example .env
 ```
 
-Edit `.env` and set the PDF path:
-```
-PDF_PATH=data/pdf/Human Resources Policies & Procedures Manual (ML-HR-01, V.01).docx.pdf
+4. Edit `.env` to set values such as:
+
+```env
+PDF_PATH=data/pdf/your_policy_file.pdf
 OLLAMA_HOST=http://localhost:11434
-OLLAMA_MODEL=qwen2.5:14b-instruct
+OLLAMA_MODEL=llama3.1:latest
+CHROMA_DB_PATH=chroma_storage
+CHROMA_COLLECTION_NAME=emphnet_policies
+TOP_K_RESULTS=5
 ```
 
-### 4. Start Ollama Service
+5. Start Ollama:
 
-Before running the application, ensure Ollama is running:
-
-**Windows:**
-```bash
-# Ollama typically auto-starts, or run:
-ollama serve
-```
-
-**macOS/Linux:**
 ```bash
 ollama serve
 ```
 
-The service will be available at `http://localhost:11434`
-
-### 5. Ingest & Embed the PDF
-
-Run the ingestion pipeline to extract, chunk, and embed the PDF:
+6. Generate the chunk inspection file and build the vector index:
 
 ```bash
-# Activate virtual environment first
-venv\Scripts\activate
-
-# Run ingestion
 python src/ingestion.py
+python embed_chunks.py
 ```
 
-This will:
-1. ? Extract text from the PDF
-2. ? Remove header/footer/watermark noise
-3. ? Parse hierarchically (Section ? Subsection ? Policy/Procedure)
-4. ? Create chunks with metadata
-5. ? Embed chunks using multilingual-e5-large
-6. ? Store in ChromaDB (persisted to `chroma_storage/`)
-7. ? Save chunk inspection file: `data/chunks_inspection.json`
-
-**First run duration:** 5-15 minutes (depending on PDF size and hardware)
-**Subsequent runs:** ~1 minute (uses cached embeddings)
-
-### 6. Inspect Chunks (Recommended)
-
-Before launching the UI, review the ingestion output:
-
-```bash
-# View the chunks_inspection.json file to verify:
-# - Chunk structure
-# - Metadata extraction
-# - Section/subsection parsing
-# - Procedure reference codes
-
-cat data/chunks_inspection.json | head -100
-```
-
-### 7. Launch the Web Application
+7. Launch the app:
 
 ```bash
 streamlit run app.py
 ```
 
-The app will open in your browser at `http://localhost:8501`
+## Runtime behavior
 
-**Usage:**
-1. Type your question in English or Arabic
-2. Click "Get Answer"
-3. View the generated response with source citations
-4. Expand "Sources" to see the exact policy excerpts used
+- The ingestion step extracts text, normalizes noisy PDF content, and assigns policy metadata to each chunk.
+- The retrieval layer searches semantically and with keyword matching to reduce misses on policy-specific wording.
+- The generation layer prompts the local LLM with only the relevant retrieved chunks and asks it to answer from that context only.
+- The UI surfaces the final answer and the source excerpts used for grounding.
 
-## Project Structure
+## Maintaining this project
 
-```
-c:\Emphnet Policies Chatbot/
-+-- venv/                          # Python virtual environment
-+-- src/
-�   +-- ingestion.py               # PDF ? Chunks ? Embeddings
-�   +-- retrieval.py               # Vector + BM25 search
-�   +-- generation.py              # LLM prompting & responses
-�   +-- __init__.py
-+-- data/
-�   +-- pdf/                       # Place PDF here
-�   +-- chunks_inspection.json     # Generated: chunk verification
-�   +-- eval_questions.json        # Generated: Q&A pairs for testing
-+-- chroma_storage/                # Vector database (auto-created)
-+-- app.py                         # Streamlit UI
-+-- requirements.txt               # Python dependencies
-+-- .env.example                   # Environment template
-+-- .env                           # Your local config (git-ignored)
-+-- .gitignore                     # Version control exclusions
-+-- plan.txt                       # Project specification
-+-- README.md                      # This file
+This codebase is structured around the core pipeline rather than ad hoc experiments. When editing, prefer these modules:
+
+- `src/ingestion.py` for PDFs, chunk construction, and metadata
+- `src/document_structure.py` for section and intent matching
+- `src/retrieval.py` for ranking and retrieval behavior
+- `src/generation.py` for answer generation and compatibility wrappers
+- `src/config.py` for configuration defaults and environment validation
+
+For operational changes, prefer updating the source modules and relevant tests rather than adding one-off scripts at the repository root.
+
+## Testing
+
+Run the project checks with:
+
+```bash
+pytest -q
 ```
 
-## Configuration
-
-### Environment Variables (`.env`)
-
-```env
-# PDF Document
-PDF_PATH=data/pdf/Human Resources Policies & Procedures Manual (ML-HR-01, V.01).docx.pdf
-
-# Ollama LLM
-OLLAMA_HOST=http://localhost:11434
-OLLAMA_MODEL=qwen2.5:14b-instruct
-
-# Embeddings
-EMBEDDING_MODEL=intfloat/multilingual-e5-large
-EMBEDDING_DEVICE=cpu  # or 'cuda' if you have GPU
-
-# Retrieval
-TOP_K_RESULTS=5       # Number of chunks to retrieve
-BM25_ENABLE=true      # Enable keyword search
-
-# Storage
-CHROMA_DB_PATH=chroma_storage
-
-# Application
-DEBUG=false
-```
-
-## Understanding the Pipeline
-
-### 1. Ingestion (`src/ingestion.py`)
-
-**Why:** Extract text from PDF with noise removed and organize hierarchically
-
-- **Text Extraction**: PyPDF reads each page
-- **Noise Removal**: Strips repeating headers (GHD|EMPHNET, page numbers, DocuSign IDs)
-- **Hierarchical Parsing**: Identifies sections (01-07), subsections (1.1-1.7), policies, and procedures
-- **Metadata Attachment**: Each chunk gets document code, version, section ref, page number, language flag
-- **Output**: `data/chunks_inspection.json` for review + embedding pipeline
-
-### 2. Embeddings & Vector Store (`src/ingestion.py`)
-
-**Why:** Convert text to dense vectors for semantic search
-
-- **Model**: `intfloat/multilingual-e5-large` (supports 100+ languages)
-- **Storage**: ChromaDB (local, persistent, no vendor lock-in)
-- **Caching**: Embeddings cached on disk, so re-running ingestion is fast
-- **Output**: `chroma_storage/` directory with vector indexes
-
-### 3. Retrieval (`src/retrieval.py`)
-
-**Why:** Find the most relevant policy sections for a user's question
-
-**Hybrid Retrieval Strategy:**
-- **Vector Search (80% weight)** - Semantic similarity using embeddings
-  - Captures intent: "What about time off?" matches "Leave Policy"
-- **BM25 Search (20% weight)** - Keyword matching
-  - Captures exact terms: "Section 4.2" matches exact clause reference
-
-**Output**: Top 5 chunks ranked by combined score, with metadata
-
-### 4. Generation (`src/generation.py`)
-
-**Why:** Generate a grounded, natural-language answer
-
-**System Prompt Enforces:**
-- Answer strictly from retrieved chunks
-- Refuse to guess if chunks don't address the question
-- Respond in the same language as the question (EN or AR)
-- Include source section numbers and verbatim excerpts
-- Be concise but complete
+This repository keeps the active test suite focused on the maintained behavior rather than obsolete benchmarking or exploratory scripts.
 
 **Output**: Answer text + source citations formatted for UI
 

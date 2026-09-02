@@ -8,11 +8,170 @@ Enforces grounding: refuses to answer if retrieved chunks don't address the ques
 import logging
 from typing import List, Dict, Any, Tuple, Optional
 import requests
-import json
 
 from .query_intent import QueryAnalysis, analyze_query
 
 logger = logging.getLogger(__name__)
+
+
+class ProviderFailure(RuntimeError):
+    """Raised when a provider cannot generate a supported answer."""
+
+
+class HybridGenerator:
+    """Generate responses with HF as the preferred provider and Ollama as fallback.
+
+    This keeps the app behavior explicit and predictable while preserving the older
+    compatibility contract used by helper scripts and tests.
+    """
+
+    def __init__(
+        self,
+        hf_api_key: Optional[str] = None,
+        hf_model: Optional[str] = None,
+        ollama_host: str = "http://localhost:11434",
+        model: str = "llama3.1:latest",
+        temperature: float = 0.3,
+        **kwargs: Any,
+    ):
+        self.hf_api_key = (hf_api_key or "").strip().strip('"').strip("'")
+        self.hf_model = hf_model or "Qwen/Qwen3-32B"
+        self.hf_provider = None
+        self.ollama_provider = None
+        self.ollama_host = ollama_host
+        self.model = model
+        self.temperature = temperature
+        self.kwargs = kwargs
+
+        if self.hf_api_key:
+            self.hf_provider = _HuggingFaceProvider(self.hf_api_key, model=self.hf_model)
+
+    def _ensure_ollama_provider(self):
+        if self.ollama_provider is None:
+            self.ollama_provider = OllamaGenerator(
+                ollama_host=self.ollama_host,
+                model=self.model,
+                temperature=self.temperature,
+                **self.kwargs,
+            )
+        return self.ollama_provider
+
+    @staticmethod
+    def _normalise_answer(value: Any, *, provider: str, source_fallback: Optional[List[str]] = None) -> Dict[str, Any]:
+        if isinstance(value, dict):
+            answer = value.get("answer", "")
+            source_list = value.get("sources", source_fallback or [])
+            language = value.get("language", "en")
+            confidence = value.get("confidence", 0.0)
+            metadata = value.get("metadata", {})
+            return {
+                "answer": answer,
+                "provider": provider,
+                "sources": source_list,
+                "confidence": confidence,
+                "language": language,
+                "metadata": metadata,
+            }
+
+        return {
+            "answer": str(value),
+            "provider": provider,
+            "sources": source_fallback or [],
+            "confidence": 0.7,
+            "language": "en",
+            "metadata": {},
+        }
+
+    def generate(
+        self,
+        query: str,
+        retrieved_chunks: List[Dict[str, Any]],
+        analysis: Optional[QueryAnalysis] = None,
+    ) -> Dict[str, Any]:
+        source_fallback = [chunk.get("source") for chunk in retrieved_chunks if chunk.get("source")]
+        provider_failures: List[str] = []
+
+        if self.hf_provider is not None:
+            try:
+                result = self.hf_provider.generate(query, retrieved_chunks, analysis=analysis)
+                payload = self._normalise_answer(result, provider="hf", source_fallback=source_fallback)
+                payload.setdefault("metadata", {})
+                payload["metadata"]["provider_failures"] = provider_failures
+                return payload
+            except ProviderFailure as exc:
+                provider_failures.append(str(exc))
+            except TypeError as exc:
+                provider_failures.append(f"HF signature mismatch: {exc}")
+
+        try:
+            result = self._ensure_ollama_provider().generate(query, retrieved_chunks, analysis=analysis)
+            payload = self._normalise_answer(result, provider="ollama", source_fallback=source_fallback)
+            payload.setdefault("metadata", {})
+            payload["metadata"]["provider_failures"] = provider_failures
+            return payload
+        except ProviderFailure as exc:
+            provider_failures.append(str(exc))
+        except TypeError as exc:
+            provider_failures.append(f"Ollama signature mismatch: {exc}")
+
+        return {
+            "answer": "I could not generate an answer from the available policy context.",
+            "provider": "error",
+            "sources": source_fallback,
+            "confidence": 0.0,
+            "language": "en",
+            "metadata": {"provider_failures": provider_failures},
+        }
+
+
+class _HuggingFaceProvider:
+    """Generate text through the Hugging Face Inference API."""
+
+    def __init__(self, api_key: str, *, model: str):
+        self.api_key = (api_key or "").strip().strip('"').strip("'")
+        self.model = model
+
+    def generate(self, query: str, retrieved_chunks: List[Dict[str, Any]], analysis: Optional[QueryAnalysis] = None) -> str:
+        if not self.api_key:
+            raise ProviderFailure("HF API key is missing")
+
+        context = "\n\n".join(chunk.get("text", "") for chunk in retrieved_chunks if chunk.get("text"))
+        payload = {
+            "inputs": f"Question: {query}\n\nContext:\n{context}\n\nAnswer using only the provided context.",
+            "parameters": {
+                "max_new_tokens": 300,
+                "temperature": 0.2,
+                "return_full_text": False,
+            },
+            "options": {"wait_for_model": True},
+        }
+        headers = {"Authorization": f"Bearer {self.api_key}"}
+
+        try:
+            response = requests.post(
+                f"https://api-inference.huggingface.co/models/{self.model}",
+                headers=headers,
+                json=payload,
+                timeout=120,
+            )
+        except requests.RequestException as exc:
+            raise ProviderFailure(f"HF request failed: {exc}") from exc
+
+        if response.status_code == 401:
+            raise ProviderFailure("HF API key is invalid or expired")
+        if response.status_code >= 400:
+            raise ProviderFailure(f"HF request failed with status {response.status_code}: {response.text[:300]}")
+
+        data = response.json()
+        if isinstance(data, list):
+            if data and isinstance(data[0], dict) and "generated_text" in data[0]:
+                return data[0]["generated_text"]
+            if data and isinstance(data[0], str):
+                return data[0]
+        if isinstance(data, dict) and "generated_text" in data:
+            return data["generated_text"]
+
+        raise ProviderFailure("HF returned an unexpected response format")
 
 
 class OllamaGenerator:
@@ -400,32 +559,3 @@ Answer the question using ONLY the context above. Give a focused answer."""
             confidence += (avg_score - 0.5) * 0.2
         
         return max(0, min(1, confidence))  # Clamp to [0, 1]
-
-
-# Example usage
-if __name__ == "__main__":
-    logging.basicConfig(level=logging.INFO)
-    
-    # Initialize generator
-    generator = OllamaGenerator(
-        ollama_host="http://localhost:11434",
-        model="qwen2.5:14b-instruct"
-    )
-    
-    # Example retrieved chunks (mock)
-    mock_chunks = [
-        {
-            "text": "Sick leave is provided to employees for medical reasons. "
-                   "Employees must provide a medical certificate after 3 consecutive days.",
-            "metadata": {"section_num": 2, "page_number": 45},
-            "source": "HR Manual • Section 2.4 • p. 45"
-        }
-    ]
-    
-    # Generate answer
-    query = "What is the sick leave policy?"
-    result = generator.generate(query, mock_chunks)
-    
-    print(f"Answer: {result['answer']}\n")
-    print(f"Confidence: {result['confidence']:.2f}\n")
-    print(f"Sources: {json.dumps(result['sources'], indent=2)}")
