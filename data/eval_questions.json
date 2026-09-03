@@ -88,5 +88,86 @@
     "expected_keywords": ["absence", "report", "notification", "manager"],
     "difficulty": "easy",
     "category": "Procedures"
+  },
+  {
+    "id": 11,
+    "question": "What is the procedure for planning and preparing for events?",
+    "language": "en",
+    "doc_id": "ML-ORG-01",
+    "expected_sections": ["1.4", "1.5"],
+    "expected_keywords": ["event", "planning", "preparation", "Task Owner"],
+    "difficulty": "medium",
+    "category": "Events Management"
+  },
+  {
+    "id": 12,
+    "question": "What are the rules for travel booking and visa issuance for events?",
+    "language": "en",
+    "doc_id": "ML-ORG-01",
+    "expected_sections": ["1.4"],
+    "expected_keywords": ["visa", "travel booking", "Operations Officer", "passport"],
+    "difficulty": "medium",
+    "category": "Events Management"
+  },
+  {
+    "id": 13,
+    "question": "Who is responsible for hotel accommodation reservations for event participants?",
+    "language": "en",
+    "doc_id": "ML-ORG-01",
+    "expected_sections": ["1.3", "1.4"],
+    "expected_keywords": ["Operations Officer", "accommodation", "hotel"],
+    "difficulty": "easy",
+    "category": "Events Management"
+  },
+  {
+    "id": 14,
+    "question": "What are the general instructions and rules for the GHD|EMPHNET WhatsApp group?",
+    "language": "en",
+    "doc_id": "GL-ORG-01",
+    "expected_sections": ["2.4"],
+    "expected_keywords": ["WhatsApp", "work-related", "social events", "HR team"],
+    "difficulty": "medium",
+    "category": "Internal Communication"
+  },
+  {
+    "id": 15,
+    "question": "What are the main principles and process for effective internal communication?",
+    "language": "en",
+    "doc_id": "GL-ORG-01",
+    "expected_sections": ["1.0"],
+    "expected_keywords": ["communication", "principles", "long-term focus", "5Ws"],
+    "difficulty": "medium",
+    "category": "Internal Communication"
+  },
+  {
+    "id": 16,
+    "question": "How often should bi-weekly departmental meetings be held and documented?",
+    "language": "en",
+    "doc_id": "GL-ORG-01",
+    "expected_sections": ["4.0"],
+    "expected_keywords": ["bi-weekly", "meeting minutes", "MoM", "Executive Director"],
+    "difficulty": "easy",
+    "category": "Internal Communication"
+  },
+  {
+    "id": 17,
+    "question": "What is the acronym description for ERE and DMS in event management?",
+    "language": "en",
+    "doc_id": "ML-ORG-01",
+    "expected_sections": ["0.0"],
+    "expected_keywords": ["EMPHNET Resources Engine", "Document Management System"],
+    "difficulty": "easy",
+    "category": "Acronyms & Definitions"
+  },
+  {
+    "id": 18,
+    "question": "ما هي تعليمات استخدام مجموعة الواتساب الخاصة بالمؤسسة؟",
+    "language": "ar",
+    "doc_id": "GL-ORG-01",
+    "expected_sections": ["2.4"],
+    "expected_keywords": ["واتساب", "تعليمات", "الموارد البشرية"],
+    "difficulty": "medium",
+    "category": "الاتصالات الداخلية"
   }
 ]
+

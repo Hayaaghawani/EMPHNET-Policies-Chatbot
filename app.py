@@ -162,8 +162,8 @@ def main():
     with col2:
         st.markdown("""
             <div class="header">
-                <h1>💼 EMPHNET HR Policy Chatbot</h1>
-                <p><em>Get instant answers to your HR policy questions</em></p>
+                <h1>📋 EMPHNET Policies & Guidelines Chatbot</h1>
+                <p><em>Instant answers across HR, Events Management, and Internal Communication documents</em></p>
             </div>
         """, unsafe_allow_html=True)
     
@@ -186,11 +186,12 @@ def main():
     st.markdown("### 🤔 Ask Your Question")
     
     question = st.text_area(
-        "Type your question about HR policies:",
-        placeholder="E.g., 'What is the policy on sick leave?' or 'ما هي سياسة الإجازة المرضية؟'",
+        "Type your question about EMPHNET policies or guidelines:",
+        placeholder="E.g., 'What is the sick leave policy?', 'What are the steps for event planning?', or 'How to use WhatsApp group?'",
         height=100,
         label_visibility="collapsed"
     )
+
     
     # Submit button
     col1, col2, col3 = st.columns([1, 1, 1])

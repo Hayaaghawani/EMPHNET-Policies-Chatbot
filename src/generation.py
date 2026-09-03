@@ -1,13 +1,15 @@
 """
 Generation Module - LLM-based Answer Generation with Grounding
 
-Generates answers strictly from retrieved policy chunks using Ollama LLM.
-Enforces grounding: refuses to answer if retrieved chunks don't address the question.
+Generates answers strictly from retrieved policy chunks.
+Prioritizes Hugging Face Serverless Router; falls back to local Ollama.
 """
 
 import logging
-from typing import List, Dict, Any, Tuple, Optional
+import os
+import re
 import requests
+from typing import List, Dict, Any, Tuple, Optional
 
 from .query_intent import QueryAnalysis, analyze_query
 
@@ -15,176 +17,176 @@ logger = logging.getLogger(__name__)
 
 
 class ProviderFailure(RuntimeError):
-    """Raised when a provider cannot generate a supported answer."""
+    """Raised when a generation provider fails."""
 
 
-class HybridGenerator:
-    """Generate responses with HF as the preferred provider and Ollama as fallback.
-
-    This keeps the app behavior explicit and predictable while preserving the older
-    compatibility contract used by helper scripts and tests.
-    """
-
-    def __init__(
-        self,
-        hf_api_key: Optional[str] = None,
-        hf_model: Optional[str] = None,
-        ollama_host: str = "http://localhost:11434",
-        model: str = "llama3.1:latest",
-        temperature: float = 0.3,
-        **kwargs: Any,
-    ):
-        self.hf_api_key = (hf_api_key or "").strip().strip('"').strip("'")
-        self.hf_model = hf_model or "Qwen/Qwen3-32B"
-        self.hf_provider = None
-        self.ollama_provider = None
-        self.ollama_host = ollama_host
-        self.model = model
-        self.temperature = temperature
-        self.kwargs = kwargs
-
-        if self.hf_api_key:
-            self.hf_provider = _HuggingFaceProvider(self.hf_api_key, model=self.hf_model)
-
-    def _ensure_ollama_provider(self):
-        if self.ollama_provider is None:
-            self.ollama_provider = OllamaGenerator(
-                ollama_host=self.ollama_host,
-                model=self.model,
-                temperature=self.temperature,
-                **self.kwargs,
-            )
-        return self.ollama_provider
+class BaseGenerator:
+    """Shared utilities, prompts, formatting, and heuristic scoring."""
 
     @staticmethod
-    def _normalise_answer(value: Any, *, provider: str, source_fallback: Optional[List[str]] = None) -> Dict[str, Any]:
-        if isinstance(value, dict):
-            answer = value.get("answer", "")
-            source_list = value.get("sources", source_fallback or [])
-            language = value.get("language", "en")
-            confidence = value.get("confidence", 0.0)
-            metadata = value.get("metadata", {})
-            return {
-                "answer": answer,
-                "provider": provider,
-                "sources": source_list,
-                "confidence": confidence,
-                "language": language,
-                "metadata": metadata,
-            }
-
-        return {
-            "answer": str(value),
-            "provider": provider,
-            "sources": source_fallback or [],
-            "confidence": 0.7,
-            "language": "en",
-            "metadata": {},
-        }
-
-    def generate(
-        self,
-        query: str,
+    def _prepare_chunks_for_llm(
         retrieved_chunks: List[Dict[str, Any]],
-        analysis: Optional[QueryAnalysis] = None,
-    ) -> Dict[str, Any]:
-        source_fallback = [chunk.get("source") for chunk in retrieved_chunks if chunk.get("source")]
-        provider_failures: List[str] = []
+        analysis: QueryAnalysis,
+        max_chunks: int,
+        max_chars_per_chunk: int,
+    ) -> List[Dict[str, Any]]:
+        if analysis.intent in ("list", "structural"):
+            limit = max_chunks
+            char_limit = max_chars_per_chunk
+        else:
+            limit = min(max_chunks, 5)
+            char_limit = max_chars_per_chunk
 
-        if self.hf_provider is not None:
-            try:
-                result = self.hf_provider.generate(query, retrieved_chunks, analysis=analysis)
-                payload = self._normalise_answer(result, provider="hf", source_fallback=source_fallback)
-                payload.setdefault("metadata", {})
-                payload["metadata"]["provider_failures"] = provider_failures
-                return payload
-            except ProviderFailure as exc:
-                provider_failures.append(str(exc))
-            except TypeError as exc:
-                provider_failures.append(f"HF signature mismatch: {exc}")
-
-        try:
-            result = self._ensure_ollama_provider().generate(query, retrieved_chunks, analysis=analysis)
-            payload = self._normalise_answer(result, provider="ollama", source_fallback=source_fallback)
-            payload.setdefault("metadata", {})
-            payload["metadata"]["provider_failures"] = provider_failures
-            return payload
-        except ProviderFailure as exc:
-            provider_failures.append(str(exc))
-        except TypeError as exc:
-            provider_failures.append(f"Ollama signature mismatch: {exc}")
-
-        return {
-            "answer": "I could not generate an answer from the available policy context.",
-            "provider": "error",
-            "sources": source_fallback,
-            "confidence": 0.0,
-            "language": "en",
-            "metadata": {"provider_failures": provider_failures},
-        }
+        prepared = []
+        for chunk in retrieved_chunks[:limit]:
+            trimmed = dict(chunk)
+            text = chunk.get("text", "")
+            if analysis.intent not in ("list", "structural") and len(text) > char_limit:
+                trimmed["text"] = text[:char_limit] + "\n[...truncated...]"
+            prepared.append(trimmed)
+        return prepared
 
 
-class _HuggingFaceProvider:
-    """Generate text through the Hugging Face Inference API."""
+    @staticmethod
+    def _detect_language(text: str) -> str:
+        arabic_count = sum(1 for c in text if '\u0600' <= c <= '\u06FF')
+        return "ar" if arabic_count > len(text) * 0.3 else "en"
 
-    def __init__(self, api_key: str, *, model: str):
-        self.api_key = (api_key or "").strip().strip('"').strip("'")
-        self.model = model
+    @staticmethod
+    def _build_system_prompt(language: str, analysis: QueryAnalysis) -> str:
+        if language == "ar":
+            return """أنت مساعد متخصص في سياسات الموارد البشرية لمنظمة EMPHNET. أجب بناءً على النصوص المُسترجعة فقط.
 
-    def generate(self, query: str, retrieved_chunks: List[Dict[str, Any]], analysis: Optional[QueryAnalysis] = None) -> str:
-        if not self.api_key:
-            raise ProviderFailure("HF API key is missing")
+قواعد صارمة:
+1. اقرأ جميع النصوص المُسترجعة قبل الإجابة.
+2. إذا وُجدت الإجابة في أي نص مُسترجع، قدّم كل التفاصيل (أرقام، شروط، خطوات). ممنوع قول "لا أعرف" إذا المعلومة موجودة.
+3. اقتبس الأرقام والمدد حرفياً (مثلاً: "14 يوماً").
+4. للأسئلة الإجرائية والقوائم: اذكر الخطوات المرقمة بالترتيب من جميع النصوص ذات الصلة.
+5. لا تختلق معلومات غير موجودة في النصوص.
+6. الرد بالعربية.
 
-        context = "\n\n".join(chunk.get("text", "") for chunk in retrieved_chunks if chunk.get("text"))
-        payload = {
-            "inputs": f"Question: {query}\n\nContext:\n{context}\n\nAnswer using only the provided context.",
-            "parameters": {
-                "max_new_tokens": 300,
-                "temperature": 0.2,
-                "return_full_text": False,
-            },
-            "options": {"wait_for_model": True},
-        }
-        headers = {"Authorization": f"Bearer {self.api_key}"}
+قواعد التنسيق الإجبارية:
+- يجب وضع كل خطوة أو نقطة في سطر مستقل تماماً.
+- افصل بين كل نقطة مرقمة والأخرى بسطر فارغ (Double Line Break).
+- ممنوع دمج النقاط في فقرة واحدة متصلة.
+- في النهاية اذكر المرجع والمصدر."""
+        else:
+            if analysis.intent in ("list", "structural"):
+                return """You are an EMPHNET HR policy assistant. The user wants a COMPLETE LIST of items from the retrieved text.
 
-        try:
-            response = requests.post(
-                f"https://api-inference.huggingface.co/models/{self.model}",
-                headers=headers,
-                json=payload,
-                timeout=120,
-            )
-        except requests.RequestException as exc:
-            raise ProviderFailure(f"HF request failed: {exc}") from exc
+Rules:
+1. List ALL items, points, or bullet points (numbered 1,2,3 or bulleted ➢,-,•) found in the context — do NOT skip items.
+2. Present each item clearly on its own line.
+3. Stay strictly within the retrieved context — do not invent items.
+4. Merge related chunks (e.g. Part 1 and Part 2) into one complete list.
 
-        if response.status_code == 401:
-            raise ProviderFailure("HF API key is invalid or expired")
-        if response.status_code >= 400:
-            raise ProviderFailure(f"HF request failed with status {response.status_code}: {response.text[:300]}")
+MANDATORY FORMATTING:
+- Put EACH item or step on its OWN line.
+- Leave an empty line between items (use double newlines).
+- NEVER repeat or loop text.
+- End with the source reference."""
 
-        data = response.json()
-        if isinstance(data, list):
-            if data and isinstance(data[0], dict) and "generated_text" in data[0]:
-                return data[0]["generated_text"]
-            if data and isinstance(data[0], str):
-                return data[0]
-        if isinstance(data, dict) and "generated_text" in data:
-            return data["generated_text"]
+            return """You are an EMPHNET HR policy assistant. Answer ONLY from the retrieved text.
 
-        raise ProviderFailure("HF returned an unexpected response format")
+Rules:
+1. Answer the EXACT question asked — only the specific fact, number, deadline, or rule requested.
+2. Do NOT list all retrieved content. Extract only the relevant detail.
+3. If multiple chunks are retrieved, read all of them but quote only what directly answers the question.
+4. For multi-step or procedural questions, put each step on its own line.
+5. Never invent information. Never say "not found" if the answer exists in context.
+
+Format: one focused answer; cite the source section at the end."""
+
+    @staticmethod
+    def _build_user_prompt(query: str, context: str, language: str, analysis: QueryAnalysis) -> str:
+        if language == "ar":
+            return f"""السؤال: {query}
+
+السياق:
+{context}
+
+الرجاء الإجابة على السؤال بناءً على السياق المقدم أعلاه فقط مع فصل كل نقطة مرقمة في سطر مستقل."""
+        if analysis.intent in ("list", "structural"):
+            return f"""Question: {query}
+
+Context:
+{context}
+
+List EVERY numbered point from the context above. 
+CRITICAL: Put each numbered point on a NEW line. Do NOT combine them into one paragraph."""
+        return f"""Question: {query}
+
+Context:
+{context}
+
+Answer the question using ONLY the context above. Use clear line breaks between distinct steps or points."""
+
+    @staticmethod
+    def _format_context(retrieved_chunks: List[Dict[str, Any]], language: str) -> str:
+        if language == "ar":
+            header = "المستندات ذات الصلة:\n"
+        else:
+            header = "Retrieved Policy Documents:\n"
+        separator = "\n---\n"
+
+        context_parts = [header]
+        for i, chunk in enumerate(retrieved_chunks, 1):
+            source = chunk.get('source', 'Unknown Source')
+            text = chunk.get('text', '')
+            if language == "ar":
+                context_parts.append(f"({i}) مصدر: {source}\nالنص:\n{text}")
+            else:
+                context_parts.append(f"({i}) Source: {source}\nText:\n{text}")
+        return separator.join(context_parts)
+
+    @staticmethod
+    def _parse_response(response_text: str, retrieved_chunks: List[Dict[str, Any]]) -> Tuple[str, List[Dict[str, str]]]:
+        parts = response_text.split("[Source:")
+        answer = parts[0].strip()
+
+        # Deterministic line-break fix:
+        # If the LLM collapses numbered items (e.g., "...etc. 2. If ... 3. Prepare ..."),
+        # automatically inject clean double newlines before digits followed by dots or bullets.
+        answer = re.sub(r'([^\n])\s+(\d{1,2}\.\s+[A-Z\u0621-\u064A])', r'\1\n\n\2', answer)
+        answer = re.sub(r'([^\n])\s+(•\s+)', r'\1\n\n\2', answer)
+
+        sources = []
+        for chunk in retrieved_chunks:
+            metadata = chunk.get('metadata')
+            if not isinstance(metadata, dict):
+                metadata = {}
+            source_text = chunk.get('source', 'Unknown')
+            text_excerpt = chunk.get('text', '')[:300] + "..."
+            sources.append({
+                "section": metadata.get('section_num', 'Unknown'),
+                "source": source_text,
+                "excerpt": text_excerpt,
+            })
+        return answer, sources
+
+    @staticmethod
+    def _calculate_confidence(response_text: str, retrieved_chunks: List[Dict[str, Any]]) -> float:
+        confidence = 0.7
+        refusal_phrases = ["couldn't find", "not found", "not mentioned", "no information", "unable to find"]
+        if any(phrase in response_text.lower() for phrase in refusal_phrases):
+            confidence -= 0.3
+
+        num_chunks = len(retrieved_chunks)
+        if num_chunks < 2:
+            confidence -= 0.2
+        elif num_chunks >= 5:
+            confidence += 0.1
+
+        if retrieved_chunks:
+            avg_score = sum(c.get('score', 0) for c in retrieved_chunks) / len(retrieved_chunks)
+            confidence += (avg_score - 0.5) * 0.2
+
+        return max(0.0, min(1.0, confidence))
 
 
-class OllamaGenerator:
-    """
-    Generates grounded answers using Ollama LLM
-    
-    Features:
-    - Strict grounding to retrieved chunks
-    - Language detection (responds in same language as query)
-    - Citation formatting with section numbers and excerpts
-    - Refusal to answer if chunks don't contain relevant information
-    """
-    
+class OllamaGenerator(BaseGenerator):
+    """Local Ollama generation provider."""
+
     def __init__(
         self,
         ollama_host: str = "http://localhost:11434",
@@ -192,12 +194,13 @@ class OllamaGenerator:
         temperature: float = 0.3,
         top_p: float = 0.9,
         timeout: int = 300,
-        max_chunks: int = 3,
-        max_chars_per_chunk: int = 1000,
-        num_predict: int = 400,
-        list_max_chunks: int = 6,
+        max_chunks: int = 5,
+        max_chars_per_chunk: int = 3500,
+        num_predict: int = 1800,
+        list_max_chunks: int = 8,
         list_max_chars_per_chunk: int = 6000,
-        list_num_predict: int = 900,
+        list_num_predict: int = 2500,
+        **kwargs: Any,
     ):
         self.ollama_host = ollama_host
         self.model = model
@@ -210,252 +213,43 @@ class OllamaGenerator:
         self.list_max_chunks = list_max_chunks
         self.list_max_chars_per_chunk = list_max_chars_per_chunk
         self.list_num_predict = list_num_predict
-        
-        self._verify_connection()
-        self._warmup_model()
-    
-    def _verify_connection(self) -> None:
-        """Verify Ollama is running and model is available"""
+
+        self._soft_verify_and_warmup()
+
+    def _soft_verify_and_warmup(self) -> None:
+        """Non-blocking check so Ollama outage doesn't block startup if HF is primary."""
         try:
-            response = requests.get(f"{self.ollama_host}/api/tags", timeout=5)
-            if response.status_code == 200:
-                models = response.json().get("models", [])
-                model_names = [m.get("name") for m in models]
-                if self.model not in model_names:
-                    logger.warning(f"Model {self.model} not found. Available: {model_names}")
-            logger.info(f"✓ Connected to Ollama at {self.ollama_host}")
-        except requests.exceptions.ConnectionError:
-            raise ConnectionError(
-                f"Cannot connect to Ollama at {self.ollama_host}. "
-                f"Please ensure Ollama is running: ollama serve"
-            )
+            res = requests.get(f"{self.ollama_host}/api/tags", timeout=3)
+            if res.status_code == 200:
+                logger.info(f"Connected to Ollama at {self.ollama_host}")
+                requests.post(
+                    f"{self.ollama_host}/api/generate",
+                    json={"model": self.model, "prompt": "ok", "stream": False, "options": {"num_predict": 1}},
+                    timeout=5,
+                )
+        except Exception as e:
+            logger.warning(f"Ollama local service not immediately reachable ({e}). Will retry on demand.")
 
-    def _warmup_model(self) -> None:
-        """Load model into memory so the first user query is faster."""
-        try:
-            requests.post(
-                f"{self.ollama_host}/api/generate",
-                json={
-                    "model": self.model,
-                    "prompt": "ok",
-                    "stream": False,
-                    "options": {"num_predict": 1},
-                },
-                timeout=120,
-            )
-            logger.info(f"Warmed up model: {self.model}")
-        except requests.exceptions.RequestException as e:
-            logger.warning(f"Model warmup skipped: {e}")
-
-    @staticmethod
-    def _prepare_chunks_for_llm(
-        retrieved_chunks: List[Dict[str, Any]],
-        analysis: QueryAnalysis,
-        max_chunks: int,
-        max_chars_per_chunk: int,
-    ) -> List[Dict[str, Any]]:
-        """Trim context for the LLM — list queries keep full text; specific queries stay short."""
-        if analysis.intent in ("list", "structural"):
-            limit = max_chunks
-            char_limit = max_chars_per_chunk
-        else:
-            limit = min(max_chunks, 3)
-            char_limit = max_chars_per_chunk
-
-        prepared = []
-        for chunk in retrieved_chunks[:limit]:
-            trimmed = dict(chunk)
-            text = chunk.get("text", "")
-            if analysis.intent != "list" and len(text) > char_limit:
-                trimmed["text"] = text[:char_limit] + "\n[...truncated...]"
-            prepared.append(trimmed)
-        return prepared
-    
-    @staticmethod
-    def _detect_language(text: str) -> str:
-        """
-        Detect if query is in Arabic or English
-        
-        Returns: "ar" or "en"
-        """
-        # Simple heuristic: count Arabic Unicode characters
-        arabic_count = sum(1 for c in text if '\u0600' <= c <= '\u06FF')
-        return "ar" if arabic_count > len(text) * 0.3 else "en"
-    
-    def _build_system_prompt(self, language: str, analysis: QueryAnalysis) -> str:
-        """
-        Build system prompt that enforces grounding
-        
-        Args:
-            language: "en" or "ar"
-        
-        Returns: System prompt string
-        """
-        if language == "ar":
-            return """أنت مساعد متخصص في سياسات الموارد البشرية لمنظمة EMPHNET. أجب بناءً على النصوص المُسترجعة فقط.
-
-قواعد صارمة:
-1. اقرأ جميع النصوص المُسترجعة قبل الإجابة.
-2. إذا وُجدت الإجابة في أي نص مُسترجع، قدّم كل التفاصيل (أرقام، شروط، خطوات). ممنوع قول "لا أعرف" إذا المعلومة موجودة.
-3. اقتبس الأرقام والمدد حرفياً (مثلاً: "14 يوماً").
-4. للأسئلة الإجرائية: اذكر الخطوات المرقمة بالترتيب من جميع النصوص ذات الصلة.
-5. لا تختلق معلومات غير موجودة في النصوص.
-6. الرد بالعربية.
-
-التنسيق:
-- إجابة مباشرة وواضحة مع كل التفاصيل
-- للإجراءات: قائمة خطوات مرقمة
-- اقتباس قصير من النص المصدر
-- مرجع القسم/الإجراء"""
-        else:
-            if analysis.intent in ("list", "structural"):
-                return """You are an EMPHNET HR policy assistant. The user wants a COMPLETE LIST from the retrieved text.
-
-Rules:
-1. List EVERY numbered point (1, 2, 3...) found in the context — do NOT skip the last points.
-2. If context has "Part 1" and "Part 2" chunks, merge them into one continuous list.
-3. Stay within the same section/subsection/policy — do not add items from other topics.
-4. Do not invent points. Use the exact wording and numbers from the text.
-
-Format: numbered list covering all points, then source reference."""
-            return """You are an EMPHNET HR policy assistant. Answer ONLY from the retrieved text.
-
-Rules:
-1. Give a focused answer with the specific details asked (numbers, conditions, steps).
-2. Never say "not found" if the answer is in the context.
-3. For how-to questions, list only the relevant steps in order.
-4. Do not invent information.
-
-Format: direct answer, brief quote, source reference."""
-    
     def generate(
         self,
         query: str,
         retrieved_chunks: List[Dict[str, Any]],
         analysis: Optional[QueryAnalysis] = None,
     ) -> Dict[str, Any]:
-        """
-        Generate a grounded answer based on query and retrieved chunks
-        
-        Args:
-            query: User question
-            retrieved_chunks: List of dicts with 'text' and 'metadata' keys
-                from retriever.retrieve()
-        
-        Returns:
-            Dict with keys:
-            - answer: Generated response text
-            - language: Language of the response
-            - sources: List of source citations
-            - confidence: Confidence score (0-1)
-        """
-        # Detect language
         analysis = analysis or analyze_query(query)
         language = self._detect_language(query)
-        logger.info(f"Detected language: {language}, intent: {analysis.intent}")
 
         if analysis.intent in ("list", "structural"):
-            max_chunks = self.list_max_chunks
-            max_chars = self.list_max_chars_per_chunk
-            num_predict = self.list_num_predict
+            max_chunks, max_chars, num_predict = self.list_max_chunks, self.list_max_chars_per_chunk, self.list_num_predict
         else:
-            max_chunks = self.max_chunks
-            max_chars = self.max_chars_per_chunk
-            num_predict = self.num_predict
+            max_chunks, max_chars, num_predict = self.max_chunks, self.max_chars_per_chunk, self.num_predict
 
-        llm_chunks = self._prepare_chunks_for_llm(
-            retrieved_chunks, analysis, max_chunks, max_chars
-        )
+        llm_chunks = self._prepare_chunks_for_llm(retrieved_chunks, analysis, max_chunks, max_chars)
         context = self._format_context(llm_chunks, language)
-        logger.info(
-            f"LLM context ({analysis.intent}): {len(llm_chunks)} chunks, "
-            f"{len(context)} chars, num_predict={num_predict}"
-        )
-
         system_prompt = self._build_system_prompt(language, analysis)
         user_prompt = self._build_user_prompt(query, context, language, analysis)
-        
-        logger.debug(f"System prompt length: {len(system_prompt)} chars")
-        logger.debug(f"User prompt length: {len(user_prompt)} chars")
-        
-        # Call Ollama
-        response_text = self._call_ollama(system_prompt, user_prompt, num_predict)
-        
-        # Parse response and extract sources
-        answer, sources = self._parse_response(response_text, retrieved_chunks)
-        
-        # Calculate confidence (simple heuristic)
-        confidence = self._calculate_confidence(response_text, retrieved_chunks)
-        
-        return {
-            "answer": answer,
-            "language": language,
-            "sources": sources,
-            "confidence": confidence,
-            "raw_response": response_text
-        }
-    
-    @staticmethod
-    def _format_context(
-        retrieved_chunks: List[Dict[str, Any]],
-        language: str
-    ) -> str:
-        """Format retrieved chunks into context string"""
-        if language == "ar":
-            header = "المستندات ذات الصلة:\n"
-            separator = "\n---\n"
-        else:
-            header = "Retrieved Policy Documents:\n"
-            separator = "\n---\n"
-        
-        context_parts = [header]
-        
-        for i, chunk in enumerate(retrieved_chunks, 1):
-            source = chunk.get('source', 'Unknown Source')
-            text = chunk.get('text', '')
-            
-            if language == "ar":
-                context_parts.append(f"({i}) مصدر: {source}\nالنص:\n{text}")
-            else:
-                context_parts.append(f"({i}) Source: {source}\nText:\n{text}")
-        
-        return separator.join(context_parts)
-    
-    def _build_user_prompt(
-        self,
-        query: str,
-        context: str,
-        language: str,
-        analysis: QueryAnalysis,
-    ) -> str:
-        """Build user prompt with query and context"""
-        if language == "ar":
-            return f"""السؤال: {query}
 
-السياق:
-{context}
-
-الرجاء الإجابة على السؤال بناءً على السياق المقدم أعلاه فقط."""
-        if analysis.intent in ("list", "structural"):
-            return f"""Question: {query}
-
-Context:
-{context}
-
-List EVERY numbered point from the context above. Include all parts if split across chunks. Do not skip any point."""
-        return f"""Question: {query}
-
-Context:
-{context}
-
-Answer the question using ONLY the context above. Give a focused answer."""
-    
-    def _call_ollama(
-        self, system_prompt: str, user_prompt: str, num_predict: Optional[int] = None
-    ) -> str:
-        """Call Ollama API and return response"""
         url = f"{self.ollama_host}/api/generate"
-        
         payload = {
             "model": self.model,
             "prompt": user_prompt,
@@ -465,97 +259,218 @@ Answer the question using ONLY the context above. Give a focused answer."""
             "temperature": self.temperature,
             "top_p": self.top_p,
             "options": {
-                "num_predict": num_predict or self.num_predict,
-                "num_ctx": 8192 if (num_predict or 0) > 500 else 4096,
+                "num_predict": num_predict,
+                "num_ctx": 8192 if num_predict > 500 else 4096,
+                "repeat_penalty": 1.15,
             },
+
         }
-        
-        logger.info(f"Calling Ollama ({self.model}), timeout={self.timeout}s")
-        
+
         try:
-            response = requests.post(url, json=payload, timeout=self.timeout)
-            response.raise_for_status()
-            
-            result = response.json()
-            return result.get("response", "")
-        except requests.exceptions.Timeout:
-            return (
-                "The model is taking too long on this machine. "
-                "Try a smaller model (e.g. llama3.1:latest) in your .env file, "
-                "or ask a shorter question."
+            res = requests.post(url, json=payload, timeout=self.timeout)
+            res.raise_for_status()
+            response_text = res.json().get("response", "")
+        except Exception as e:
+            raise ProviderFailure(f"Ollama error: {e}")
+
+        answer, sources = self._parse_response(response_text, retrieved_chunks)
+        confidence = self._calculate_confidence(response_text, retrieved_chunks)
+
+        return {
+            "answer": answer,
+            "language": language,
+            "sources": sources,
+            "confidence": confidence,
+            "provider": "ollama",
+            "raw_response": response_text,
+            "metadata": {},
+        }
+
+
+class HuggingFaceProvider(BaseGenerator):
+    """Hugging Face Inference Router generation provider."""
+
+    def __init__(
+        self,
+        api_key: str,
+        model: str = "Qwen/Qwen3-32B",
+        provider: str = "nscale",
+        max_chunks: int = 5,
+        max_chars_per_chunk: int = 3500,
+        list_max_chunks: int = 8,
+        list_max_chars_per_chunk: int = 6000,
+        temperature: float = 0.3,
+        timeout: int = 120,
+        **kwargs: Any,
+    ):
+        self.api_key = api_key.strip().strip('"').strip("'")
+        self.model = model
+        self.provider = (os.environ.get("HF_PROVIDER") or provider).strip()
+        self.max_chunks = max_chunks
+        self.max_chars_per_chunk = max_chars_per_chunk
+        self.list_max_chunks = list_max_chunks
+        self.list_max_chars_per_chunk = list_max_chars_per_chunk
+        self.temperature = temperature
+        self.timeout = timeout
+
+    def generate(
+        self,
+        query: str,
+        retrieved_chunks: List[Dict[str, Any]],
+        analysis: Optional[QueryAnalysis] = None,
+    ) -> Dict[str, Any]:
+        if not self.api_key:
+            raise ProviderFailure("Hugging Face API key is missing.")
+
+        analysis = analysis or analyze_query(query)
+        language = self._detect_language(query)
+
+        if analysis.intent in ("list", "structural"):
+            max_chunks = self.list_max_chunks
+            max_chars = self.list_max_chars_per_chunk
+            max_tokens = 4096
+        else:
+            max_chunks = self.max_chunks
+            max_chars = self.max_chars_per_chunk
+            max_tokens = 2048
+
+        llm_chunks = self._prepare_chunks_for_llm(retrieved_chunks, analysis, max_chunks, max_chars)
+        context = self._format_context(llm_chunks, language)
+        system_prompt = self._build_system_prompt(language, analysis)
+        user_prompt = self._build_user_prompt(query, context, language, analysis)
+
+        url = f"https://router.huggingface.co/{self.provider}/v1/chat/completions"
+        headers = {
+            "Authorization": f"Bearer {self.api_key}",
+            "Content-Type": "application/json",
+        }
+        payload = {
+            "model": self.model,
+            "messages": [
+                {"role": "system", "content": system_prompt},
+                {"role": "user", "content": user_prompt},
+            ],
+            "max_tokens": max_tokens,
+            "temperature": self.temperature,
+        }
+
+        # Only pass enable_thinking if supported by model family
+        if "qwen" in self.model.lower():
+            payload["enable_thinking"] = False
+
+        try:
+            res = requests.post(url, headers=headers, json=payload, timeout=self.timeout)
+            if res.status_code != 200:
+                raise ProviderFailure(f"HF returned {res.status_code}: {res.text[:200]}")
+            data = res.json()
+            msg = data["choices"][0]["message"]
+            response_text = msg.get("content") or msg.get("reasoning_content") or ""
+        except Exception as e:
+            raise ProviderFailure(f"HF request failure: {e}")
+
+        answer, sources = self._parse_response(response_text, retrieved_chunks)
+        confidence = self._calculate_confidence(response_text, retrieved_chunks)
+
+        return {
+            "answer": answer,
+            "language": language,
+            "sources": sources,
+            "confidence": confidence,
+            "provider": "hf",
+            "raw_response": response_text,
+            "metadata": {},
+        }
+
+
+class HybridGenerator:
+    """Orchestrates HF as the primary engine with seamless Ollama failover."""
+
+    def __init__(
+        self,
+        hf_api_key: Optional[str] = None,
+        hf_model: Optional[str] = None,
+        ollama_host: str = "http://localhost:11434",
+        model: str = "llama3.1:latest",
+        temperature: float = 0.3,
+        **kwargs: Any,
+    ):
+        self.hf_api_key = hf_api_key or os.environ.get("HF_API_KEY", "")
+        self.hf_model = hf_model or os.environ.get("HF_MODEL", "Qwen/Qwen3-32B")
+        self.ollama_host = ollama_host
+        self.model = model
+        self.temperature = temperature
+        self.kwargs = kwargs
+
+        self.hf_provider = None
+        if self.hf_api_key:
+            self.hf_provider = HuggingFaceProvider(
+                api_key=self.hf_api_key,
+                model=self.hf_model,
+                temperature=self.temperature,
+                **kwargs,
             )
-        except requests.exceptions.RequestException as e:
-            logger.error(f"Ollama API error: {e}")
-            return f"Error communicating with LLM: {str(e)}"
-    
-    @staticmethod
-    def _parse_response(
-        response_text: str,
-        retrieved_chunks: List[Dict[str, Any]]
-    ) -> Tuple[str, List[Dict[str, str]]]:
-        """
-        Parse response and extract sources
-        
-        Returns:
-            (answer_text, sources_list)
-        """
-        # Simple parsing: everything before "Source:" is the answer
-        parts = response_text.split("[Source:")
-        answer = parts[0].strip()
-        
-        # Extract sources from retrieved chunks
-        sources = []
-        for chunk in retrieved_chunks:
-            metadata = chunk.get('metadata')
-            if not isinstance(metadata, dict):
-                metadata = {}
-            source_text = chunk.get('source', 'Unknown')
-            text_excerpt = chunk.get('text', '')[:300] + "..."
-            
-            sources.append({
-                "section": metadata.get('section_num', 'Unknown'),
-                "source": source_text,
-                "excerpt": text_excerpt
-            })
-        
-        return answer, sources
-    
-    @staticmethod
-    def _calculate_confidence(
-        response_text: str,
-        retrieved_chunks: List[Dict[str, Any]]
-    ) -> float:
-        """
-        Calculate confidence score (0-1)
-        
-        Heuristics:
-        - Lower if response contains "I couldn't find", "not found", etc.
-        - Lower if only 1-2 chunks retrieved
-        - Higher if multiple high-quality chunks
-        """
-        confidence = 0.7  # Base confidence
-        
-        # Reduce if refusal phrases present
-        refusal_phrases = [
-            "couldn't find",
-            "not found",
-            "not mentioned",
-            "no information",
-            "unable to find"
+        self.ollama_provider = OllamaGenerator(
+            ollama_host=self.ollama_host,
+            model=self.model,
+            temperature=self.temperature,
+            **kwargs,
+        )
+
+    def generate(
+        self,
+        query: str,
+        retrieved_chunks: List[Dict[str, Any]],
+        analysis: Optional[QueryAnalysis] = None,
+    ) -> Dict[str, Any]:
+        provider_failures = []
+
+        # 1. Hugging Face Primary
+        if self.hf_provider:
+            try:
+                res = self.hf_provider.generate(query, retrieved_chunks, analysis)
+                if isinstance(res, str):
+                    res = {"answer": res, "provider": "hf", "sources": [], "confidence": 0.8, "language": "en", "metadata": {}}
+                elif isinstance(res, dict):
+                    res.setdefault("metadata", {})
+                    if not isinstance(res["metadata"], dict):
+                        res["metadata"] = {}
+                res["metadata"]["provider_failures"] = provider_failures
+                return res
+            except ProviderFailure as e:
+                logger.warning(f"HF failed: {e}. Falling back to Ollama.")
+                provider_failures.append(str(e))
+
+        # 2. Local Ollama Fallback
+        try:
+            res = self.ollama_provider.generate(query, retrieved_chunks, analysis)
+            if isinstance(res, str):
+                res = {"answer": res, "provider": "ollama", "sources": [], "confidence": 0.8, "language": "en", "metadata": {}}
+            elif isinstance(res, dict):
+                res.setdefault("metadata", {})
+                if not isinstance(res["metadata"], dict):
+                    res["metadata"] = {}
+            res["metadata"]["provider_failures"] = provider_failures
+            return res
+        except ProviderFailure as e:
+            logger.error(f"Ollama fallback failed: {e}")
+            provider_failures.append(str(e))
+
+
+        # 3. Graceful Failure
+        fallback_sources = [
+            {
+                "section": c.get("metadata", {}).get("section_num", "Unknown") if isinstance(c.get("metadata"), dict) else "Unknown",
+                "source": c.get("source", "Unknown"),
+                "excerpt": c.get("text", "")[:300] + "...",
+            }
+            for c in retrieved_chunks
         ]
-        if any(phrase in response_text.lower() for phrase in refusal_phrases):
-            confidence -= 0.3
-        
-        # Adjust based on number of chunks
-        num_chunks = len(retrieved_chunks)
-        if num_chunks < 2:
-            confidence -= 0.2
-        elif num_chunks >= 5:
-            confidence += 0.1
-        
-        # Adjust based on average score
-        if retrieved_chunks:
-            avg_score = sum(c.get('score', 0) for c in retrieved_chunks) / len(retrieved_chunks)
-            confidence += (avg_score - 0.5) * 0.2
-        
-        return max(0, min(1, confidence))  # Clamp to [0, 1]
+        return {
+            "answer": "I could not generate an answer from the available policy context.",
+            "language": "en",
+            "sources": fallback_sources,
+            "confidence": 0.0,
+            "provider": "error",
+            "raw_response": "",
+            "metadata": {"provider_failures": provider_failures},
+        }

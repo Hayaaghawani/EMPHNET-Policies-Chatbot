@@ -58,7 +58,9 @@ class Settings:
     list_num_predict: int
     pdf_path: Path
     chunks_path: Path
-    index_schema_version: str = "split-groups-v1"
+    pdf_dir: Path = Path("data/pdf")
+    chunks_dir: Path = Path("data/chunks")
+    index_schema_version: str = "multi-doc-v2"
 
 
 def get_settings(*, load_environment: bool = True) -> Settings:
@@ -94,4 +96,7 @@ def get_settings(*, load_environment: bool = True) -> Settings:
             "data/pdf/Human Resources Policies & Procedures Manual (ML-HR-01, V.01).docx.pdf",
         )),
         chunks_path=Path(os.getenv("CHUNKS_PATH", "data/chunks_inspection.json")),
+        pdf_dir=Path(os.getenv("PDF_DIR", "data/pdf")),
+        chunks_dir=Path(os.getenv("CHUNKS_DIR", "data/chunks")),
     )
+

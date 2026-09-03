@@ -98,6 +98,19 @@ class HybridRetriever:
                 embedding_function=None  # We'll embed manually
             )
             logger.info(f"Created new collection: {collection_name}")
+
+    def _chunk_id_for(self, idx: int) -> str:
+        """Generate consistent unique chunk ID string for chunk index idx."""
+        if 0 <= idx < len(self.chunks_list):
+            meta = self._meta_dict(self.chunks_list[idx].metadata)
+            doc_id = meta.get("doc_id") or "chunk"
+            return f"{doc_id}_chunk_{idx}"
+        return f"chunk_{idx}"
+
+    @staticmethod
+    def _chunk_idx_from_id(doc_id: str) -> int:
+        """Extract integer chunk index from doc_id string (e.g. 'ML-HR-01_chunk_5' or 'chunk_5')."""
+        return int(doc_id.rsplit("_", 1)[1])
     
     def add_chunks(self, chunks: List[Chunk]) -> None:
         """
@@ -126,8 +139,8 @@ class HybridRetriever:
             show_progress_bar=True,
         )
         
-        # Prepare data for ChromaDB
-        ids = [f"chunk_{i}" for i in range(len(chunks))]
+        # Prepare data for ChromaDB — IDs are globally unique across all docs
+        ids = [self._chunk_id_for(i) for i in range(len(chunks))]
         # Convert metadata to simple types (strings/ints/floats only - ChromaDB limitation)
         metadatas = []
         for chunk in chunks:
@@ -144,17 +157,22 @@ class HybridRetriever:
             metadatas.append(filtered_meta)
         documents = texts
         
-        # Add to ChromaDB
-        self.collection.add(
-            ids=ids,
-            embeddings=embeddings.tolist(),
-            metadatas=metadatas,
-            documents=documents
-        )
+        # Batch upload to ChromaDB
+        batch_size = 100
+        for i in range(0, len(chunks), batch_size):
+            end_idx = i + batch_size
+            self.collection.add(
+                ids=ids[i:end_idx],
+                embeddings=embeddings[i:end_idx].tolist(),
+                metadatas=metadatas[i:end_idx],
+                documents=documents[i:end_idx]
+            )
+        
         logger.info(f"Successfully added {len(chunks)} chunks to ChromaDB")
         
-        # Build BM25 index
-        self._build_bm25_index()
+        # Build BM25 index from full chunk texts
+        corpus = [chunk.text.lower().split() for chunk in self.chunks_list]
+        self.bm25_index = BM25Okapi(corpus)
         logger.info("BM25 index built")
     
     def _build_bm25_index(self) -> None:
@@ -178,23 +196,33 @@ class HybridRetriever:
 
             documents = all_docs.get("documents", [])
             metadatas = all_docs.get("metadatas", [])
+
+            # Only pass fields that ChunkMetadata actually accepts
+            import dataclasses
+            valid_fields = {f.name for f in dataclasses.fields(ChunkMetadata)}
+
             self.chunks_list = []
             for doc, meta in zip(documents, metadatas):
-                clean = {k: (v if v != "" else None) for k, v in meta.items()}
+                clean = {k: (v if v != "" else None) for k, v in meta.items()
+                         if k in valid_fields}
                 for int_key in ("section_num", "page_number", "split_part", "split_total"):
                     if clean.get(int_key) is not None:
                         clean[int_key] = int(clean[int_key])
+                for bool_key in ("has_list",):
+                    if bool_key in clean and clean[bool_key] is not None:
+                        clean[bool_key] = bool(clean[bool_key])
                 metadata = ChunkMetadata(**clean)
                 self.chunks_list.append(Chunk(text=doc, metadata=metadata))
 
             self.structure_index = DocumentStructureIndex(self.chunks_list)
-            
+
             # Build BM25 index
             corpus = [doc.lower().split() for doc in documents]
             self.bm25_index = BM25Okapi(corpus)
             logger.info(f"Rebuilt BM25 index from {len(documents)} documents in collection")
         except Exception as e:
             logger.error(f"Error rebuilding BM25 index: {e}")
+
     
     @staticmethod
     def _reciprocal_rank_fusion(vector_results: List[Tuple[str, float]], bm25_results: List[Tuple[str, float]], k: int = 60) -> Dict[str, float]:
@@ -279,6 +307,11 @@ class HybridRetriever:
         for idx, chunk in enumerate(self.chunks_list):
             meta = self._meta_dict(chunk.metadata)
 
+            # Cross-doc scoping: if query was scoped to a doc, skip other docs
+            analysis_doc_id = getattr(analysis, "doc_id", None)
+            if analysis_doc_id and meta.get("doc_id") and meta["doc_id"] != analysis_doc_id:
+                continue
+
             if analysis.procedure_code:
                 if meta.get("procedure_code") != analysis.procedure_code:
                     continue
@@ -296,6 +329,7 @@ class HybridRetriever:
             indices.append(idx)
 
         return indices
+
 
     def retrieve(
         self,
@@ -381,9 +415,9 @@ class HybridRetriever:
         query_tokens = query.lower().split()
         bm25_scores_raw = self.bm25_index.get_scores(query_tokens)
         max_bm25 = max(bm25_scores_raw) if max(bm25_scores_raw) > 0 else 1
-        bm25_scores = {f"chunk_{i}": score / max_bm25 for i, score in enumerate(bm25_scores_raw)}
+        bm25_scores = {self._chunk_id_for(i): score / max_bm25 for i, score in enumerate(bm25_scores_raw)}
         bm25_ranked = [
-            (f"chunk_{i}", score / max_bm25) for i, score in enumerate(bm25_scores_raw)
+            (self._chunk_id_for(i), score / max_bm25) for i, score in enumerate(bm25_scores_raw)
         ]
         bm25_ranked = sorted(bm25_ranked, key=lambda item: item[1], reverse=True)[:self.retrieval_candidates]
 
@@ -394,7 +428,7 @@ class HybridRetriever:
             k=self.rrf_k,
         )
         for doc_id in set(vector_scores) | set(bm25_scores):
-            chunk_idx = int(doc_id.split("_")[1])
+            chunk_idx = self._chunk_idx_from_id(doc_id)
             chunk = self.chunks_list[chunk_idx]
             meta = self._meta_dict(chunk.metadata)
             base = (
@@ -409,7 +443,7 @@ class HybridRetriever:
         # List mode fallback: boost metadata matches inside hybrid results
         if analysis.intent == "structural":
             for idx in self._structural_candidates(analysis):
-                doc_id = f"chunk_{idx}"
+                doc_id = self._chunk_id_for(idx)
                 if doc_id not in combined_scores:
                     combined_scores[doc_id] = 0.85
                 else:
@@ -424,7 +458,7 @@ class HybridRetriever:
 
         results = []
         for doc_id, score in sorted_results:
-            chunk_idx = int(doc_id.split("_")[1])
+            chunk_idx = self._chunk_idx_from_id(doc_id)
             chunk = self.chunks_list[chunk_idx]
             results.append({
                 "text": chunk.text,
@@ -433,10 +467,11 @@ class HybridRetriever:
                 "source": self._format_source(chunk.metadata),
             })
 
-        head = self._expand_split_siblings(results[:2])
+
+        head = self._expand_split_siblings(results[:5])
         seen = {r["text"] for r in head}
         merged = list(head)
-        for r in results[2:]:
+        for r in results[5:]:
             if r["text"] not in seen:
                 merged.append(r)
                 seen.add(r["text"])
@@ -445,7 +480,13 @@ class HybridRetriever:
     @staticmethod
     def _format_source(metadata) -> str:
         meta = HybridRetriever._meta_dict(metadata)
-        parts = [meta.get("document_title", "HR Policies & Procedures Manual")]
+        # Prefer explicit document_title; fall back to doc_id; then a generic label
+        doc_title = (
+            meta.get("document_title")
+            or meta.get("doc_id")
+            or "EMPHNET Policy Document"
+        )
+        parts = [doc_title]
 
         if meta.get("section_num"):
             parts.append(f"Section {meta['section_num']:02d}")
