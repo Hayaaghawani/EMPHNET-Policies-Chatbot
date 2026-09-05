@@ -4,6 +4,30 @@ import os
 from pathlib import Path
 
 import streamlit as st
+st.set_page_config(page_title="EMPHNET Policies Assistant", page_icon="P", layout="wide")
+
+LOGO_PATH = Path("assets/emphnet logo.png")
+
+def render_header() -> None:
+    logo_column, title_column = st.columns([0.8, 5], gap="small", vertical_alignment="center")
+    with logo_column:
+        st.image(str(LOGO_PATH), width=72)
+    with title_column:
+        st.title("EMPHNET Policies Assistant")
+
+# Microsoft OIDC gate: no retrieval, model loading, or app UI runs for guests.
+if not st.user.is_logged_in:
+    render_header()
+    st.write("Sign in with your EMPHNET Microsoft account to access the policy assistant.")
+    if st.button("Log in with Microsoft", type="primary"):
+        st.login("microsoft")
+    st.stop()
+
+with st.sidebar:
+    st.write(f"Signed in as {st.user.email}")
+    if st.button("Log out"):
+        st.logout()
+
 from dotenv import load_dotenv
 
 from src.skeleton_generation import SkeletonLLM
@@ -11,14 +35,15 @@ from src.skeleton_pipeline import SkeletonCorpus, SkeletonQA
 from src.skeleton_retrieval import SkeletonHybridRetriever
 
 load_dotenv()
-st.set_page_config(page_title="EMPHNET Policies Assistant", page_icon="P", layout="wide")
 
 st.markdown(
     """
     <style>
     .block-container { max-width: 980px; padding-top: 3rem; }
-    .answer { background: #f1f7f4; border-left: 4px solid #187a58; padding: 1rem 1.25rem; }
-    .source { border-left: 3px solid #d68b32; padding: .5rem 1rem; margin: .5rem 0; }
+    .answer { background: #e8f3ed; border-left: 4px solid #187a58; padding: 1rem 1.25rem; color: #111111 !important; }
+    .answer * { color: #111111 !important; }
+    .source { background: #fff4e5; border-left: 3px solid #d68b32; padding: .5rem 1rem; margin: .5rem 0; color: #111111 !important; }
+    .source * { color: #111111 !important; }
     </style>
     """,
     unsafe_allow_html=True,
@@ -47,8 +72,7 @@ def initialize_qa() -> SkeletonQA | None:
     )
     return SkeletonQA(corpus, llm, retriever)
 
-
-st.title("EMPHNET Policies Assistant")
+render_header()
 st.caption("HR, Events Management, and Internal Communication documents")
 qa = initialize_qa()
 if qa is None:

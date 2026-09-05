@@ -103,6 +103,24 @@ data/outline.json
 
 ## Run the app
 
+Microsoft SSO is required to access the application. Before running it, fill in
+`.streamlit/secrets.toml` with the real values from the Azure App Registration:
+
+```toml
+[auth]
+redirect_uri = "http://localhost:8501/oauth2callback"
+cookie_secret = "..."
+
+[auth.microsoft]
+client_id = "..."
+client_secret = "..."
+server_metadata_url = "https://login.microsoftonline.com/<tenant-id>/v2.0/.well-known/openid-configuration"
+```
+
+The `redirect_uri` must exactly match the redirect URI registered in Azure. Keep
+`.streamlit/secrets.toml` private; it is ignored by Git. The app uses Streamlit's
+native Authlib-based OIDC support through `st.login`, `st.logout`, and `st.user`.
+
 Start Ollama first if no Hugging Face key is configured, then run:
 
 ```powershell
