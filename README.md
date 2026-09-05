@@ -38,6 +38,20 @@ A successful question uses two LLM calls:
 
 BM25 and embedding retrieval run locally and do not add LLM calls.
 
+## Conversation memory
+
+The UI keeps a normal chat thread in `st.session_state` for the current Streamlit
+session only. Each displayed turn contains the question, answer, and collapsible
+source excerpts. Nothing is persisted to disk or a database, so the history is
+lost when the browser session closes or times out. Use **New Chat** in the sidebar
+to clear the displayed thread immediately.
+
+Navigation has a separate compact memory containing only the last four questions
+and the retrieved node IDs with their headings. This memory is sent to the
+navigation LLM only to help interpret ambiguous follow-ups. Previous turns never
+enter the generation prompt: every answer is generated strictly from the current
+turn's fetched `own_text`.
+
 ## Project layout
 
 ```text

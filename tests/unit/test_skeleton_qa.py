@@ -10,8 +10,9 @@ class FakeRetriever:
 
 
 class FakeLLM:
-    def navigate(self, question, outline, similarity_candidates):
+    def navigate(self, question, outline, similarity_candidates, memory):
         assert similarity_candidates
+        assert memory == [{"question": "Earlier question", "nodes": []}]
         return Navigation([("TEST", "leaf")], False)
 
     def answer(self, question, contexts):
@@ -37,7 +38,10 @@ def test_qa_merges_retrieval_and_navigation_context(tmp_path):
     }]), encoding="utf-8")
 
     qa = SkeletonQA(SkeletonCorpus(tree_dir, outline_path), FakeLLM(), FakeRetriever())
-    result = qa.answer("What is the policy?")
+    result = qa.answer(
+        "What is the policy?",
+        memory=[{"question": "Earlier question", "nodes": []}],
+    )
 
     assert result["answer"] == "Grounded answer"
     assert result["sources"][0]["path"] == "Policy > Leaf"

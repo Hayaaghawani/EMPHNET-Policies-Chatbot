@@ -46,11 +46,21 @@ class SkeletonLLM:
         question: str,
         outline: list[dict[str, str]],
         similarity_candidates: list[dict[str, Any]] | None = None,
+        memory: list[dict[str, Any]] | None = None,
     ) -> Navigation:
         candidates = similarity_candidates or []
+        memory = memory or []
+        memory_lines = []
+        for index, turn in enumerate(memory, 1):
+            nodes = ", ".join(
+                f"{node['doc_id']}#{node['id']} ({node['heading']})"
+                for node in turn.get("nodes", [])
+            )
+            memory_lines.append(f'{index}. Q: "{turn["question"]}"\n   Nodes: {nodes}')
+        memory_block = "\n".join(memory_lines) or "(none)"
         raw = self._complete(
-            "Return only valid JSON. Select the smallest relevant node set. broad=true means the full node/subtree is needed; broad=false means one node's own_text is enough. Use semantic candidates as evidence, but choose any outline node when the candidates miss the question.",
-            f"Question: {question}\nOutline:\n{json.dumps(outline, ensure_ascii=False)}\nSemantic candidates:\n{json.dumps(candidates, ensure_ascii=False)}\nReturn {{\"node_ids\":[{{\"doc_id\":\"...\",\"id\":\"...\"}}],\"broad\":false}}",
+            "Return only valid JSON. Select the smallest relevant node set. broad=true means the full node/subtree is needed; broad=false means one node's own_text is enough. Use semantic candidates as evidence, but choose any outline node when the candidates miss the question. Previous turns are context only: use them to interpret ambiguous references in the current question, never blindly repeat their nodes. Select nodes based on the current question's actual content.",
+            f"Question: {question}\nPrevious turns (for context only, may be irrelevant to current question):\n{memory_block}\nOutline:\n{json.dumps(outline, ensure_ascii=False)}\nSemantic candidates:\n{json.dumps(candidates, ensure_ascii=False)}\nReturn {{\"node_ids\":[{{\"doc_id\":\"...\",\"id\":\"...\"}}],\"broad\":false}}",
         )
         match = re.search(r"\{.*\}", raw, re.S)
         if not match:

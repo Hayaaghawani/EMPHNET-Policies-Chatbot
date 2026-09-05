@@ -35,6 +35,18 @@ from src.skeleton_pipeline import SkeletonCorpus, SkeletonQA
 from src.skeleton_retrieval import SkeletonHybridRetriever
 
 load_dotenv()
+MAX_MEMORY_TURNS = 4
+
+if "chat_history" not in st.session_state:
+    st.session_state.chat_history = []
+if "navigation_memory" not in st.session_state:
+    st.session_state.navigation_memory = []
+
+with st.sidebar:
+    if st.button("New Chat", use_container_width=True):
+        st.session_state.chat_history = []
+        st.session_state.navigation_memory = []
+        st.rerun()
 
 st.markdown(
     """
@@ -79,26 +91,34 @@ if qa is None:
     st.error("Structured data is not built yet. Run `python build_skeleton_data.py` after correcting any skeleton validation errors.")
     st.stop()
 
-question = st.text_area(
-    "Question",
-    placeholder="Ask a question in English or Arabic",
-    height=110,
-    label_visibility="collapsed",
-)
-if st.button("Get answer", type="primary", use_container_width=True) and question.strip():
+for turn in st.session_state.chat_history:
+    with st.chat_message("user"):
+        st.write(turn["question"])
+    with st.chat_message("assistant"):
+        st.markdown(f'<div class="answer">{turn["answer"]}</div>', unsafe_allow_html=True)
+        with st.expander(f"Sources ({len(turn['sources'])})", expanded=False):
+            for source in turn["sources"]:
+                st.markdown(
+                    f'<div class="source"><strong>{source["path"]}</strong><br>{source["text"]}</div>',
+                    unsafe_allow_html=True,
+                )
+
+question = st.chat_input("Ask a question in English or Arabic")
+if question and question.strip():
     with st.spinner("Selecting the relevant policy section and drafting an answer..."):
         try:
-            result = qa.answer(question.strip())
+            result = qa.answer(question.strip(), memory=st.session_state.navigation_memory)
         except Exception as exc:
             st.error(f"The request could not be completed: {exc}")
         else:
-            st.markdown("### Answer")
-            st.markdown(f'<div class="answer">{result["answer"]}</div>', unsafe_allow_html=True)
-            with st.expander(f"Sources ({len(result['sources'])})", expanded=True):
-                for source in result["sources"]:
-                    st.markdown(
-                        f'<div class="source"><strong>{source["path"]}</strong><br>{source["text"]}</div>',
-                        unsafe_allow_html=True,
-                    )
-elif not question.strip():
-    st.info("Enter a question to begin.")
+            st.session_state.chat_history.append({
+                "question": question.strip(),
+                "answer": result["answer"],
+                "sources": result["sources"],
+            })
+            st.session_state.navigation_memory.append({
+                "question": question.strip(),
+                "nodes": qa.corpus.memory_nodes(result["navigation"]),
+            })
+            st.session_state.navigation_memory = st.session_state.navigation_memory[-MAX_MEMORY_TURNS:]
+            st.rerun()

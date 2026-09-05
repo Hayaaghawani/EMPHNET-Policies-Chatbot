@@ -200,6 +200,7 @@ def write_enriched_corpus(
                 "doc_id": enriched["doc_id"],
                 "id": node["id"],
                 "path": node["path"],
+                "heading": node.get("heading") or node["path"].split(" > ")[-1],
                 "node_type": node["node_type"],
             })
     outline_path.write_text(json.dumps(outlines, ensure_ascii=False, indent=2), encoding="utf-8")
@@ -238,6 +239,22 @@ class SkeletonCorpus:
         visit(root_id)
         return result
 
+    def memory_nodes(self, navigation: Navigation) -> list[dict[str, str]]:
+        """Return only outline identity and heading data for navigation memory."""
+        outline_by_ref = {
+            (item["doc_id"], item["id"]): item for item in self.outline
+        }
+        return [
+            {
+                "doc_id": doc_id,
+                "id": node_id,
+                "heading": outline_by_ref[(doc_id, node_id)].get("heading")
+                or outline_by_ref[(doc_id, node_id)]["path"].split(" > ")[-1],
+            }
+            for doc_id, node_id in navigation.node_refs
+            if (doc_id, node_id) in outline_by_ref
+        ]
+
 
 class SkeletonQA:
     def __init__(self, corpus: SkeletonCorpus, llm: SkeletonLLM, retriever: SkeletonHybridRetriever | None = None):
@@ -245,9 +262,13 @@ class SkeletonQA:
         self.llm = llm
         self.retriever = retriever
 
-    def answer(self, question: str) -> dict[str, Any]:
+    def answer(
+        self,
+        question: str,
+        memory: list[dict[str, Any]] | None = None,
+    ) -> dict[str, Any]:
         similarity = self.retriever.search(question) if self.retriever else []
-        navigation = self.llm.navigate(question, self.corpus.outline, similarity)
+        navigation = self.llm.navigate(question, self.corpus.outline, similarity, memory or [])
         recommended = set(navigation.node_refs)
         for result in similarity[:2]:
             recommended.add((result["doc_id"], result["id"]))
