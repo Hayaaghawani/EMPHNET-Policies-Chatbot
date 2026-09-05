@@ -1,0 +1,52 @@
+{
+  "doc_id": "GL-ORG-01",
+  "title": "Internal Communication Guideline",
+  "version": "01",
+  "effective_date": "April 10th, 2023",
+  "note": "Document code prefix is GL- (guideline), not ML- (manual). Section 01 does NOT follow the X.1 Purpose/X.2 Scope pattern used elsewhere - its sub-topics are plain prose headings.",
+  "nodes": [
+    { "id": "intro", "path": "Introduction", "level": 1, "node_type": "parent", "children": ["intro.purpose","intro.responsibility"] },
+    { "id": "intro.purpose", "path": "Introduction > Purpose", "level": 2, "node_type": "leaf", "heading": "Purpose", "next_heading": "Responsibility" },
+    { "id": "intro.responsibility", "path": "Introduction > Responsibility", "level": 2, "node_type": "leaf", "heading": "Responsibility", "next_heading": "Acronyms" },
+    { "id": "acronyms", "path": "Acronyms", "level": 1, "node_type": "leaf", "heading": "Acronyms", "next_heading": "Section 01: Effective Communication" },
+
+    { "id": "s01", "path": "Section 01: Effective Communication", "level": 1, "node_type": "parent",
+      "children": ["s01.a","s01.b","s01.c","s01.d"],
+      "note": "no X.1/X.2 numbering here - plain prose subheadings" },
+    { "id": "s01.a", "path": "Section 01 > Benefits of Effective Internal Communication", "level": 2, "node_type": "leaf", "heading": "Benefits of Effective Internal Communication", "next_heading": "Main Principles of Effective Internal Communication" },
+    { "id": "s01.b", "path": "Section 01 > Main Principles of Effective Internal Communication", "level": 2, "node_type": "leaf", "heading": "Main Principles of Effective Internal Communication", "next_heading": "Three-Step Process for Effective Communication" },
+    { "id": "s01.c", "path": "Section 01 > Three-Step Process for Effective Communication", "level": 2, "node_type": "leaf", "heading": "Three-Step Process for Effective Communication", "next_heading": "Major Challenges in Communication", "note": "internally covers Identify Communication Requirements / Identify the 5Ws and 1H / Identify and Accommodate the Enterprise Environmental Factors - kept as one leaf, no separate TOC entries" },
+    { "id": "s01.d", "path": "Section 01 > Major Challenges in Communication", "level": 2, "node_type": "leaf", "heading": "Major Challenges in Communication", "next_heading": "Section 02: GHD|EMPHNET's Internal Communication Channels" },
+
+    { "id": "s02", "path": "Section 02: Internal Communication Channels", "level": 1, "node_type": "parent",
+      "children": ["s02.1","s02.2","s02.3","s02.4"] },
+    { "id": "s02.1", "path": "Section 02 > 2.1 Virtual Engagement", "level": 2, "node_type": "parent", "children": ["s02.1.1","s02.1.2"] },
+    { "id": "s02.1.1", "path": "Section 02 > 2.1 Virtual Engagement > 2.1.1 Microsoft Teams", "level": 3, "node_type": "leaf", "heading": "2.1.1 Microsoft Teams", "next_heading": "2.1.2 Zoom" },
+    { "id": "s02.1.2", "path": "Section 02 > 2.1 Virtual Engagement > 2.1.2 Zoom", "level": 3, "node_type": "leaf", "heading": "2.1.2 Zoom", "next_heading": "2.2 Face-to-Face Meeting" },
+    { "id": "s02.2", "path": "Section 02 > 2.2 Face-to-Face Meeting", "level": 2, "node_type": "leaf", "heading": "2.2 Face-to-Face Meeting", "next_heading": "2.3 Emails" },
+    { "id": "s02.3", "path": "Section 02 > 2.3 Emails", "level": 2, "node_type": "parent",
+      "children": ["s02.3.a","s02.3.b","s02.3.c","s02.3.d"],
+      "note": "internal sub-groups are bold run-in headers, not numbered - detected by reading, not regex" },
+    { "id": "s02.3.a", "path": "Section 02 > 2.3 Emails > Email subject and writing style", "level": 3, "node_type": "leaf", "heading": "Email subject and writing style", "next_heading": "Reply and Forward" },
+    { "id": "s02.3.b", "path": "Section 02 > 2.3 Emails > Reply and Forward", "level": 3, "node_type": "leaf", "heading": "Reply and Forward", "next_heading": "Recipients" },
+    { "id": "s02.3.c", "path": "Section 02 > 2.3 Emails > Recipients", "level": 3, "node_type": "leaf", "heading": "Recipients", "next_heading": "Email Size and Security" },
+    { "id": "s02.3.d", "path": "Section 02 > 2.3 Emails > Email Size and Security", "level": 3, "node_type": "leaf", "heading": "Email Size and Security", "next_heading": "2.4. WhatsApp" },
+    { "id": "s02.4", "path": "Section 02 > 2.4 WhatsApp – HQ & Offices Group", "level": 2, "node_type": "leaf", "heading": "2.4. WhatsApp", "next_heading": "Section 03: GHD|EMPHNET Internal Communication Matrix" },
+
+    { "id": "s03", "path": "Section 03: Internal Communication Matrix", "level": 1, "node_type": "leaf", "heading": "Section 03: GHD|EMPHNET Internal Communication Matrix", "next_heading": "Section 04: GHD|EMPHNET Periodic Internal Meetings", "note": "short pointer section; the actual matrix content lives in Appendix 01" },
+
+    { "id": "s04", "path": "Section 04: Periodic Internal Meetings", "level": 1, "node_type": "parent",
+      "children": ["s04.a","s04.b","s04.c","s04.d","s04.e","s04.f","s04.g","s04.h","s04.i"],
+      "note": "bullet list of meeting types (arrow-marker headings), not numbered" },
+    { "id": "s04.a", "path": "Section 04 > Departmental and Teams bi-weekly meetings", "level": 2, "node_type": "leaf", "heading": "Departmental and Teams bi-weekly meetings", "next_heading": "Executive Director's bi-weekly meetings" },
+    { "id": "s04.b", "path": "Section 04 > Executive Director's bi-weekly meetings", "level": 2, "node_type": "leaf", "heading": "Executive Director’s bi-weekly meetings", "next_heading": "Monthly Technical Day" },
+    { "id": "s04.c", "path": "Section 04 > Monthly Technical Day", "level": 2, "node_type": "leaf", "heading": "Monthly Technical Day", "next_heading": "Quarterly Staff Meeting" },
+    { "id": "s04.d", "path": "Section 04 > Quarterly Staff Meeting", "level": 2, "node_type": "leaf", "heading": "Quarterly Staff Meeting", "next_heading": "EMPHNET Annual Meeting" },
+    { "id": "s04.e", "path": "Section 04 > EMPHNET Annual Meeting", "level": 2, "node_type": "leaf", "heading": "EMPHNET Annual Meeting", "next_heading": "Senior Management Team Meeting" },
+    { "id": "s04.f", "path": "Section 04 > Senior Management Team Meeting", "level": 2, "node_type": "leaf", "heading": "Senior Management Team Meeting", "next_heading": "Quarterly Strategy Meeting" },
+    { "id": "s04.g", "path": "Section 04 > Quarterly Strategy Meeting", "level": 2, "node_type": "leaf", "heading": "Quarterly Strategy Meeting", "next_heading": "Quarterly Management Meeting" },
+    { "id": "s04.h", "path": "Section 04 > Quarterly Management Meeting", "level": 2, "node_type": "leaf", "heading": "Quarterly Management Meeting", "next_heading": "Monthly HQ Country Team and the Country Office Employees' Meeting" },
+    { "id": "s04.i", "path": "Section 04 > Monthly HQ Country Team and the Country Office Employees' Meeting", "level": 2, "node_type": "leaf", "heading": "Monthly HQ Country Team and the Country Office Employees’ Meeting", "next_heading": "Appendix 01: Internal Communication Matrix" }
+
+  ]
+}

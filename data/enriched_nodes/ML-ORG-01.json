@@ -1,0 +1,478 @@
+{
+  "doc_id": "ML-ORG-01",
+  "title": "Events Management Policies and Procedures Manual",
+  "version": "01",
+  "effective_date": "November 16th, 2022",
+  "nodes": [
+    {
+      "id": "intro",
+      "path": "Introduction",
+      "level": 1,
+      "node_type": "leaf",
+      "heading": "Introduction",
+      "next_heading": "Purpose of the Manual",
+      "own_text": "This manual compiles policies and procedures for organizing, running, and closing\nevents. The actual technical content of the event is set aside as the manual’s main\npurpose is to focus on the management aspect of events.\nEvents at GHD|EMPHNET may take several forms that vary in complexity and\narrangement requirements. However, the running of all these events shall include\nplanning, preparation, conduct, and closeout.\nFor the purpose of this manual, an Event is defined as Assessment, Field Outreach,\nMeeting, Regional Meeting, National/sub-national or Regional Training Workshop or\nanother Training Event, as well as Conferences/Symposia, where:\nRegional/Global Conferences and/or Scientific Symposia: These regional/\nglobal events require extensive planning, preparation, implementation, and\ncloseout efforts. While general elements of this manual are applicable to each\nof such high-level events, they may come with their own guidance/guideline as\nneeded. (Conference details are covered in separate document).\nRegional training workshop: Regional-level training for participants from\nmultiple countries.\nCountry training workshop: National and subnational training workshop.\nRegional\nworkshop/\nmeeting: Non-training\nkey\nevent\nattended\nby\nparticipants from the region e.g. NITAG regional meetings, FETP Directors’\nmeetings, etc.\nCountry workshop/ meeting: Non-training workshops or meetings that may\ninclude meetings with national stakeholders.\nField outreach: activities that include field work and reach out such as\nawareness campaigns, vaccination campaigns, engagements and meetings\nwith local communities, field visits to health centers, community centers, FETP\nfieldwork, etc.\nAssessment/ Field Study: the event pertains to conducting an assessment\nand studies and include data collectors’ trainings, data collection field visits,\nfocus group discussions, meetings, etc.\nGHD|EMPHNET’s Executive Director has the authority to approve and sign this\nmanual according to the endorsed authority matrix. The Organizational Development\nhas the responsibility of reviewing the manual and ensuring its consistency with\ninternal policies and procedures and in compliance with best practices and internal\ncontrols. The involved parties (Technical Team including the Operations team, Project\nManagement Office, Media and Communication, Information Technology Team) in\nthis manual have the responsibility to review and keep this manual updated based on\nthe adopted manuals review procedures and authority matrix.\nThe Organizational Development and Quality Management are responsible of\nperforming regular reviews and monitoring to identify possible risks and to guarantee\nthat all measures are taken to prevent breaching of policies and/or procedures.\n\nGHD|EMPHNET has the right to amend the policies mentioned in this manual at any\ntime. Failure to comply with any of the policies will be considered actionable behavior\nby senior management and could result in disciplinary action up to and including\nsuspension or termination."
+    },
+    {
+      "id": "purpose",
+      "path": "Purpose of the Manual",
+      "level": 1,
+      "node_type": "leaf",
+      "heading": "Purpose of the Manual",
+      "next_heading": "Manual Overview",
+      "own_text": "This manual aims to provides GHD|EMPHNET staff with the policies and procedures\nto assure systematic and standardized implementation of events with clear\nresponsibilities and authorities within a specific timeline. The manual will ultimately\nminimize concerns and problems as it is based on GHD|EMPHNET’s experience in\nrunning events over the years."
+    },
+    {
+      "id": "overview",
+      "path": "Manual Overview",
+      "level": 1,
+      "node_type": "leaf",
+      "heading": "Manual Overview",
+      "next_heading": "Definitions and Acronyms",
+      "own_text": "Planning and timely organization are essential for effective event management. In\naddition, teamwork with regular, clear, and timely communication are all essential\nelements for producing successful events. This document contains information to\nmake events successful and effective from the planning till the close-out phase. This\nmanual covers the following sections:\nPlanning and preparation phase.\nEvent Implementation phase\nClosing the event"
+    },
+    {
+      "id": "definitions",
+      "path": "Definitions and Acronyms",
+      "level": 1,
+      "node_type": "leaf",
+      "heading": "Definitions and Acronyms",
+      "next_heading": "Section 01: PLANNING AND PREPARATION FOR THE EVENTS",
+      "own_text": "s\nAcronym\nDescription\nAV\nAudio-visual (equipment/system, etc.)\nDMS\nDocument Management System\nERE\nEMPHNET Resources Engine\nIT\nInformation Technology\nMoI\nMinistry of Interior"
+    },
+    {
+      "id": "s01",
+      "path": "Section 01: Planning and Preparation for the Events",
+      "level": 1,
+      "node_type": "parent",
+      "children": [
+        "s01.1",
+        "s01.2",
+        "s01.3",
+        "s01.4",
+        "s01.5",
+        "s01.6",
+        "s01.7"
+      ]
+    },
+    {
+      "id": "s01.1",
+      "path": "Section 01 > 1.1 Purpose",
+      "level": 2,
+      "node_type": "leaf",
+      "heading": "1.1. Purpose",
+      "next_heading": "1.2. Scope",
+      "own_text": "This section aims to set the policies, procedures, and guidelines for planning and\npreparation phase for events conducted by GHD|EMPHNET."
+    },
+    {
+      "id": "s01.2",
+      "path": "Section 01 > 1.2 Scope",
+      "level": 2,
+      "node_type": "leaf",
+      "heading": "1.2. Scope",
+      "next_heading": "1.3. Responsibilities",
+      "own_text": "Planning for an event is essential for assuring successful results. It requires team\neffort, multitask management, communication, coordination, and collaboration.\nPlanning helps in implementing successful actions and in making decisions that can\nprevent failure or mistakes. This section presents the major areas that need to be\nconsidered when planning an event. These topics are not inclusive as it is impossible\nto plan for any unforeseen occurrence which are bound to occur even with the best\nplans. The covered topics are standard issues that need to be considered when\nplanning an event to take place in regular and steady circumstances. This section\napplies to all personnel involved in planning and preparation phase."
+    },
+    {
+      "id": "s01.3",
+      "path": "Section 01 > 1.3 Responsibilities",
+      "level": 2,
+      "node_type": "leaf",
+      "heading": "1.3. Responsibilities",
+      "next_heading": "1.4. Policies",
+      "own_text": "It is the responsibility of the Task Owner to initiate the process for the event,\nand to provide the required information to the involved stakeholders to assure\ntimely and proper preparation for the event.\nWhen the event is conduct outside Jordan, it is the responsibility of the Task\nOwner to make the required arrangements with the representative in the\ncountry.\nIt is the responsibility of the Operations Officer to arrange for all required\nlogistics to prepare for the event on timely manner and according to the event\nrequirements and the policies mentioned in this section\nIt is the responsibility of the relevant employee from Project Management Office\nto monitor the implementation of the event according to the Gantt Chart and the\nevent plan.\nIt is the responsibility of the Media and Communication Team to make all the\nrequired arrangements according to the Task Owner’s request.\nIt is the responsibility of the Finance Department to make sure that the event\nexpenses are in alignment with the event predefined budget.\nOther responsibilities are detailed in the below policies and procedures."
+    },
+    {
+      "id": "s01.4",
+      "path": "Section 01 > 1.4 Policies",
+      "level": 2,
+      "node_type": "parent",
+      "children": [
+        "s01.4.a",
+        "s01.4.b",
+        "s01.4.c",
+        "s01.4.d",
+        "s01.4.e",
+        "s01.4.f",
+        "s01.4.g",
+        "s01.4.h",
+        "s01.4.i",
+        "s01.4.j",
+        "s01.4.k",
+        "s01.4.l"
+      ]
+    },
+    {
+      "id": "s01.4.a",
+      "path": "Section 01 > 1.4 Policies > Planning",
+      "level": 3,
+      "node_type": "leaf",
+      "heading": "Planning",
+      "next_heading": "Event Announcement",
+      "own_text": "g\nAdvanced planning of events is crucial for successful implementation. All\nGHD|EMPHNET events are planned ahead of time in order to secure ample time for\npreparation. When organizing events, it is important to keep in mind the timeframe and\nentailed costs. Once the exact dates of the event are formally set in coordination\nbetween Technical and Project Management teams, the Task Owner shall initiate\nEvent Request Process on the system at least one month before the event start date.\n(Note: Sometimes the exact dates are not agreed upon till closer to the event. In this\ncase, the event can be initiated and start preparations while waiting for the\ndetermination of the dates.)\nBefore starting the process on the system, the Task Owner shall ensure proper\nplanning, acquire needed approvals, and collection of the required data to initiate the\nprocess. At this stage, and to make sure of appropriate planning, our representatives\nin the countries could be consulted whenever the need arises. The Task Owner shall\nbe are aware that the below data provide the road map for the preparation and conduct\nof the event and they will function as the guidelines and instructions for the different\ndepartments. It is important to be aware that not all these field are considered required\nfor all events, this depends on the event nature, requirement and complexity.\n1. Event General Information:\nThe Task Owner shall fill the Event General Information section, and specify the\nfollowing information:\nEvent Title\n• Charging Code\nEvent Date\n• WBS\nEvent Country/ Location/ City\n• Task\nEvent Type\n• Team Leader\nFace-Face or virtual event\n• Task Owner\nProject Name\n• Finance Officer\n• Country Focal Point (To be notified)\nDepartment\n• Venue type\n2. Event Programmatic Information\nThe Task Owner shall fill the Programmatic Information Section, and specify the\nfollowing information:\nEvent Objectives\n• Material sharing methodology\nEvent Description\n• Agenda\nMethods\n• Facilitators Meeting Details\nTopics Covered\n\nPreliminary Participants (adding invitees\nlist)\nTime\nResource(s) (e.g., Trainer, Facilitator,\nLecturer, Consultant, etc.)\nFood & Beverage\nParticipating Partners / Organizations\nwith Contact (Email, Phone)\nNumber of People Attending\nEvent Needs Training Materials Check?\nAny Additional Requirements\nMaterials Link\nLocation\n3. Event Logistics & Administration Information\nThe Task Owner shall fill the Logistics & Administration Section in coordination with\nthe Operation Officer and other involved teams indicating the below information for the\nevent. In case an Operations Officer was delegated to fill this part, proper coordination\nbetween the Operations Officer and the Task Owner shall take place.\nExpected # of Participants\n• Media and Communication\nRequirements\nExpected # of GHD|EMPHNET Staff\n• Translation requirements (Interpretation\nTranslation or Documents Translation)\nExpected # of Facilitators\n• Transportation requirements and details\nExpected # of Administrator\n• Passengers Information\nEvent Size\n• Airplane for Participants’ details\nSeating Style\n• Airplane for Staff details\nEquipment and Materials\n• Hotel for Participants’ details\nIT Equipment and Materials\n• Hotel for GHD|EMPHNET Staff details\nNeeded IT Support Staff\n• Food and Beverage details\nNeeded Zoom Meeting Request\n• Pre-event website announcement\nNews article on website\n• Newsletter article\nSocial media coverage\n• Press and TV coverage\nRollup/banner/pop-up\n• Photographer/ Videographer\nThe above-filled information shall get the approval of the Technical Team Leader,\nTechnical Director, and Project Management Office to ensure their compliance with\nthe event plan. In addition, Finance Affairs plays a crucial role in checking the event\nallocated budget covers and approve, to proceed with event conduct.\nAll GHD|EMPNET events shall be approved by the Executive Director before their\nconduction.\nGeneral Polices:\nAmendments:\n\no If there was an amendment that is related to internal support and not\nrelated to the event budget, such as requesting for a Website Article,\nthen the Task Owner shall share this update through email with the\nconcerned department keeping the respected Team Leader/ Director in\nthe cc.\no If there was an amendment that is related to all concerned parties such\nas event dates, no. of participants or events no. of days, then the Task\nOwner shall share this update through email with all concerned\ndepartments keeping the respected Team Leader/ Director in the cc. If\nthere was any change to the budget, then the Finance Officer/ Manager\nshall revise budget and provide their approvals before proceeding with\nthe event.\nAs a general role, when there is a cascade of trainings in one activity, it is\npreferable to initiated as one event, if the Task Owner sees that it is better to\nmake it as a sperate events (for example, there is long time span between the\ntrainings which may affect the logistics preparation), prior discussion and\nagreement with the Team Leader/ Direct shall take place.\nNot all the items mentioned below are mandatory to be applied to all events,\nthis depends on the Task Owner decision based on the event nature,\nrequirements and complexity. This shall be clearly stated when the Task Owner\nfills the Event Request items (Annex 01).\nEvent Material Guideline (Annex 02) provide a general guideline for the Task\nOwner regarding the requirements for Media and Communications functions.\nFor simple meetings where there is no travel or accommodation, Task Owner\nmay fill Meeting Request instead of Event Request. The meeting request is\ndesigned to request only the needed information to conduct a simple meeting,\nHowever, it still requires the same level of approvals as the event."
+    },
+    {
+      "id": "s01.4.b",
+      "path": "Section 01 > 1.4 Policies > Event Announcement",
+      "level": 3,
+      "node_type": "leaf",
+      "heading": "Event Announcement",
+      "next_heading": "Event Language",
+      "own_text": "In some instances, such as regional workshops or conferences, it is necessary to\nannounce for an event on the website and different channels for the public audience\nwhere registration is required. In these instances, the Task Owner shall determine the\nneed for event announcement based on the event audience. The announcement shall\nbe prepared by the Task Owner at least six weeks prior to the scheduled event and\nshall be reviewed by the Team Leader, Director, and then the Executive Director. The\nannouncement should have the following information consistent/in line with the initial\nconcept note, activity description, and other relevant technical documents:\nTitle of event\nDates and location of event\nObjective of the event and its context\nAny required pre-requisites for participants\nClosing date for application\nAny expected fees incurred in attending the event\n\nRegistration Application form, if any.\nOnce the announcement is approved, it shall be published by the Media and\nCommunication Team at GHD|EMPHNET’s announcement channels."
+    },
+    {
+      "id": "s01.4.c",
+      "path": "Section 01 > 1.4 Policies > Event Language",
+      "level": 3,
+      "node_type": "leaf",
+      "heading": "Event Language",
+      "next_heading": "Participants",
+      "own_text": "GHD|EMPHNTE events could be conducted in English, Arabic or French based on the\naudience. However, if the need arises for interpretation from one language into\nanother for the audience, then the Task Owner shall request this added service upon\nfilling the event request."
+    },
+    {
+      "id": "s01.4.d",
+      "path": "Section 01 > 1.4 Policies > Participants",
+      "level": 3,
+      "node_type": "leaf",
+      "heading": "Participants",
+      "next_heading": "Facilitators and Speakers",
+      "own_text": "Participant Identification process shall start four weeks before the event through\nparticipants nomination/ invitation or registration:\n1. Participants Nomination\nIn the case where the target audience names/ titles are not specified, it is\nnecessary to prepare a letter to target countries/ organizations to ask for\nnominations as soon as the event is scheduled. The Task Owner shall specify such\nneed and share the nomination list with the Operations Officer.\nThe letter shall list the event details and to request to share the names, titles and\ncontact information for the nominated candidates.\n2. Participants Invitation\nWhen participants titles or names are identified, then invitation letters shall be\nshared with their entities or directly to the participants sharing the related event\ndetails and request participants to confirm their attendance.\nBoth nomination letters and invitation letters shall be prepared by the Task Owner,\nreviewed by the Team Leader/ Director and signed by the Executive Director. Once\nthe letter is approved from the technical team, the Operations Officer shall provide the\nrequired coordination with the Administrative Team till the issuance of the letter\napplying the approved policies and procedures for official letters issuance as per\nAdministrative Affairs Policies & Procedures Manual (ML-ADM-01).\nLetters shall be shared through the Administrative email keeping the Task Owner,\nTeam Leader/ Director, Country Focal Point and Operations Officer in the cc to follow\nup receiving the response. In this email, the Country Focal Point or the Task Owner\nshall be mentioned as a reference in case of any enquiries.\nIn certain cases, the letters shall be sent as official mail, policies in Administrative\nAffairs Policies & Procedures Manual (ML-ADM-01) shall be followed.\nThe response for the letters may take time depending on the logistics criteria and\nprocess in the different countries, however, sometimes it is necessary to send\n\nreminders based on the Task Owner decision. The Operations Officer shall update the\nParticipants list according to the invitee’s response and keep the Task Owner\ninformed. The participants list shall include all the required information that required\nfor the Technical Team and Finance and Accounting Team such as the origin of the\nparticipant, the requirement for per diem (including the number of days with departure\nand arrival dates) and ground transportation, and to specify if there is any exceptional\nneed. These pieces of information are important to ensure accurate Financial\ncalculations; any changes will lead to change request.\nThe Operations Officer shall keep tracking on the responses and update the\nParticipants Lists accordingly.\nLetters issuance shall follow the applied policies and procedures for official letters\nissuance at GHD|EMPHNET as per Administrative Affairs Policies & Procedures\nManual (ML-ADM-01). Note: In certain cases, based on the recipient, the letter could\nbe shared from Task Owner Email.\n3. Registration\nIn rare cases, registration could be open for public through announcing the event at\nGHD|EMPHNET different channels. Registration application or system shall be\ndeveloped by the Innovative Solutions Team under the recommendations of the Task\nOwner.\nWhenever the event is announced for public registration, received applications will be\nstudied to select the eligible participants. In this case, confirmation letter/ email for\nregistration shall be shared with the participants. Support letters shall be shared based\non the need.\nParticipants Bio Data\nIn order to have an updated database of participants who were involved in\nGHD|EMPHNET events, it is essential to have the biodata of the participants (Names,\nGender, Date of Birth, Email Address, Mobile number, educational degree, Major,\nTotal Experience, Country of Work, Current Job Title, Current Employer, Experience\nin current position, languages, etc.). Whenever these data are not available, a Biodata\nform to collect the required data shall be prepared by the Operations Officer based on\nthe Task Owner recommendations.\nThe link is shared with participants along with the welcoming email providing a\ndeadline.\nNOTE: It is extremely important to maintain accurate records of participants in the\nEMPHNET Resources Engine (ERE), which is a site intending to collect data for all\nparticipants who were involved in any of GHD|EMPHNET activities (including the past\nevents). After each event, any new participants shall be added to the ERE. However,\n\nextreme caution must be taken not to add duplicates to the records as this will strain\nthe ERE system resources and will require a lot of efforts later on for duplication\nremovals and updating of new data for the records of the same individuals (as opposed\nto adding the same individuals multiple times)."
+    },
+    {
+      "id": "s01.4.e",
+      "path": "Section 01 > 1.4 Policies > Facilitators and Speakers",
+      "level": 3,
+      "node_type": "leaf",
+      "heading": "Facilitators and Speakers",
+      "next_heading": "Venue Selection",
+      "own_text": "The Task Owner is responsible for communication with speakers or facilitators. This\nshould be done at an early stage. Once secured, facilitators or speakers are given a\ndeadline for sending their presentations. Travel arrangements for facilitators or\nspeakers follow the same procedure as that of the participants."
+    },
+    {
+      "id": "s01.4.f",
+      "path": "Section 01 > 1.4 Policies > Venue Selection",
+      "level": 3,
+      "node_type": "leaf",
+      "heading": "Venue Selection",
+      "next_heading": "Travel Arrangements",
+      "own_text": "Events venue could be at the premises of the trainees such as Ministries, or at\nGHD|EMPHNET premises or there would be a need to rent a venue. This\nshould be specified in the planning phase.\nIf the training is at the premises of the target entities in the countries, The\nGovernment counterpart institution e.g. MOH will do the necessary\narrangements in coordination with GHD|EMPHNET representative at the\ncountry.\nIf there is a need to rent a venue, the Operations Officer or our representative\nin the country should request three quotations for venue rental at least four\nweeks prior to the dates of the event taking the following into consideration:\no Number of days needed to conduct the event.\no Estimated number of participants (including facilitators and any other\nsupport staff)\no Estimated number of rooms for accommodating participants and facilitators,\nif any.\no Number of meeting rooms and their setting/s (including breakout rooms), if\nany.\no Need for special arrangements, such as head table, podium, flip charts, etc.\no Needed equipment, such as computer, projector, sound system,\nmicrophones, wireless connection, IT technical support, etc. If not provided\nby the venue, a sound system organization shall be outsourced.\no Food and beverages required for the event.\nNote: The cost of renting meeting rooms is often waived by hotels when\ncatering (lunch and coffee breaks) is offered for charge. Therefore, make\nsure to include the catering services needed during the meeting/s.\no Other relevant information required for event conduct.\nOnce the quotations are received, they shall be analyzed by the Operations\nOfficer considering the following points:\no Availability of spacious meeting rooms (enough space to move around\nconveniently)\n\no Good lighting, acoustics, ventilation, heating/air-conditioning, breakout area\nand parking.\no Meeting venue/room is close and/or easily accessible to the hotel rooms.\no Meeting venue is close or easily accessible to the office during potentially\nheavy traffic hours.\no Availability of support service, such as IT, photocopying, wireless\nconnection.\no Hotel policy blocking rooms, reservation, and cancelation.\no Dates for confirming reservations and any financial liability in this regard.\no Country’s counterpart recommendation.\nNote: Many hotels offer a free suite or room with group booking (over a\nparticular number). This is a complimentary service that GHD|EMPHNET\ncan seize if needed.\nThe following shall be taken into consideration while selecting a venue:\no The Operations Officer or our representative in the country shall make\nsure that the venue is not booked the day before the event, in order to\nmake the required setup the day before the event. This is crucial in the\ncase that audio-visual (AV) equipment/system (Sound system,\nVideography and/or Photography) should be implemented as it needs\ntime and can’t be implemented in the same day of the event. Otherwise,\nthe Operations Officer shall make the required arrangements with the\nvenue to make sure that the venue is ready before the event.\no For events where accommodation of participants is necessary, it is\nrecommended that the selected venue be in the same premises as hotel\nrooms. Transportation should be arranged if venue location is other than\nthat of accommodation. Note: Every effort should be made to avoid such\nsituation in order to minimize logistics efforts.\nThe proposed offers and the above analysis shall be shared with the Creative\nUnit to provide their specialized opinion regarding halls suitability for event\nconduct. Based on the setup of the event, number of participants and lighting\nof the halls, the Creative Lead will recommend the options that are suitable for\nthe event. The Task Owner shall select one of the proposed options.\nThe proposed option(s) shall be shared by the Operations Officer with Finance\nSpecialist/ Officer for recommended decision based on the available budget.\nBased on the aforementioned feedback, the Task Owner shall take the decision\nregarding the venue selection.\nOnce the venue is selected and the rates are agreed upon, a contract is signed\nwith the hotel after confirming that all needs are covered in the contract. The\nOperations Officer or our representative in the country will send the signed\ncontract to the hotel indicating that the point of contact with the hotel from this\npoint on will be the Operations Officer or our representative in the country. This\nis preferably done by an email, keeping the Finance in the cc.\n\nGetting three quotations for venue could be waived in the case that\nGHD|EMPHNET have a general agreement with venues or there was a clear\njustification for sole sourcing and/or selecting a certain venue."
+    },
+    {
+      "id": "s01.4.g",
+      "path": "Section 01 > 1.4 Policies > Travel Arrangements",
+      "level": 3,
+      "node_type": "leaf",
+      "heading": "Travel Arrangements",
+      "next_heading": "Welcoming Participants",
+      "note": "contains sub-blocks Passports, Visa Issuances, Travel Booking, Accommodation, Ground Transportation - not split further, kept as one leaf since not TOC-listed separately",
+      "own_text": "For events where travel and accommodation of participants, facilitators or\nGHD|EMPHNET staff is necessary (such as regional events), arrangements should\nbe made as soon as nominated candidates are identified. The Operations Officer is\nresponsible for travel arrangements, however, s/he shall share the travel information\nand updates on regular basis and notify the Task Owner of any potential problems\nPassports\nFor external flights, valid passports shall be available for the concerned\nperson(s).\nThe Operations team shall check GHD|EMPHNET data base for the availability\nof valid passports copies before contacting the concerned persons. Valid\npassport should have validity of at least six months of the travel date.\nIf a passport copy is available in our database; share an email with the\nconcerned person(s) to confirm that the available copy is the latest valid\npassport, and he/she confirms to use it.\nIf no passport copy is available in our database, then the Operations Officer\nshall contact the concerned person(s) requesting them to share it.\nPassports copies shall be kept in DMS Twenty, under the administration\nchannel, in the Passports folder under the relevant country.\nPassport copies shall be saved with the first and last name of the concerned\nperson.\nIf passport copies in the database are outdated, they must be updated/replaced\nby new copies within the same record.\nVisa Issuances\nThe need for visa issuance for participants, facilitator or GHD|EMPHNET staff\nshall be identified at early stage because in some cases it might take longer\nthan three weeks to obtain a visa. This shall be done by the Operations Officer\nusually in coordination with the Task Owner.\nTo ensure that the Operations Officer has the correct and valid information in\norder to proceed with visa issuance and travel booking, a form (Annex 03) shall\nbe shared with participants and facilitators requesting them to fill the required\ninformation. Form content could be updated based on the requirements.\nThe following scenarios for visa issuance could take place:\nSome countries request visitors to present a letter from GHD|EMPHNET to\nverify their attendance at an event. In such cases, GHD|EMPHNET Operations\nOfficer issues visa support letters to participants (or facilitators) attending the\n\nevent, at least 2 weeks prior to the event. The information below should be\nincluded in these letters:\no Full name (as it appears on participant’s passport)\no GHD|EMPHNET’s full name, title, and dates of the event that the\nparticipant intends to attend.\no Include a fax number or email address for any information request\nFor events conducted in Jordan and for those participants and facilitators who\ncome from countries where there is no Jordan embassy, GHD|EMPHNET\nneeds to support these by facilitating issuing their visas from Jordan’s\ngovernment.\nThe Operations Officer prepares the visa letters, signed by the Executive\nDirector and submit it to Ministry of Interior (MoI). Follow up with the MoI should\nbe through the focal point in coordination with the Operations Officer.\nFor events conducted outside Jordan, the Operations Officer shall make the\nrequired arrangements for visa issuance. However, in certain cases, visa\nissuance could be supported by our representative in the country, while the\nOperations Officer holds the responsibility of follow up and tracking.\nTravel Booking\nThe required information shall be compiled by the Operations Officer and\nshared with travel agency to procced with reservations. In certain cases, the\nOperations Officer can arrange for travel booking in coordination with the\nCountry Representative or travel agency based on the country requirements.\nIt is important to take note of the following when making flight reservations:\no Check that the passport expiry date is at least six months from the event\ndate, plus any other visa requirements (for certain countries) are met.\nNo ticket shall be issued without obtaining a copy of the passport.\no The visa is issued and valid, if required.\no The route of travel is convenient and accurate.\no Travel insurance is issued, if required by the country requirements.\no Any additional entry requirements.\nIn some cases, the participants or facilitators may request amending the ticket\nfor personal reasons, the Operations Officer shall connect the travel agency\nwith the participant to proceed with the change(s) and fees payment. However,\nGHD|EMPHNET is not responsible for extending participants/ facilitators stay\nperiod.\nAccommodation\nThe Operations Officer shall make sure to reserve hotel rooms for participants,\nfacilitators, and GHD|EMPHNET staff who confirm attending the event.\nAccommodation information shall be shared with the participants along with\ntravel details.\n\nIn certain cases, where the event is conducted in countries other than Jordan,\nthe Operations Officer can arrange for hotel booking in coordination with the\nCountry Representative or travel agency.\nIn some cases, the participant may request to amend the hotel reservation\ndates or type of room for personal reasons, in this case the Operations Officer\nshall make the required arrangements with the hotel and the participant shall\npay the extra fees to the hotel directly.\nGround Transportation\nThe Operations Officer shall make the required arrangements for participants\nregarding transportation inside Jordan.\nOutside Jordan, ground transportation fees will be given to participants."
+    },
+    {
+      "id": "s01.4.h",
+      "path": "Section 01 > 1.4 Policies > Welcoming Participants",
+      "level": 3,
+      "node_type": "leaf",
+      "heading": "Welcoming Participants",
+      "next_heading": "Event Materials",
+      "own_text": "Once all the arrangements are completed, the Operations Officer will send a\nwelcoming email to the participants including visa (if required), ticket, accommodation\ndetails, travel guide, agenda, biodata link, the location of the event and any additional\ninformation at least one week before the event start. The Task Owner, Project\nManager, and Country Presentative shall be kept in the cc.\nNote: The language of the email (Arabic, English) shall be based on the audience. The\nTask Owner may share the email from his/ her end based on the target audience."
+    },
+    {
+      "id": "s01.4.i",
+      "path": "Section 01 > 1.4 Policies > Event Materials",
+      "level": 3,
+      "node_type": "leaf",
+      "heading": "Event Materials",
+      "next_heading": "Media and Communication Role",
+      "note": "contains Agenda, Training Material, Name tags/Table tags sub-blocks - kept as one leaf",
+      "own_text": "Materials such as agenda, training material, presentations, and references shall be\nprepared in advance for the event. If needed as physical copies, the final versions\nneed to be made available for printing and photocopying at least one week prior to the\nevent undertaking; the Task Owner is responsible for preparing a folder prototype of\nthese material and to give it to the Operations Officer to make appropriate copies and\npreparations. In addition, event presentation(s) shall be provided three days before\nthe event. Creative Lead could be consulted regarding material branding.\nThe Task Owner shall give the presentations to the Information Technology Team or\nthe representative in the country in a folder named by day number, e.g. Day I, Day 2,\nDay 3. When saving the presentation add to the name of the presentation file a number\nat the beginning of the file name that matches the order of that presentation. For\nExample: save a presentation to be presented second in row on the third day of the\nevent (as per the agenda) carrying the file name “Outbreak Response” should be\nsaved in a folder named “Day 3” with the name “2. Outbreak Response”\nThe Task Owner shall specify the method for sharing the event material with\nparticipants whether to be printed, through a link, or through a USB. It is preferable to\ngo green and to share the material through links.\n\nIf there is a need to add any entity(ies) logo(s) to the approved template or there is a\nneed, the Task Owner shall get the approval of the Team Leader then to share the\nrequest with the Creative Lead who in his/ her turn will refer to the internal brand\nguideline and the level of contribution of the other entity.\nThe Task Owner is responsible for preparing the event’s agenda in accordance\nwith the intended objectives using the approved template. It is recommended\nto build in an approximate 30 minutes of daily “hidden” time in order to\naccommodate late start or any running over of time for any of the sessions. It\nis often necessary to secure facilitators’ agreement to their scheduled\npresentations (sessions) prior to finalizing the agenda.\nOnce the agenda is approved by the Team Leader (Executive Director approval\nshall be obtained based on the Team Leader or the Director decision) it is\nshared with the relevant stakeholders and facilitators or speakers. In addition,\nit should be shared with the Operations Officer in order to facilitate preparation\nof venue premises.\nAgenda could be prepared and distributed digitally. Annex 02 provides general\nguidelines regarding event material management.\nNote: For large events (please refer to Annex 02), the final agenda shall be\nshared with the Creative Lead for final design and printing.\nTraining Material\nTraining material shall be prepared in advance using the approved template.\nAll training material shall be checked by the Capacity Building team before they\nare used at any event. Task Owner shall share the link of the training materials\nat least four weeks before the event to give some time for materials check. The\nmaterial shall be updated according to the received comments from the\nCapacity Building team and the Final Material shall be shared with the\nOperations Officer accordingly.\nPretest, posttest, evaluation material, and online surveys shall be prepared by\nthe Task Owner and shared with the Operations Officer at least two weeks in\nadvance. The Operations Officer will launch the aforementioned material on the\napproved tool and provide the Task Owner with the appropriate link to be used\nfor the event.\nName tags/ Table tags\nThe final list of participants shall be shared by the Operations Officer at least 5\ndays before the event with the Media and Communication team to prepare the\nname tags (Badge) for the participants and the facilitators and the table tags for\nthe facilitators, any updates shall be shared by the Operations Officer on timely\nbasis.\n\nThe Media and Communication Team are responsible to make the design for\nthe name tags and table tags, while the Operations Officer or the representative\nin the county should print them and make them ready to be delivered to\nparticipants and facilitators.\nFor events outside Jordan, these items could be printed in Jordan and shipped\ndepending in the logistics in that country."
+    },
+    {
+      "id": "s01.4.j",
+      "path": "Section 01 > 1.4 Policies > Media and Communication Role",
+      "level": 3,
+      "node_type": "leaf",
+      "heading": "Media and Communication Role",
+      "next_heading": "Certificates",
+      "note": "contains Publicity, Photography, Rollups, AV, Plaque, Promotional Material sub-blocks",
+      "own_text": "Annex 02 summarizes the difference between the event sizes; the size of the event\nwill determine the required branded material to be prepared for the event. The\nfollowing items shall be specified in the event request based on the event needs:\nPublicity and Media Coverage\nBased on the event, the Task Owner shall request the required publicity and\nmedia coverage for an event.\nTask Owner should provide timely media content material to the Media and\nCommunication team.\nPolicies and Procedures in Media and Communication Manual (ML-MAC-01)\nshall be applied.\nPhotography and Videography Selection\nThe Operations Officer in coordination with Task Owner shall specify the\nneeded coverage for the event:\no Photos, videos, or both could be required for the event.\no If the photographer shall cover the whole event either for Photography\nor Videography (to ensure video recording availability), then an\noutsourcing photographer will be contacted. On the other hand, if the\nmaterials are for promotional purposes only, an internal or external\nphotographer will be assigned.\nIt is the responsibility of the Creative Lead to supervise the supplier process\nbased on the desired material from each event. The creative lead will also guide\nthe supplier on the needed material/converge.\nIf the event is outside Jordan:\no The Operations Officer/ Task Owner shall do the required arrangements\nwith country representative to arrange for photography/ videography in\ncollaboration with the Creative Lead.\no In certain cases where the event is outside Jordan, the Task Owner or\nthe representative in the country will take the photos follow, however,\nthey shall adhere to GHD|EMPHNET photography guidelines (GL-MC-\n03)\no The taken photos should highlight the major activities of the event.\nPhotos/videos should capture presentations, attendees, speakers,\ngroup work, registration, handing certificates and other activities. If the\nTask Owner/ Operations Officer took the photos, then they shall share\nthem with the MaC team via email. The MaC team is responsible for filing\n\nthe photos on the shared drive in the appropriate folder on the\nDocumentation Management System (DMS Twenty).\no The Operations Officer coordinator sharing the events photos and\nvideos with the participants upon request.\nRollups/ Banners/ Backdrops/ Pop-ups\nAnnex 02 summarizes the criteria for rollups/ banners/ backdrops/ pop-up setup\nduring the event. This shall provide the required guide for the involved teams\nto assure standardization among events and this will assure the required\nvisibility.\nIf the event is outside Jordan, then the Country Office representative or the\nfocal point at the country shall print the designed items by the HQ Media and\nCommunication Team and place them according to the guideline.\nAudio-visual (AV) System and Interpretation\nIf a sound system and/or real-time interpretation are required for an event, it is\nthe responsibility of the Media and Communication team to select the vendor.\nThree quotations shall be requested from vendors for any event. The Media\nand Communication team is responsible to select the suitable vendor in\ncoordination with the Finance Team.\nProviding three quotations could be waived in the case there was signed\ncontracts with sound system vendors.\nOnce the vendor is selected, then all relevant parties shall be notified, and the\nOperations Officer shall make the required arrangements with the vendor.\nPlaque\nGHD|EMPHNET branded plaques are only to be handed out during mediocre\nand large events (during the opening or closing ceremonies) in one of the\nfollowing conditions:\no Closing an event for a long-term project\no EMPHNET’s biennial conferences\no C-level executive representation of the partner\nPlaques can be handed to:\no Organizations such as Ministries (ministers), international organizations\nand the private sector.\no People for their distinguished contribution.\no Service providers: such as travel agencies, event planners, etc.\nIt is important to bear in mind that plaques are not handed in the following\nsituations:\no During training and workshops\no During private meeting\no New partnerships (only during closing ceremonies when the projects are\ncompleted)\no When GHD|EMPHNET is not the host\no When there is any political sensitivity\n\no Plaques are never handed out to donors.\nGHD|EMPHNET plaques are in two sizes, the regular size is handed out to\npartners while the large size is handed out to C-Level\nThe names and the content of the plaque shall be provided by the task owner\nafter obtaining approval by the Executive Director.\nThe branding of the plaques shall follow GHD|EMPHNET branding guidelines\nFor large events the Media and Communication team may assign an event agency\nfor the event setup, however, the sound system could be outsourced separately.\nFor Large events, the Creative Lead shall make sure that all the planned setups\nare in place before the event till the event end to assure proper visibility.\nPromotional Material\nIn the case there was a need for promotional material for an event, then the policy for\npromotional materials in Media and Communication Manual (ML-MAC-01) shall be\nfollowed."
+    },
+    {
+      "id": "s01.4.k",
+      "path": "Section 01 > 1.4 Policies > Certificates",
+      "level": 3,
+      "node_type": "leaf",
+      "heading": "Certificates",
+      "next_heading": "Certificate Documentation",
+      "own_text": "Certificates Preparation\nMedia and Communication team shall be notified about the event once the\nevent is approved over the system, however, two weeks before the certificates\ndelivery, the Operations Officer should share with the Media and\nCommunication team the event official name, event date, the official event\nlanguage, certificates serial number, the other entity(ies) logo and name and\nposition of signatory. In addition, the list of attendees shall be shared once\nfinalized maximum 5 days before the event.\nSerial numbers for certificates:\no Serial numbers for digital certificates are assigned by the Operations\nOfficer (using the approved sheet between the Creative Lead and\nOperations Officers).\no Serial numbers for printed certificates are already printed on the\ntemplates, Operations Officer shall track the serial numbers for\ndocumentation purpose.\no Serial number for FETP certificates should be provided by the\nOperations Officer as follows:\nCountry acronyms-FETP modality-Cohort number-Serial Number\nFor example:\nEGY-FETP-01-1\nEGY-IFETP-01-1\nEGY-BFETP-01-1\nMedia and Communication team shall prepare the certificate design according\nto GHD|EMPHNET guidelines, and share it with the Task Owner, whom by\n\nhis/her turn will share it with the other entities, if any, to get their approval and\nto agree on the signature method (live signature, e-signature through\nGHD|EMPHNET, e-signature through the entity itself).\nMaC team will start inserting the names to the certificate’s template and\ninserting the certificate serial number as shared by the Operations Officer.\nThe Operations Officer shall review all the names and serial number on the\ncertificates prior signing and printing.\nNote: If there is a change to the approved templates as requested by other\nentities, then Creative Lead will take approval from the Executive Director.\nCertificates Signing\nBased on the selected signatory method of the other entity(ies):\no If all parties are going to sign the certificated electronically, then the final\ncertificates will be signed by the other entity(ies) first, after being\napproved by the Team Leader, The Task Owner shall communicate with\nthe Creative Lead for adding the Executive Director signature.\no If the other entity(ies) will sign live, then the Creative Lead will add the\nExecutive Director's signature upon confirmation from the Task Owner,\nthen certificates will be printed to be shared by the other entity.\nCertificates could be prepared and distributed digitally to each participant,\nbased on the Task Owner decision.\nThe approval of the Executive Director for the event implies authorization of the\nCreative Lead to use the Executive Director e-signature for certificates issuance\nafter obtaining the Task Owner and Team Leader approval on the certificates.\nCertificates Printing\nFETP certificates are printed in the country of the program implementation.\nGHD|EMPHNET and EMPHNET certificates other than FETP certificates shall\nbe printed in the Headquarters only. They can be shipped through courier or\nsent with any team member.\nGHD|EMPHNET and EMPHNET certificates hard copy templates are the\nresponsibility of the Creative Lead to prepare, add serial numbers, stamp, and\nprint.\nThe Custody and Inventory team is responsible for notifying the Creative Lead\nwhen the hard copy certificates inventory is lower than 50 certificates."
+    },
+    {
+      "id": "s01.4.l",
+      "path": "Section 01 > 1.4 Policies > Certificate Documentation",
+      "level": 3,
+      "node_type": "leaf",
+      "heading": "Certificate Documentation",
+      "next_heading": "1.5. Procedures",
+      "own_text": "The Operations Officer shall maintain certificates documentation for all\ncertificates (printed, digital or FETP certificates).\n\nThe Operations Officer shall make the required arrangements for any side meetings,\nfacilitator meetings or Gala dinner that is related to the Event, based on the Task\nOwner or the Executive Director request.\nAnnex 04 summarizes a checklist that shall be followed up by the Operations Officer\nto support them to assure that the preparation phase is going on timely manner and\nas planned."
+    },
+    {
+      "id": "s01.5",
+      "path": "Section 01 > 1.5 Procedures",
+      "level": 2,
+      "node_type": "parent",
+      "children": [
+        "s01.p01"
+      ]
+    },
+    {
+      "id": "s01.p01",
+      "path": "Section 01 > 1.5 Procedures > Procedure 01: Event Planning and Preparation Phase",
+      "level": 3,
+      "node_type": "leaf",
+      "ref_code": "ML-ORG-01.P01",
+      "heading": "Procedure 01: Event Planning and Preparation Phase",
+      "next_heading": "1.6. Related Documents",
+      "own_text": "ML-ORG-01.P01 Event Planning and\nPreparation Phase\nManual\nVersion no.:\nPlanning Phase:\n1.\nInitiate the process over the system and fill the Event\nGeneral\nInformation\nand\nEvent\nProgrammatic\nInformation\n2.\nFill the Event Logistics & Administration Information\nTask\nOwner\nor\ndelegated\nto\n3.\nReview/ Approve the Event Logistics & Administration\nInformation If filled by the Task Owner\nIf not approved, return it to be modified.\n4.\nReview/ Approve the Event Information.\nIf not approved, return it to be modified.\nTechnical\nTeam\nLeader\n5.\nReview/ Approve the Event Information.\nIf not approved, return it to be modified.\nTechnical Director\n6.\nReview/ Approve the Event Information.\nIf not approved, return it to be modified.\nProject Manager /\nProject Officer\n7.\nReview/ Approve the Event Information.\nIf not approved, return it to be modified.\nPMO Team Leader\n8.\nReview/ Approve the Event Information.\nIf not approved, return it to be modified.\nPMO Director\n9.\nAssign a Finance Officer\nFinance Manager\n10.\nReview/ Approve the allocated budget over the Event\nLogistics & Administration Information and prepare\nthe budget for the event.\nIf not approved, return it to be modified by the\nOperations Officer.\nFinance Officer\n11.\nReview/ Approve the budget.\nIf not approved, return it to be modified.\nFinance Manager\n12.\nReview/ Approve the budget.\nIf not approved, return it to be modified.\nFinance\nand\nAdministrative\nAffairs Director\n13.\nApprove the event information and budget\nPreparation Phase*:\n14.\nAnnouncements (For big events e.g. conferences:\n\n14.1. Prepares the announcement at least six weeks prior\nto the scheduled event\n14.2. Review/ Approve the announcement\nTeam\nLeader/\nDirector\n14.3. Review/ Approve the announcement\n14.4. Share the approved announcement with Media and\nCommunication Team Leader\n14.5. Disseminate the announcement at GHD|EMPHNET\nchannels.\nMedia\nand\nCommunication\nTeam Leader\n15.\nNomination/ Invitation Letter (According to the level\nof the event):\n15.1. Share the nomination list with the Operations Officer Task Owner\n15.2. Prepare the nomination/ invitation letter\n15.3. Review and approve the letter\nTeam\nLeader/\nDirector\n15.4. Communicate with the Administrative Team to\nproceed with the letter preparation and issuance\naccording to ML-ADM-01\n15.5. Share the letters through Admin email\nAdmin\nOfficer/\nAssistant\n15.6. Follow up the response and send reminders\nwhenever required\n15.7. Update the list of participants and share it with the\n16.\nParticipants Biodata:\n16.1. Decide the need to request participants to share their\nbiodata\n16.2. Prepare a Biodata Application Form and send it to\nparticipants to fill their data\n16.3. Follow up the response of the participants and send\nreminders whenever required. Update the Task\nOwner about Biodata collection status.\n16.4. Share the biodata with the Task Owner, Finance\nTeam, or any relevant team\n16.5. Upload the data to the ERE\n17.\nFacilitators and Speckers\n17.1. Determine the suggested facilitators and speakers in\ncoordination with the Team Leader\n17.2. Communicate with Facilitators and Speckers to take\ntheir approval for participating in the event.\nTask Owner/ Team\nLeader\n\n17.3. Request Facilitators and Speckers to share their\npresentations and give them deadline\n17.4. Share the presentations with the Operations Officer to\nmake the proper arrangements with IT team\n17.5. Arrange for Facilitators and Speckers travels and\naccommodation, if required\n18.\nVenues Selection\n18.1. If there is a need to rent a venue, request three\nquotations.\n18.2. Analyze the received offers and share them with the\nCreative Lead for their opinion regarding halls\nsuitability\n18.3. Give recommendation regarding the suitable venues/\nhalls Based on the setup of the event, number of\nparticipants and lightning of the halls\nCreative Lead\n18.4. Share the proposed option(s) with the analysis with\nFinance Specialist/ Officer\n18.5. Check the available budget for venue rental and\nprovide your recommendations\nFinance\nSpecialist/\nOfficer\n18.6. Select the venue based on the available information\n18.7. Sign a contract with the selected venue\n19.\nTravel Arrangements:\n19.1. Visa Issuance:\nCheck the need for participants visa issuance, and\nwhether the visa shall be issued from the participant\nresidency country or from the destination country\nBased on the visa requirements proceed with visa\nissuance on case-by-case basis.\nCheck GHD|EMPHNET database for participant\npassport from previous events, if the passport is\navailable, share it with the participant so they confirm\nthat this is a copy of the last valid passport, otherwise,\nrequest the participant to share their passport copy.\nFollow up visa issuance and update the travel details\nsheet and share it with Task Owner\nOnce the visa is issued, proceed with ticket and hotel\nbooking\nIf the visa was denied, inform the participant\n19.2. Travel Booking\nRequest the participants and facilitators to share the\nrequired information for tickets booking\nShare the required information with the travel agency Operations Officer\n\nShare with Finance Specialist/ Officer the available\ntickets options\nDecide regarding the most suitable ticket price, rate,\nand route.\nFinance\nSpecialist/\nOfficer\nProceed with booking\n19.3. Accommodation\nBook the room for the participant who confirm their\nattendance in compliance with the arrival and\ndeparture dates/ times.\n20.\nWelcoming Participants:\n20.1. Share a welcoming email with participants including\nvisa (if required), ticket, accommodation details, travel\nguide, agenda, biodata link and any other relevant\ndocuments one week prior the event and cc Project\nManager and Project Officer.\n21.\nEvent Material\n21.1. Agenda\nPrepare the event agenda and share it with Team\nLeader for review.\nIf required, share the agenda with facilitators to\nconfirm their scheduled presentation.\nReview the agenda and approve it. If not approved\nreturn it for updates\nTeam Leader\nShare\nthe\nagenda,\nparticipants\nlist\nand\nlist\nGHD|EMPHNET employees participating in the event\nwith the Executive Director Office for approval, one\nweek before the event\nShare the approved agenda with the different\nstakeholders\nProceed with venue preparation based on the agenda Operations Officer\n21.2. Training Material:\nShare the training material with the Capacity Building\nteam Leader\nReview the training material and provide your\nfeedback\nCapacity\nBuilding\nteam Leader\nShare the approved training material including pretest\nand posttest with Operations Officer to make the\nrequired arrangements\nPrepare pretest and posttest links and share them\nwith the Task Owner\nBased on the decision of the Task Owner, prepare the\nmaterials to be shared with the participants\n\n21.3. Name and Table Tags:\nShare\nthe\nparticipants,\nfacilitators\nand\nGHD|EMPHNET employees list with Media and\nCommunication Team\nPrepare name tags and table tags and share the soft\ncopy with the Operations Officer\nMedia\nand\nCommunication\nTeam\nPrint the name tags and make them ready to be\ndelivered to participants and facilitators\n22.\nCertificates\n22.1. Share the required information and final list of\nparticipants and serial numbers with the Creative\nDesigner keeping the Task Owner and the Creative\nLead in the cc.\n22.2. Prepare the certificates design and share it back to\nthe Operations Officer and Task Owner\nCreative Designer\n22.3. Share the certificate design with the other entity(ies)\nto agree on the design and the signature method\n23.\nAfter getting approval on the design, start inserting\nthe names and serial number to the certificate’s\ntemplate and share the, with the Operations Officer\nCreative Designer\n24.\nCheck the names in the certificate and share with the\n25.\nApprove the final certificates and request the Creative\nLead to add the Executive Director’s Signature\n26.\nInsert the Executive Director’s E-Signature\nCreative Lead\n27.\nArrange for Facilitator Meeting, any side meeting or\nGala Dinner as requested by the Task Owner or\nExecutive Office.\n28.\nFill the Event Preparations Checklist (ML-ORG-\n01.A.03) to support you in the timely preparation for\nthe event.\n29.\nEvent Expenses:\nProcced with the payment or money transfer\naccording to the applied procedures\nTreasury and Payroll\n* Not all preparation steps are applied to each event. Preparation steps could be worked on parallel."
+    },
+    {
+      "id": "s01.6",
+      "path": "Section 01 > 1.6 Related Documents",
+      "level": 2,
+      "node_type": "leaf",
+      "heading": "1.6. Related Documents",
+      "next_heading": "1.7. References",
+      "own_text": "s\nML-ORG-A.01 “Event Request”\nML-ORG-A.03 “Required Information for Visa Issuance and Travel Booking”\nML-ORG-A.04 “Event Preparations Checklist”\nML-MAC-01 “Media and Communication Policies and Procedures Manual”\nML-ADM-01 “Administrative Affairs Policies & Procedures Manual”\nEvent Material Guideline\nMeeting Request"
+    },
+    {
+      "id": "s01.7",
+      "path": "Section 01 > 1.7 References",
+      "level": 2,
+      "node_type": "leaf",
+      "heading": "1.7. References",
+      "next_heading": "Section 02: Event Implementation",
+      "own_text": ""
+    },
+    {
+      "id": "s02",
+      "path": "Section 02: Event Implementation",
+      "level": 1,
+      "node_type": "parent",
+      "children": [
+        "s02.1",
+        "s02.2",
+        "s02.3",
+        "s02.4",
+        "s02.5",
+        "s02.7",
+        "s02.8"
+      ]
+    },
+    {
+      "id": "s02.1",
+      "path": "Section 02 > 2.1 Purpose",
+      "level": 2,
+      "node_type": "leaf",
+      "heading": "2.1. Purpose",
+      "next_heading": "2.2. Scope",
+      "own_text": "activities that shall take place before launching the event and during the event."
+    },
+    {
+      "id": "s02.2",
+      "path": "Section 02 > 2.2 Scope",
+      "level": 2,
+      "node_type": "leaf",
+      "heading": "2.2. Scope",
+      "next_heading": "2.3. Responsibilities",
+      "own_text": "Conducting a successful event, required team effort, multitask management, and\neffective communication. It is also required good skills for problem solving to face any\nchallenges during the event. The following topics are standard issues that need to be\nconsidered when conducting an event to take place in regular and steady\ncircumstances. This policy applies to all personnel involved in running the event."
+    },
+    {
+      "id": "s02.3",
+      "path": "Section 02 > 2.3 Responsibilities",
+      "level": 2,
+      "node_type": "leaf",
+      "heading": "2.3. Responsibilities",
+      "next_heading": "2.4. Policies",
+      "own_text": "It is the responsibility of the Operations Officer or the representative in the\ncountry (who is responsible to logistical support) to be available during the\nentire event to assure proper implementation of the planned items.\nIt is the responsibility of the Logistics Officer to provide the required support to\nthe Operations Officer prior, during, and after the event (This is mainly inside\nJordan).\nIt is the responsibility of the Task Owner to ensure the event according to the\nagenda and the plan. Based on the event, the Task Owner shall attend the\nevent or coordinate with the Technical representative in the country to attend."
+    },
+    {
+      "id": "s02.4",
+      "path": "Section 02 > 2.4 Policies",
+      "level": 2,
+      "node_type": "parent",
+      "children": [
+        "s02.4.a",
+        "s02.4.b",
+        "s02.4.c",
+        "s02.4.d",
+        "s02.4.e"
+      ]
+    },
+    {
+      "id": "s02.4.a",
+      "path": "Section 02 > 2.4 Policies > Before Launching the event",
+      "level": 3,
+      "node_type": "leaf",
+      "heading": "Before Launching the event",
+      "next_heading": "During the Event",
+      "own_text": "To assure smooth implementation, every effort shall be made before the event\nto make sure that all the required arrangements are made to achieve the\nrequirements that was requested in the planning phase. Each team member\nplays a crucial role in making the success of the event as follows.\nEvent Site check shall be performed by the assigned team one day before the\nevent to make sure that the set up matches the requirements and to give time\nto rectify any incident(s).\nIn addition, the relevant team shall be one hour and half before the event start\ntime on the first day to reassure proper arrangements.\nThe involved team in these preparations are usually the Operations Officer,\nLogistics Officer, IT Specialist, plus a technical officer. However, based on the\ncircumstances and event location and country these functions could be\ndelegated to the representative in the country or other personnel. However, this\nshall be monitored by the Operations Officer."
+    },
+    {
+      "id": "s02.4.b",
+      "path": "Section 02 > 2.4 Policies > During the Event",
+      "level": 3,
+      "node_type": "leaf",
+      "heading": "During the Event",
+      "next_heading": "Delivering Payments to Participants and Facilitators",
+      "own_text": "t\nThe Operations Officer or the representative in the country and the Logistics\nOfficer should be always physically present during the event. They shall arrive\none hour before starting the daily program (other than the first day) to make the\nrequired arrangements and should be the last one to leave the premises.\nThe Operations Officer could request support from the Logistics Officer in\naccomplishing any task or arrangements, however, the Operations Officer\nholds the ultimate responsibility.\nThe Task Owner and/ or the Technical Team at the country should arrive to the\nevent site at least one hour prior to the start time to make sure that all the\nrequired arrangements are in place.\nMedia and Communication team member(s) should attend the opening session\nof the event and take appropriate notes and/ or photos.\nThe Creative Lead shall make sure that the venue setup and all arrangements\nare as planned."
+    },
+    {
+      "id": "s02.4.c",
+      "path": "Section 02 > 2.4 Policies > Delivering Payments to Participants and Facilitators",
+      "level": 3,
+      "node_type": "leaf",
+      "heading": "Delivering Payments to Participants and Facilitators",
+      "next_heading": "Social Program",
+      "own_text": "The Operations Officer shall coordinate delivering the payment with the\naccounting department.\nIn the case that participants and facilitators attending events are entitled to a\nper diem covering their period of stay. The Treasury Accountant or a delegate\nis responsible for preparing and delivering these per diems.\nDelivering the per diem shall be on the second day of the event for the events\nthat for more than one day. The Treasury Accountant or a delegate shall make\nsure to distribute the per diem in a suitable time that doesn’t disturb the event\nitself or the participants/ facilitators.\nWhen the event is conducted outside Jordan, the Treasury Accountant shall\nmake the required coordination with the assigned person who will deliver the\npayment to participants.\nAccounting policies and procedures shall be applied."
+    },
+    {
+      "id": "s02.4.d",
+      "path": "Section 02 > 2.4 Policies > Social Program",
+      "level": 3,
+      "node_type": "leaf",
+      "heading": "Social Program",
+      "next_heading": "Photography",
+      "own_text": "It is not customary for GHD|EMPHNET to offer social activities or a social\nprogram during the event. However, GHD|EMPHNET’s Operations Officer or\nthe country representative is responsible for arranging trips or providing\ninformation to any of the participants who wish to do sightseeing. Sometimes,\nthe participants wish to engage in a group dinner that is self-paid. In such\ninstances, the Operations Officer is responsible for making dinner reservations\nfor the group. Other times, GHD|EMPHNET Executive Office decides to invite\nsome of the participants or facilitators to a farewell and recognition dinner, for\nwhich the Operations Officer will arrange reservations and inform the\nconcerned parties of details."
+    },
+    {
+      "id": "s02.4.e",
+      "path": "Section 02 > 2.4 Policies > Photography",
+      "level": 3,
+      "node_type": "leaf",
+      "heading": "Photography",
+      "next_heading": "2.5. Procedures",
+      "own_text": "y\nBased on the arrangements during the preparation phase, the Media and\nCommunication team is responsible for ensuring that photos are captured to cover the\nevent whether this is done internally or by an external photographer, by the\nrepresentative in the country or by the Task owner/ Operations Officer who attend the\nevent."
+    },
+    {
+      "id": "s02.5",
+      "path": "Section 02 > 2.5 Procedures",
+      "level": 2,
+      "node_type": "parent",
+      "children": [
+        "s02.p02"
+      ]
+    },
+    {
+      "id": "s02.p02",
+      "path": "Section 02 > 2.5 Procedures > Procedure 02: Event Implementation",
+      "level": 3,
+      "node_type": "leaf",
+      "ref_code": "ML-ORG-01.P02",
+      "heading": "Procedure 02: Event Implementation",
+      "next_heading": "2.7. Related Documents",
+      "own_text": "ML-ORG-01.P02 Event\nImplementation\nManual\nVersion no.:\n1.\nOne day before the event\n1.1.\nMake sure that all the materials and supplies that are\nneeded to run the event are available. Request from the\nLogistics Officer, if any, to collect these items and to have\nthem delivered to the event site one day prior to beginning\nthe event.\nOfficer or the\nrepresentative\nin the country\n1.2.\nDeliver the required material to the event site and make\nsure to place them in their designated destination\naccording to the Operations Officer recommendations.\nLogistics\nSupport\n1.3.\nCheck the following on the day before the event:\nRoom\nsetting\nand\ncondition\nmatches\nthe\nrequirements\nAvailability of all requested items, including an\naccessible table for registration with convenient\nspace\nAll equipment, including lighting and ventilation,\nwork properly\nSignage is available in two visible locations\nRoll up, banner and/or back drop mounted in a\nvisible location\nCheck settings and make sure that there are\nenough seats to match the number of participants\nand facilitators\nBe fully aware with the hotel’s facility to guide the\nparticipants such as exist routes, pray area,\nrestrooms, etc.\nOfficer or the\nrepresentative\nin the country\n1.4.\nMake the following arrangements on the day before the\nevent:\nSet up the laptop and download the presentations\non the laptop.\nSet up a printer and check its functionality\nCheck that the sound system is working properly.\nTest zoom link, if there is a zoom connection.\nIT Specialist\n\n2.\nAt the morning of the event day\n2.1.\nAt least an hour and a half before the official registration\ntime for the event and use this time to do the following:\nCheck lighting and get familiar with their switches\nOrganize the registration desk by including the\nfollowing:\no Attendance signing sheet listing participants\nsorted by country and then alphabetical\no Folders to hand out upon registration\no Name tags arranged alphabetical\no Check the availability of any required electrical\nextensions\no Any other information\no Check breakout area\no Confirm catering services and provide coffee\ntime and lunch time to hotel\no Write down “housekeeping notes” that need\nto be announced during the event\no Make sure hotel staff has details for the event\nand that support is readily available when\nneeded. Obtain a mobile number that can be\nused to summon support when needed.\nofficer or the\nrepresentative\nin the country\n2.2.\nAt least an hour and a half before the event, check the\nfollowing:\nCheck the sound system\nCheck that the laptops are functioning properly\nIT Specialist or\nthe delegate in\nthe country\n3.\nDuring the event\n3.1.\nMake sure to perform the following:\nObtain signatures of all participants (including\nfacilitators) on the daily attendance sheet.\nCheck that all participants have filled out their bio data\nand alert those who did not.\nAssure that presentations are saved on the laptop.\nPhotocopy any material requested by the Task Owner.\nConfirm catering times with hotel.\nMake sure that photos/ videos are taken during the\nevent.\nVerify hotel catering receipts against the number of\nparticipants and sign the bills accordingly.\nRetain all receipts for any expenses encountered\nduring the event.\nOfficer or the\nrepresentative\nin the country\n\nMake necessary announcements in coordination with\nthe Technical Team.\n3.2.\nProvide the required support during the event and the Gala\nDinner.\nLogistics\nOfficer\n4.\nDelivering Payments to Participants and Facilitators\nTreasury\nAccountant\n4.1.\nSend a final list of participants and facilitators to the\nTreasury Unit outlining the duration of stay (date of arrival\nand departure) on the first day of the event. In addition,\nshare any relevant invoices shared by participants/\nfacilitators.\nOfficer\n4.2.\nCalculate transportation and per diem amounts based on\nthe duration of stay and in accordance with the applied\npolicies and procedures.\nTreasury\nAccountant or\nthe delegate\n4.3.\nPrint out a detailed list of payments (include payment type\nand amount for each participants/ facilitator) and other\nsupportive documents, prepare a cheque indicating the\ntotal amount and submit for signature.\nTreasury\nAccountant or\nthe delegate\n4.4.\nPrepare the per diem amounts and place the amount for\neach participant in a separate envelop that carries the\nname of the recipient.\nTreasury\nAccountant or\nthe delegate\n4.5.\nPrepare a receipt voucher for each recipient. This receipt\nshould carry the name of the recipient, the date, and the\npayment amount. These receipts should be placed in the\nrelevant envelops with the payments.\nTreasury\nAccountant or\nthe delegate\n4.6.\nDeliver the payments in person to each of the recipients\non the second day of the event, making sure that the\nrecipient signs the receipt in person.\nTreasury\nAccountant or\nthe delegate\n4.7.\nRetain all receipts and file them appropriately on record.\nTreasury\nAccountant or\nthe delegate"
+    },
+    {
+      "id": "s02.7",
+      "path": "Section 02 > 2.7 Related Documents",
+      "level": 2,
+      "node_type": "leaf",
+      "heading": "2.7. Related Documents",
+      "next_heading": "2.8. References",
+      "own_text": "s"
+    },
+    {
+      "id": "s02.8",
+      "path": "Section 02 > 2.8 References",
+      "level": 2,
+      "node_type": "leaf",
+      "heading": "2.8. References",
+      "next_heading": "Section 03: Closing the event",
+      "own_text": ""
+    },
+    {
+      "id": "s03",
+      "path": "Section 03: Closing the event",
+      "level": 1,
+      "node_type": "parent",
+      "children": [
+        "s03.1",
+        "s03.2",
+        "s03.3",
+        "s03.4"
+      ]
+    },
+    {
+      "id": "s03.1",
+      "path": "Section 03 > 3.1 Purpose",
+      "level": 2,
+      "node_type": "leaf",
+      "heading": "3.1. Purpose",
+      "next_heading": "3.2. Scope",
+      "own_text": "activities that shall take place upon event closure."
+    },
+    {
+      "id": "s03.2",
+      "path": "Section 03 > 3.2 Scope",
+      "level": 2,
+      "node_type": "leaf",
+      "heading": "3.2. Scope",
+      "next_heading": "3.3. Responsibilities",
+      "own_text": "All events come to a conclusion and certain actions are required to wrap an event in\norder to assure documentation of outcomes and achievements. Concluding an event\nis not a sudden and rapid action as several issues need to be considered. This section\nsummarizes the issues need to be considered to assure proper and efficient closing\nof events. This policy applies to all personnel involved in event conduct closeout."
+    },
+    {
+      "id": "s03.3",
+      "path": "Section 03 > 3.3 Responsibilities",
+      "level": 2,
+      "node_type": "leaf",
+      "heading": "3.3. Responsibilities",
+      "next_heading": "3.4. Policies",
+      "own_text": "It is the responsibility of the Task Owner and the Operations Officer to assure proper\nclose out of the event."
+    },
+    {
+      "id": "s03.4",
+      "path": "Section 03 > 3.4 Policies",
+      "level": 2,
+      "node_type": "parent",
+      "children": [
+        "s03.4.a",
+        "s03.4.b",
+        "s03.4.c",
+        "s03.4.d"
+      ]
+    },
+    {
+      "id": "s03.4.a",
+      "path": "Section 03 > 3.4 Policies > Certificates and Plaque",
+      "level": 3,
+      "node_type": "leaf",
+      "heading": "Certificates and Plaque",
+      "next_heading": "Event Items",
+      "own_text": "Whenever certificates are requested for an event, participants and facilitators are\nhanded Certificates denoting their attendance. The Executive Director or someone\nnominated by the Executive Director shall deliver the certificates.\nIn certain cases, certificates can be distributed digitally to the participants.\nIn certain occasions and based on the Technical Team Leader decision, Plaque could\nbe handed out at the end of the event."
+    },
+    {
+      "id": "s03.4.b",
+      "path": "Section 03 > 3.4 Policies > Event Items",
+      "level": 3,
+      "node_type": "leaf",
+      "heading": "Event Items",
+      "next_heading": "Payments",
+      "own_text": "Event items that are on the event site shall be collected after the event. This is under\nthe responsibility of the Operations Officer or the representative in the country. The\nLogistics Officer shall provide the required support in coordination with the Operations\nOfficer."
+    },
+    {
+      "id": "s03.4.c",
+      "path": "Section 03 > 3.4 Policies > Payments",
+      "level": 3,
+      "node_type": "leaf",
+      "heading": "Payments",
+      "next_heading": "Reporting",
+      "own_text": "The Operations Officer needs to present receipts retained from conducting the event\nto the Finance Department together. The Treasury Accountant is responsible for\nfinalizing payment to the hotel or event site. S/he is responsible for cross-checking the\nfinal guest list received from the hotel with the list provided by the Operations Officer.\nThe Treasury Accountant and any employee who received invoices shall submit them\nto the Accounting team which by their turn will check them and upload them to the\nsystem. After that the Finance Team shall record them to the relevant activity and\nissue any required reports."
+    },
+    {
+      "id": "s03.4.d",
+      "path": "Section 03 > 3.4 Policies > Reporting",
+      "level": 3,
+      "node_type": "leaf",
+      "heading": "Reporting",
+      "next_heading": "Annexes",
+      "own_text": "g\nUpon completing the event, the Task Owner is responsible for conducting a close-out\nmeeting with all relevant staff who were engaged in managing the event. The purpose\nof this meeting is to discuss the event to identify and discuss any gaps or limitations\nfaced during the workshop. These meetings will help in identifying lessons learnt.\nThe Task Owner is responsible for preparing a report summarizing the event\nproceedings (Technical report). This report should be prepared using GHD|EMPHNET\nreport template and should be presented for the Team Leader/ Director within two\nweeks from concluding the event through the system. Once reviewed and approved,\nthe report should be saved in its relevant folder on the DMS Twenty. The Task Owner\nis also responsible for saving the material used during the event.\nDocuments Keeping\nThe Operations Officer is responsible for event documentation on the following sites:\nDMS Twenty/ Administration/ Project Tracking, by creating a new item\ndetailing the event details. This tracking is used for report generation and\nprojects tracking.\nProject Center/ Project Activity, by creating a new folder and name it\naccording to the event name, adding the final documents related to the event\nsuch as actual participants list, agenda, training material, and technical report.\nEMPHNET Resources Engine (ERE), this site aims to collect data for all\nparticipants who were involved in any of GHD|EMPHNET activities (including\nthe past events). After each event, any new participants shall be added to the\nERE.\nAdditional Consideration: It is extremely important to maintain accurate records\nof participants in the EMPHNET Resources Engine (ERE) when collecting data\nfor participants of any event as they may also be involved in similar past\nevents/activities. After each event, any new participants shall be added to the\nERE. However, extreme caution must be practiced not to add duplicates to the\nrecords as this will strain the ERE system resources and will require a lot of\nefforts later on for duplication removals and updating of new data for the records\nof the same individuals (as opposed to adding the same individuals multiple\ntimes).\nIn addition, the Project Management Team shall update the Project Center with the\nevent actual information.\nMedia and Communications team shall upload all the designs and photos related to\nthe event on the DMS Twenty.\nThe Technical team are responsible for saving the event training material on the DMS\nTwenty.\n\nThe Information Technology, upon request from the Task Owner, shall keep the\nrecording of virtual events conducted through Zoom in MS Stream for future reference."
+    }
+  ]
+}

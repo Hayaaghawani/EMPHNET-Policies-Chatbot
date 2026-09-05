@@ -1,0 +1,1070 @@
+[
+  {
+    "doc_id": "GL-ORG-01",
+    "id": "intro",
+    "path": "Introduction",
+    "node_type": "parent"
+  },
+  {
+    "doc_id": "GL-ORG-01",
+    "id": "intro.purpose",
+    "path": "Introduction > Purpose",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "GL-ORG-01",
+    "id": "intro.responsibility",
+    "path": "Introduction > Responsibility",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "GL-ORG-01",
+    "id": "acronyms",
+    "path": "Acronyms",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "GL-ORG-01",
+    "id": "s01",
+    "path": "Section 01: Effective Communication",
+    "node_type": "parent"
+  },
+  {
+    "doc_id": "GL-ORG-01",
+    "id": "s01.a",
+    "path": "Section 01 > Benefits of Effective Internal Communication",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "GL-ORG-01",
+    "id": "s01.b",
+    "path": "Section 01 > Main Principles of Effective Internal Communication",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "GL-ORG-01",
+    "id": "s01.c",
+    "path": "Section 01 > Three-Step Process for Effective Communication",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "GL-ORG-01",
+    "id": "s01.d",
+    "path": "Section 01 > Major Challenges in Communication",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "GL-ORG-01",
+    "id": "s02",
+    "path": "Section 02: Internal Communication Channels",
+    "node_type": "parent"
+  },
+  {
+    "doc_id": "GL-ORG-01",
+    "id": "s02.1",
+    "path": "Section 02 > 2.1 Virtual Engagement",
+    "node_type": "parent"
+  },
+  {
+    "doc_id": "GL-ORG-01",
+    "id": "s02.1.1",
+    "path": "Section 02 > 2.1 Virtual Engagement > 2.1.1 Microsoft Teams",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "GL-ORG-01",
+    "id": "s02.1.2",
+    "path": "Section 02 > 2.1 Virtual Engagement > 2.1.2 Zoom",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "GL-ORG-01",
+    "id": "s02.2",
+    "path": "Section 02 > 2.2 Face-to-Face Meeting",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "GL-ORG-01",
+    "id": "s02.3",
+    "path": "Section 02 > 2.3 Emails",
+    "node_type": "parent"
+  },
+  {
+    "doc_id": "GL-ORG-01",
+    "id": "s02.3.a",
+    "path": "Section 02 > 2.3 Emails > Email subject and writing style",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "GL-ORG-01",
+    "id": "s02.3.b",
+    "path": "Section 02 > 2.3 Emails > Reply and Forward",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "GL-ORG-01",
+    "id": "s02.3.c",
+    "path": "Section 02 > 2.3 Emails > Recipients",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "GL-ORG-01",
+    "id": "s02.3.d",
+    "path": "Section 02 > 2.3 Emails > Email Size and Security",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "GL-ORG-01",
+    "id": "s02.4",
+    "path": "Section 02 > 2.4 WhatsApp – HQ & Offices Group",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "GL-ORG-01",
+    "id": "s03",
+    "path": "Section 03: Internal Communication Matrix",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "GL-ORG-01",
+    "id": "s04",
+    "path": "Section 04: Periodic Internal Meetings",
+    "node_type": "parent"
+  },
+  {
+    "doc_id": "GL-ORG-01",
+    "id": "s04.a",
+    "path": "Section 04 > Departmental and Teams bi-weekly meetings",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "GL-ORG-01",
+    "id": "s04.b",
+    "path": "Section 04 > Executive Director's bi-weekly meetings",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "GL-ORG-01",
+    "id": "s04.c",
+    "path": "Section 04 > Monthly Technical Day",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "GL-ORG-01",
+    "id": "s04.d",
+    "path": "Section 04 > Quarterly Staff Meeting",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "GL-ORG-01",
+    "id": "s04.e",
+    "path": "Section 04 > EMPHNET Annual Meeting",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "GL-ORG-01",
+    "id": "s04.f",
+    "path": "Section 04 > Senior Management Team Meeting",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "GL-ORG-01",
+    "id": "s04.g",
+    "path": "Section 04 > Quarterly Strategy Meeting",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "GL-ORG-01",
+    "id": "s04.h",
+    "path": "Section 04 > Quarterly Management Meeting",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "GL-ORG-01",
+    "id": "s04.i",
+    "path": "Section 04 > Monthly HQ Country Team and the Country Office Employees' Meeting",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "ML-ORG-01",
+    "id": "intro",
+    "path": "Introduction",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "ML-ORG-01",
+    "id": "purpose",
+    "path": "Purpose of the Manual",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "ML-ORG-01",
+    "id": "overview",
+    "path": "Manual Overview",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "ML-ORG-01",
+    "id": "definitions",
+    "path": "Definitions and Acronyms",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "ML-ORG-01",
+    "id": "s01",
+    "path": "Section 01: Planning and Preparation for the Events",
+    "node_type": "parent"
+  },
+  {
+    "doc_id": "ML-ORG-01",
+    "id": "s01.1",
+    "path": "Section 01 > 1.1 Purpose",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "ML-ORG-01",
+    "id": "s01.2",
+    "path": "Section 01 > 1.2 Scope",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "ML-ORG-01",
+    "id": "s01.3",
+    "path": "Section 01 > 1.3 Responsibilities",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "ML-ORG-01",
+    "id": "s01.4",
+    "path": "Section 01 > 1.4 Policies",
+    "node_type": "parent"
+  },
+  {
+    "doc_id": "ML-ORG-01",
+    "id": "s01.4.a",
+    "path": "Section 01 > 1.4 Policies > Planning",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "ML-ORG-01",
+    "id": "s01.4.b",
+    "path": "Section 01 > 1.4 Policies > Event Announcement",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "ML-ORG-01",
+    "id": "s01.4.c",
+    "path": "Section 01 > 1.4 Policies > Event Language",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "ML-ORG-01",
+    "id": "s01.4.d",
+    "path": "Section 01 > 1.4 Policies > Participants",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "ML-ORG-01",
+    "id": "s01.4.e",
+    "path": "Section 01 > 1.4 Policies > Facilitators and Speakers",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "ML-ORG-01",
+    "id": "s01.4.f",
+    "path": "Section 01 > 1.4 Policies > Venue Selection",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "ML-ORG-01",
+    "id": "s01.4.g",
+    "path": "Section 01 > 1.4 Policies > Travel Arrangements",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "ML-ORG-01",
+    "id": "s01.4.h",
+    "path": "Section 01 > 1.4 Policies > Welcoming Participants",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "ML-ORG-01",
+    "id": "s01.4.i",
+    "path": "Section 01 > 1.4 Policies > Event Materials",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "ML-ORG-01",
+    "id": "s01.4.j",
+    "path": "Section 01 > 1.4 Policies > Media and Communication Role",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "ML-ORG-01",
+    "id": "s01.4.k",
+    "path": "Section 01 > 1.4 Policies > Certificates",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "ML-ORG-01",
+    "id": "s01.4.l",
+    "path": "Section 01 > 1.4 Policies > Certificate Documentation",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "ML-ORG-01",
+    "id": "s01.5",
+    "path": "Section 01 > 1.5 Procedures",
+    "node_type": "parent"
+  },
+  {
+    "doc_id": "ML-ORG-01",
+    "id": "s01.p01",
+    "path": "Section 01 > 1.5 Procedures > Procedure 01: Event Planning and Preparation Phase",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "ML-ORG-01",
+    "id": "s01.6",
+    "path": "Section 01 > 1.6 Related Documents",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "ML-ORG-01",
+    "id": "s01.7",
+    "path": "Section 01 > 1.7 References",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "ML-ORG-01",
+    "id": "s02",
+    "path": "Section 02: Event Implementation",
+    "node_type": "parent"
+  },
+  {
+    "doc_id": "ML-ORG-01",
+    "id": "s02.1",
+    "path": "Section 02 > 2.1 Purpose",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "ML-ORG-01",
+    "id": "s02.2",
+    "path": "Section 02 > 2.2 Scope",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "ML-ORG-01",
+    "id": "s02.3",
+    "path": "Section 02 > 2.3 Responsibilities",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "ML-ORG-01",
+    "id": "s02.4",
+    "path": "Section 02 > 2.4 Policies",
+    "node_type": "parent"
+  },
+  {
+    "doc_id": "ML-ORG-01",
+    "id": "s02.4.a",
+    "path": "Section 02 > 2.4 Policies > Before Launching the event",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "ML-ORG-01",
+    "id": "s02.4.b",
+    "path": "Section 02 > 2.4 Policies > During the Event",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "ML-ORG-01",
+    "id": "s02.4.c",
+    "path": "Section 02 > 2.4 Policies > Delivering Payments to Participants and Facilitators",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "ML-ORG-01",
+    "id": "s02.4.d",
+    "path": "Section 02 > 2.4 Policies > Social Program",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "ML-ORG-01",
+    "id": "s02.4.e",
+    "path": "Section 02 > 2.4 Policies > Photography",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "ML-ORG-01",
+    "id": "s02.5",
+    "path": "Section 02 > 2.5 Procedures",
+    "node_type": "parent"
+  },
+  {
+    "doc_id": "ML-ORG-01",
+    "id": "s02.p02",
+    "path": "Section 02 > 2.5 Procedures > Procedure 02: Event Implementation",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "ML-ORG-01",
+    "id": "s02.7",
+    "path": "Section 02 > 2.7 Related Documents",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "ML-ORG-01",
+    "id": "s02.8",
+    "path": "Section 02 > 2.8 References",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "ML-ORG-01",
+    "id": "s03",
+    "path": "Section 03: Closing the event",
+    "node_type": "parent"
+  },
+  {
+    "doc_id": "ML-ORG-01",
+    "id": "s03.1",
+    "path": "Section 03 > 3.1 Purpose",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "ML-ORG-01",
+    "id": "s03.2",
+    "path": "Section 03 > 3.2 Scope",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "ML-ORG-01",
+    "id": "s03.3",
+    "path": "Section 03 > 3.3 Responsibilities",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "ML-ORG-01",
+    "id": "s03.4",
+    "path": "Section 03 > 3.4 Policies",
+    "node_type": "parent"
+  },
+  {
+    "doc_id": "ML-ORG-01",
+    "id": "s03.4.a",
+    "path": "Section 03 > 3.4 Policies > Certificates and Plaque",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "ML-ORG-01",
+    "id": "s03.4.b",
+    "path": "Section 03 > 3.4 Policies > Event Items",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "ML-ORG-01",
+    "id": "s03.4.c",
+    "path": "Section 03 > 3.4 Policies > Payments",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "ML-ORG-01",
+    "id": "s03.4.d",
+    "path": "Section 03 > 3.4 Policies > Reporting",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "ML-HR-01",
+    "id": "intro",
+    "path": "INTRODUCTION",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "ML-HR-01",
+    "id": "purpose_manual",
+    "path": "Purpose of the Manual",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "ML-HR-01",
+    "id": "manual_overview",
+    "path": "Manual Overview",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "ML-HR-01",
+    "id": "definitions",
+    "path": "Definitions and Acronyms",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "ML-HR-01",
+    "id": "s01",
+    "path": "Section 01: Recruitment & Selection",
+    "node_type": "parent"
+  },
+  {
+    "doc_id": "ML-HR-01",
+    "id": "s01.1",
+    "path": "Section 01 > 1.1 Purpose",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "ML-HR-01",
+    "id": "s01.2",
+    "path": "Section 01 > 1.2 Scope",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "ML-HR-01",
+    "id": "s01.3",
+    "path": "Section 01 > 1.3 Responsibilities",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "ML-HR-01",
+    "id": "s01.4",
+    "path": "Section 01 > 1.4 Policies",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "ML-HR-01",
+    "id": "s01.5",
+    "path": "Section 01 > 1.5 Procedures",
+    "node_type": "parent"
+  },
+  {
+    "doc_id": "ML-HR-01",
+    "id": "s01.p01",
+    "path": "Section 01 > 1.5 Procedures > Procedure 01: Develop Human Resources Plan",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "ML-HR-01",
+    "id": "s01.p02",
+    "path": "Section 01 > 1.5 Procedures > Procedure 02: Request to fill a vacancy",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "ML-HR-01",
+    "id": "s01.p03",
+    "path": "Section 01 > 1.5 Procedures > Procedure 03: Hire Full Time Employees",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "ML-HR-01",
+    "id": "s01.p04",
+    "path": "Section 01 > 1.5 Procedures > Procedure 04: Hiring Consultant/ Contractor Related to Project",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "ML-HR-01",
+    "id": "s01.p05",
+    "path": "Section 01 > 1.5 Procedures > Procedure 05: Hiring Consultant/ Contractor Not Related to Project",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "ML-HR-01",
+    "id": "s01.p06",
+    "path": "Section 01 > 1.5 Procedures > Procedure 06: Orienting new employees",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "ML-HR-01",
+    "id": "s01.p07",
+    "path": "Section 01 > 1.5 Procedures > Procedure 07: Completing 3 Months Employee Evaluation",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "ML-HR-01",
+    "id": "s01.p08",
+    "path": "Section 01 > 1.5 Procedures > Procedure 08: Employee Transfer",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "ML-HR-01",
+    "id": "s01.6",
+    "path": "Section 01 > 1.6 Related Documents",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "ML-HR-01",
+    "id": "s01.7",
+    "path": "Section 01 > 1.7 References",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "ML-HR-01",
+    "id": "s02",
+    "path": "Section 02: Performance Appraisal",
+    "node_type": "parent"
+  },
+  {
+    "doc_id": "ML-HR-01",
+    "id": "s02.1",
+    "path": "Section 02 > 2.1 purpose",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "ML-HR-01",
+    "id": "s02.2",
+    "path": "Section 02 > 2.2 Scope",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "ML-HR-01",
+    "id": "s02.3",
+    "path": "Section 02 > 2.3 Responsibilities",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "ML-HR-01",
+    "id": "s02.4",
+    "path": "Section 02 > 2.4 Policies",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "ML-HR-01",
+    "id": "s02.5",
+    "path": "Section 02 > 2.5 Procedures",
+    "node_type": "parent"
+  },
+  {
+    "doc_id": "ML-HR-01",
+    "id": "s02.p09",
+    "path": "Section 02 > 2.5 Procedures > Procedure 09: Set Performance Objectives",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "ML-HR-01",
+    "id": "s02.p10",
+    "path": "Section 02 > 2.5 Procedures > Procedure 10: Perform Annual Appraisal and Semi-Annual Performance Review",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "ML-HR-01",
+    "id": "s02.6",
+    "path": "Section 02 > 2.6 Related Documents",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "ML-HR-01",
+    "id": "s02.7",
+    "path": "Section 02 > 2.7 References",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "ML-HR-01",
+    "id": "s03",
+    "path": "Section 03: EMPLOYMENT Contract",
+    "node_type": "parent"
+  },
+  {
+    "doc_id": "ML-HR-01",
+    "id": "s03.1",
+    "path": "Section 03 > 3.1 Purpose",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "ML-HR-01",
+    "id": "s03.2",
+    "path": "Section 03 > 3.2 Scope",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "ML-HR-01",
+    "id": "s03.3",
+    "path": "Section 03 > 3.3 Responsibilities",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "ML-HR-01",
+    "id": "s03.4",
+    "path": "Section 03 > 3.4 Policies",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "ML-HR-01",
+    "id": "s03.5",
+    "path": "Section 03 > 3.5 Procedures",
+    "node_type": "parent"
+  },
+  {
+    "doc_id": "ML-HR-01",
+    "id": "s03.p11",
+    "path": "Section 03 > 3.5 Procedures > Procedure 11: End of Contract – Clearance Process",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "ML-HR-01",
+    "id": "s03.p12",
+    "path": "Section 03 > 3.5 Procedures > Procedure 12: Resignation",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "ML-HR-01",
+    "id": "s03.p13",
+    "path": "Section 03 > 3.5 Procedures > Procedure 13: Renew a Contract",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "ML-HR-01",
+    "id": "s03.6",
+    "path": "Section 03 > 3.6 Related Documents",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "ML-HR-01",
+    "id": "s03.7",
+    "path": "Section 03 > 3.7 References",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "ML-HR-01",
+    "id": "s04",
+    "path": "Section 04: Training and Development",
+    "node_type": "parent"
+  },
+  {
+    "doc_id": "ML-HR-01",
+    "id": "s04.1",
+    "path": "Section 04 > 4.1 Purpose",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "ML-HR-01",
+    "id": "s04.2",
+    "path": "Section 04 > 4.2 Scope",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "ML-HR-01",
+    "id": "s04.3",
+    "path": "Section 04 > 4.3 Responsibilities",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "ML-HR-01",
+    "id": "s04.4",
+    "path": "Section 04 > 4.4 Policies",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "ML-HR-01",
+    "id": "s04.5",
+    "path": "Section 04 > 4.5 Procedures",
+    "node_type": "parent"
+  },
+  {
+    "doc_id": "ML-HR-01",
+    "id": "s04.p14",
+    "path": "Section 04 > 4.5 Procedures > Procedure 14: Develop and Update Annual Training Plan",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "ML-HR-01",
+    "id": "s04.p15",
+    "path": "Section 04 > 4.5 Procedures > Procedure 15: Request a Training outside the Annual Training Plan",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "ML-HR-01",
+    "id": "s04.p16",
+    "path": "Section 04 > 4.5 Procedures > Procedure 16: Training Evaluation",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "ML-HR-01",
+    "id": "s04.6",
+    "path": "Section 04 > 4.6 Related Records",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "ML-HR-01",
+    "id": "s04.7",
+    "path": "Section 04 > 4.7 References",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "ML-HR-01",
+    "id": "s05",
+    "path": "Section 05: Attendance, Leaves & Vacations",
+    "node_type": "parent"
+  },
+  {
+    "doc_id": "ML-HR-01",
+    "id": "s05.1",
+    "path": "Section 05 > 5.1 Purpose",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "ML-HR-01",
+    "id": "s05.2",
+    "path": "Section 05 > 5.2 Scope",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "ML-HR-01",
+    "id": "s05.3",
+    "path": "Section 05 > 5.3 Responsibilities",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "ML-HR-01",
+    "id": "s05.4",
+    "path": "Section 05 > 5.4 Policies",
+    "node_type": "parent"
+  },
+  {
+    "doc_id": "ML-HR-01",
+    "id": "s05.4.a",
+    "path": "Section 05 > 5.4 Policies > Employee Attendance",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "ML-HR-01",
+    "id": "s05.4.b",
+    "path": "Section 05 > 5.4 Policies > Personal Leave and Annual Vacations",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "ML-HR-01",
+    "id": "s05.4.c",
+    "path": "Section 05 > 5.4 Policies > Business Leave",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "ML-HR-01",
+    "id": "s05.4.d",
+    "path": "Section 05 > 5.4 Policies > Working from Anywhere (WfA)",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "ML-HR-01",
+    "id": "s05.4.e",
+    "path": "Section 05 > 5.4 Policies > Unpaid Vacation",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "ML-HR-01",
+    "id": "s05.4.f",
+    "path": "Section 05 > 5.4 Policies > Sick Leave",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "ML-HR-01",
+    "id": "s05.4.g",
+    "path": "Section 05 > 5.4 Policies > Official Holidays",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "ML-HR-01",
+    "id": "s05.4.h",
+    "path": "Section 05 > 5.4 Policies > Hajj Vacation",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "ML-HR-01",
+    "id": "s05.4.i",
+    "path": "Section 05 > 5.4 Policies > Emergency Vacation",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "ML-HR-01",
+    "id": "s05.4.j",
+    "path": "Section 05 > 5.4 Policies > Paternity Leave",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "ML-HR-01",
+    "id": "s05.4.k",
+    "path": "Section 05 > 5.4 Policies > Maternity Leave",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "ML-HR-01",
+    "id": "s05.4.l",
+    "path": "Section 05 > 5.4 Policies > General",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "ML-HR-01",
+    "id": "s05.4.m",
+    "path": "Section 05 > 5.4 Policies > Overtime",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "ML-HR-01",
+    "id": "s05.5",
+    "path": "Section 05 > 5.5 Procedures",
+    "node_type": "parent"
+  },
+  {
+    "doc_id": "ML-HR-01",
+    "id": "s05.p17",
+    "path": "Section 05 > 5.5 Procedures > Procedure 17: Monitoring and Reporting Attendance",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "ML-HR-01",
+    "id": "s05.p18",
+    "path": "Section 05 > 5.5 Procedures > Procedure 18: Leave Request",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "ML-HR-01",
+    "id": "s05.p19",
+    "path": "Section 05 > 5.5 Procedures > Procedure 19: Vacation Request",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "ML-HR-01",
+    "id": "s05.p20",
+    "path": "Section 05 > 5.5 Procedures > Procedure 20: Working from Anywhere (WfA)",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "ML-HR-01",
+    "id": "s05.6",
+    "path": "Section 05 > 5.6 Related Documents",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "ML-HR-01",
+    "id": "s05.7",
+    "path": "Section 05 > 5.7 References",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "ML-HR-01",
+    "id": "s06",
+    "path": "Section 06: Discipline, Grievance & Complaints",
+    "node_type": "parent"
+  },
+  {
+    "doc_id": "ML-HR-01",
+    "id": "s06.1",
+    "path": "Section 06 > 6.1 Purpose",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "ML-HR-01",
+    "id": "s06.2",
+    "path": "Section 06 > 6.2 Scope",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "ML-HR-01",
+    "id": "s06.3",
+    "path": "Section 06 > 6.3 Responsibilities",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "ML-HR-01",
+    "id": "s06.4",
+    "path": "Section 06 > 6.4 Policies",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "ML-HR-01",
+    "id": "s06.5",
+    "path": "Section 06 > 6.5 Procedures",
+    "node_type": "parent"
+  },
+  {
+    "doc_id": "ML-HR-01",
+    "id": "s06.p21",
+    "path": "Section 06 > 6.5 Procedures > Procedure 21: Discipline",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "ML-HR-01",
+    "id": "s06.p22",
+    "path": "Section 06 > 6.5 Procedures > Procedure 22: Grievance Request",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "ML-HR-01",
+    "id": "s06.p23",
+    "path": "Section 06 > 6.5 Procedures > Procedure 23: Complaint",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "ML-HR-01",
+    "id": "s06.6",
+    "path": "Section 06 > 6.6 Records & Forms",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "ML-HR-01",
+    "id": "s06.7",
+    "path": "Section 06 > 6.7 References",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "ML-HR-01",
+    "id": "s07",
+    "path": "Section 07: Personnel Management",
+    "node_type": "parent"
+  },
+  {
+    "doc_id": "ML-HR-01",
+    "id": "s07.1",
+    "path": "Section 07 > 7.1 Purpose",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "ML-HR-01",
+    "id": "s07.2",
+    "path": "Section 07 > 7.2 Scope",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "ML-HR-01",
+    "id": "s07.3",
+    "path": "Section 07 > 7.3 Responsibilities",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "ML-HR-01",
+    "id": "s07.4",
+    "path": "Section 07 > 7.4 Policies",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "ML-HR-01",
+    "id": "s07.5",
+    "path": "Section 07 > 7.5 Procedures",
+    "node_type": "parent"
+  },
+  {
+    "doc_id": "ML-HR-01",
+    "id": "s07.p24",
+    "path": "Section 07 > 7.5 Procedures > Procedure 24: Issue Health Insurance",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "ML-HR-01",
+    "id": "s07.p25",
+    "path": "Section 07 > 7.5 Procedures > Procedure 25: Issue Experience/Employment/Salary Letters",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "ML-HR-01",
+    "id": "s07.p26",
+    "path": "Section 07 > 7.5 Procedures > Procedure 26: Issue Recommendation Letter",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "ML-HR-01",
+    "id": "s07.6",
+    "path": "Section 07 > 7.6 Related Documents",
+    "node_type": "leaf"
+  },
+  {
+    "doc_id": "ML-HR-01",
+    "id": "s07.7",
+    "path": "Section 07 > 7.7 References",
+    "node_type": "leaf"
+  }
+]

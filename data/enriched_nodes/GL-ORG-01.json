@@ -1,0 +1,312 @@
+{
+  "doc_id": "GL-ORG-01",
+  "title": "Internal Communication Guideline",
+  "version": "01",
+  "effective_date": "April 10th, 2023",
+  "note": "Document code prefix is GL- (guideline), not ML- (manual). Section 01 does NOT follow the X.1 Purpose/X.2 Scope pattern used elsewhere - its sub-topics are plain prose headings.",
+  "nodes": [
+    {
+      "id": "intro",
+      "path": "Introduction",
+      "level": 1,
+      "node_type": "parent",
+      "children": [
+        "intro.purpose",
+        "intro.responsibility"
+      ]
+    },
+    {
+      "id": "intro.purpose",
+      "path": "Introduction > Purpose",
+      "level": 2,
+      "node_type": "leaf",
+      "heading": "Purpose",
+      "next_heading": "Responsibility",
+      "own_text": "This document aims to build the employees capacity on an effective\ncommunication practice by providing them with general guidelines and\nprofessional practices on internal communication. For this purpose, this document\ncovers more specific details on benefits of effective internal communication, main\nprinciples of effective internal communication, and the steps required for effective\ncommunication. It also highlights the major obstacles in communication and how\nto overcome them through considering the importance of communications in\ndiverse work groups. It also shed the light on the essential communication\nchannels which are broadly used at GHD|EMPHNET and needed by the\nemployees to communicate with different parties internally. Furthermore, this\ndocument provides employees with the needed information to manage information\nflow with stakeholders in a more efficient and effective manner.\nThis document targets all teams at HQ and Country Offices and, to some extent\nwith external parties. Additionally, it describes the planned and periodic\ncommunication occurring between different internal communications platforms.\nHence, the ultimate purpose of this document is to guide the implementation of\nGHD|EMPHNET operations, and it defines information that needs to be\ncommunicated between GHD|EMPHNET divisions, teams, and units."
+    },
+    {
+      "id": "intro.responsibility",
+      "path": "Introduction > Responsibility",
+      "level": 2,
+      "node_type": "leaf",
+      "heading": "Responsibility",
+      "next_heading": "Acronyms",
+      "own_text": "y\nGHD|EMPHNET is committed to ensuring that appropriate policies, procedures, and\nmonitoring arrangements are in place to support good internal communications at HQ\nand Country Offices. On the other hand, employees should communicate effectively\nto enhance the productive working environment and ensure success in delivering\nGHD|EMPHNET’s operational goals and plans.\nManagers, Team Leaders, and Directors are responsible to ensure implementation of\neffective communication within their teams and other teams. They should create an\nopen and informative culture where all employees are encouraged to seek and give\ninformation.\nEmployees are responsible to follow the principles and steps of effective\ncommunication, share information in a timely manner, and seek information that is\nrelevant to their work.\nEMPHNET’s Executive Director has the responsibility to approve and sign this\nguideline according to the endorsed authority matrix.\nThe Quality Management team is responsible for performing regular reviews and\nmonitoring progress, in order to identify possible risks and to guarantee that all\nmeasures are taken to prevent the breaching of policies and/or procedures.\nGHD|EMPHNET has the right to amend this guideline at any time. Failure to comply\nwith the policies or instructions mentioned in this document could result in disciplinary\naction up to and including suspension or termination."
+    },
+    {
+      "id": "acronyms",
+      "path": "Acronyms",
+      "level": 1,
+      "node_type": "leaf",
+      "heading": "Acronyms",
+      "next_heading": "Section 01: Effective Communication",
+      "own_text": "s\nAcronym\nDescription\nEEL\nEMPHNET Electronic Library\nHQ\nHeadquarters\nHR\nHuman Resources\nMoM\nMinutes of Meeting\nMoU\nMemorandum of Understanding\nPMO\nProject Management Office"
+    },
+    {
+      "id": "s01",
+      "path": "Section 01: Effective Communication",
+      "level": 1,
+      "node_type": "parent",
+      "children": [
+        "s01.a",
+        "s01.b",
+        "s01.c",
+        "s01.d"
+      ],
+      "note": "no X.1/X.2 numbering here - plain prose subheadings"
+    },
+    {
+      "id": "s01.a",
+      "path": "Section 01 > Benefits of Effective Internal Communication",
+      "level": 2,
+      "node_type": "leaf",
+      "heading": "Benefits of Effective Internal Communication",
+      "next_heading": "Main Principles of Effective Internal Communication",
+      "own_text": "Effective internal communication between all internal participants i.e. employees,\nmanagement, or consultants, creates a cohesive culture where everyone is\nfocused on the same goals. By working within a cohesive culture, different teams\ncan work more efficiently, and they can collaborate more effectively. Some specific\nbenefits that can result from effective internal communication include:\n•\nInternal Brand Awareness: to ensure that all employees are aware of the\norganization’s mission and vision.\n•\nEmployee Engagement: to keep all employees abreast with all\norganizational\nupdates,\nnews,\nachievements,\nnew\nprojects,\nand\npartnerships, etc.\n•\nEnabling Change within the Organization: to enable and empower all\nemployees to make decisions themselves by having the tools and\nknowledge they need to make decisions that are in line with the\norganization’s goals.\n•\nBuilding a Culture of Open Communication: to provide a number of\nchannels and platforms for all teams to share useful resources and\ninformation, to lessen duplication of work and to strengthen impact.\n•\nDriving Organizational Performance: to reduce the day-to-day conflict\nsince conflicts usually are the result of different opinions on what is\nimportant to the organization.\n•\nBuild an Organizational Culture: Where people work together effectively\ntowards a common goal."
+    },
+    {
+      "id": "s01.b",
+      "path": "Section 01 > Main Principles of Effective Internal Communication",
+      "level": 2,
+      "node_type": "leaf",
+      "heading": "Main Principles of Effective Internal Communication",
+      "next_heading": "Three-Step Process for Effective Communication",
+      "own_text": "Ineffective internal communication is usually either arbitrary or incomplete or\nplanned only in reaction to specific events. However, Effective internal\ncommunication should be always planned, not only to deal with specific issues, but\nfor the well-being of the organization, in the long run.\nIn this document, some basic principles need to be adopted to ensure effective\ninternal communication across the organization.\nThese include;\n•\nLong-term focus\n•\nValues to be clearly communicated.\n•\nCommunication strategy is crucial for successful and effective internal\ncommunication.\n•\nConsistency in spreading messages.\n•\nBeing proactive\n•\nCreating and maintaining a positive image.\n•\nTailored to the audience (both in delivery and content)\n•\nCommunicating in timely manner\n\nWhile communication and disseminating work related messages and information on a\ntimely basis is essential for work success, confidentiality and privacy aspects of some\ndata and information should be taken into consideration during the work dissemination."
+    },
+    {
+      "id": "s01.c",
+      "path": "Section 01 > Three-Step Process for Effective Communication",
+      "level": 2,
+      "node_type": "leaf",
+      "heading": "Three-Step Process for Effective Communication",
+      "next_heading": "Major Challenges in Communication",
+      "note": "internally covers Identify Communication Requirements / Identify the 5Ws and 1H / Identify and Accommodate the Enterprise Environmental Factors - kept as one leaf, no separate TOC entries",
+      "own_text": "Identify Communication Requirements\nEmployee should know what the requirements of successful communications are to\nplan on how to achieve those requirements. He/she should first identify who needs\nwhat information. Stakeholders need different types of information, depending on their\ninterest and priority. Besides, it is essential to determine the channels of\ncommunication, how often the information is needed, involved departments, the\nnumber of individuals involved, etc. and that there are no gaps in everyone's'\nunderstanding.\nIdentify the 5Ws (Why, What, When, Where, Who) and 1H (How)\nIdentify the 5Ws (Why, What, When, Where, Who) and 1H (How) is one of the methods\nthat used to assist in identifying communication requirements as the following:\n• Who needs to be communicated to.\n• What needs to be communicated taking into consideration the confidentiality\nand privacy aspects.\n• When it should be communicated, and the timeline of communication should\nbe monitored.\n• Where should it be communicated. If the team involves many people, then\nindividual level and team level communications needs to be resolved.\n• Why communication of information is essential and to what level is important.\n• How the communication needs to be done; via e-mail, phone, etc.\nFigure 1: The 5 “W's” and 1 “H”\n\nIdentify and Accommodate the Enterprise Environmental Factors and\nOrganizational Process Assets\nMuch of the day-day communication is linked to the enterprise environmental factors\nand Organizational Process Assets. All employees should review and identify these\nfactors and assets to ensure effective communication. These includes:\n• Organizational culture and structure,\n•\nStandard, regulations, policies, and procedures,\n•\nThe logistics and the organizational infrastructure,\n•\nThe human resources,\n•\nThe authorization matrix,\n•\nInformation system.\n•\nWorkflow and instructions for example the Business Automation System\n•\nOrganization templates for example reports, biweekly meetings minutes,\netc."
+    },
+    {
+      "id": "s01.d",
+      "path": "Section 01 > Major Challenges in Communication",
+      "level": 2,
+      "node_type": "leaf",
+      "heading": "Major Challenges in Communication",
+      "next_heading": "Section 02: GHD|EMPHNET's Internal Communication Channels",
+      "own_text": "Employees at GHD|EMPHNET are working through different interfaces such as\ndifferent departments, different organizations, country offices. Therefore, it is very\nessential to understand major challenges that limit effective communication between\ndifferent interfaces at GHD|EMPHNET and to try to overcome. Many issues can arise\nsuch as differences of opinion and miss-understandings. Involved employees need to\nbe aware of the differences, understand the divergences in attitudes between the\ninvolved parties, and then act as intermediaries to facilitate communication."
+    },
+    {
+      "id": "s02",
+      "path": "Section 02: Internal Communication Channels",
+      "level": 1,
+      "node_type": "parent",
+      "children": [
+        "s02.1",
+        "s02.2",
+        "s02.3",
+        "s02.4"
+      ]
+    },
+    {
+      "id": "s02.1",
+      "path": "Section 02 > 2.1 Virtual Engagement",
+      "level": 2,
+      "node_type": "parent",
+      "children": [
+        "s02.1.1",
+        "s02.1.2"
+      ]
+    },
+    {
+      "id": "s02.1.1",
+      "path": "Section 02 > 2.1 Virtual Engagement > 2.1.1 Microsoft Teams",
+      "level": 3,
+      "node_type": "leaf",
+      "heading": "2.1.1 Microsoft Teams",
+      "next_heading": "2.1.2 Zoom",
+      "own_text": "Audience\nHeadquarters and Country Offices employees and External\nStakeholders as needed\nPurpose\nA unified communication and collaboration platform that\ncombines persistent workplace messaging, video meetings,\nfile storage, and application integration. It is a collaboration\nenvironment for the team, that can be used to:\n➢ Discuss with the team using posts and chat box.\n➢ Meet with the team using the audio, visual, and share\nscreen features.\n➢ Share files and store them in folders.\n➢ Chat with or call anyone in the organization.\nBest For\nMS Teams is considered the first choice platforms for\nmeetings conduct at GHD|EMPHNET\nInternal Meetings (bi-weekly, team meetings, one-to-one,\netc.)\nExternal Meetings (regular meetings with funders and\npartners,\none-to-one\nwith\ngeographically\nlocated\nstakeholders)\nResponsibility\n➢ Ensure that involved parties have Microsoft Teams\ninstalled.\n➢ Number of participants are limited, (1,000 participants).\n\nGeneral rules for using Microsoft Teams:\nEmployees shall respond to received messages and calls immediately, if this\nwas not applicable, the user shall respond within 24 hours.\nAttendees shall be informed before recording any meeting.\nOpening cameras is mandatory in planned meetings.\nMeetings should be arranged using Outlook Meeting Requests:\no\nWhen organizing a meeting, check availability by viewing colleagues’\ncalendars or by using the Outlook Scheduling Assistant within a Meeting\nRequest.\no\nWhen you receive a meeting request, you should accept, reject, or\nsuggest a more suitable time as soon as possible in order to help the\nperson arranging the meeting.\no\nKeep your Outlook calendar up-to-date by entering appointments and\nholidays with the correct availability setting so others can check and see\nyour availability for meetings and collaborative work.\no\nShare your calendar with others to display your appointments. If you do\nchange the privacy setting to ‘None’ this will automatically be reverted to\nFree/Busy.\no\nShare your calendar with your team so they can see your appointments.\no\nFor part-time staff, create recurring appointments to show when you are\nnot normally working. If you normally finish work at 2:00 pm on a\nWednesday, set up a recurring appointment 2:00 – 5:30 pm every\nWednesday and set the availability to Out of Office with the subject ‘Non-\nworking time’.\no\nYou may block out time to focus on a particular piece of work. This can be\nmarked as ‘Tentative’ so meeting organizers will try to avoid arranging\nmeetings during this time but may use it if there are no other options."
+    },
+    {
+      "id": "s02.1.2",
+      "path": "Section 02 > 2.1 Virtual Engagement > 2.1.2 Zoom",
+      "level": 3,
+      "node_type": "leaf",
+      "heading": "2.1.2 Zoom",
+      "next_heading": "2.2 Face-to-Face Meeting",
+      "own_text": "Audience\nSpecific employees requesting to webinars, workshops, etc.\nPurpose\nIt provides videotelephony and online chat services through\na cloud-based peer-to-peer software platform and is used\nfor teleconferencing and telecommuting.\nBest For\nWebinars, workshops for multi-geographies, etc.\nResponsibility\n➢ Number of participants are limited, (100 participants for\nmeeting and 1,000 for webinar).\n\nGeneral Instructions for using Zoom:\nSend your request a good time before the meeting to the Technology and\nInnovative Solutions in order to give them the appropriate time to arrange for\nyour request among other meetings.\nIf requested by the meeting organizer, a representative from Technology and\nInnovative solution shall be available during the meeting to provide the required\nsupport, otherwise one of the meeting attendees will be assigned as the host.\nMeetings should be arranged using Outlook Meeting Requests and the Zoom\nlink shall be shared within the meeting request."
+    },
+    {
+      "id": "s02.2",
+      "path": "Section 02 > 2.2 Face-to-Face Meeting",
+      "level": 2,
+      "node_type": "leaf",
+      "heading": "2.2 Face-to-Face Meeting",
+      "next_heading": "2.3 Emails",
+      "own_text": "Audience\nHeadquarters and Country Offices Employees and External\nStakeholders as needed\nPurpose\nFace-to-face meeting is still the best communication as it is\ndirect and two-way communication and allows the\ndiscussion of sensitive issues that require more nuance\nderived from body language and direct interaction. It is the\nideal medium for holding discussions on important issues\nand getting feedback from audience in an immediate\nmanner. In addition, it can also be more informal and have\nmore social aspects than many other forms.\nBest For\nAll meetings were all audience are located in the same area\nor can be easily gathered in the same area, where body\nlanguage plays a vital role to deliver the message alongside\nthe direct interaction i.e. capacity building workshops,\ninterviews, etc.\nResponsibility\nMeeting requester\n➢ If further support is needed to set the meeting room for\nTechnology related issues, please refer to the\nTechnology and Innovative Solutions team.\n➢ Meetings can be held in a hybrid mode, both face-face\nand virtual, required support shall be requested from the\nTechnology and Innovative Solutions team to make the\nrequired arrangements.\nGeneral Instructions for face-to-face meetings:\nAll meetings should be arranged using Outlook Meeting Requests.\nMeeting rooms shall be booked before the meeting to assure availability. The\nmeeting location shall be specified in the meeting request.\n\nTechnology and Innovative Solutions team shall make the required support for\ntechnology solutions such as mics, screens, etc."
+    },
+    {
+      "id": "s02.3",
+      "path": "Section 02 > 2.3 Emails",
+      "level": 2,
+      "node_type": "parent",
+      "children": [
+        "s02.3.a",
+        "s02.3.b",
+        "s02.3.c",
+        "s02.3.d"
+      ],
+      "note": "internal sub-groups are bold run-in headers, not numbered - detected by reading, not regex"
+    },
+    {
+      "id": "s02.3.a",
+      "path": "Section 02 > 2.3 Emails > Email subject and writing style",
+      "level": 3,
+      "node_type": "leaf",
+      "heading": "Email subject and writing style",
+      "next_heading": "Reply and Forward",
+      "own_text": "o Work email addresses are to be used strictly for business. It is not\nallowed to use your email account for personal use.\no Emails, when possible, should be kept concise, clear and to the point\navoiding irrelevant text. Paragraphs should be kept short, using bullet\npoints where possible.\no The body of the email should be in font Calibri 11pt. Backgrounds are\nnot allowed in emails. Make sure that text is left aligned when composing\nemails in English and right aligned for emails in Arabic. Same goes for\ntext direction (left-to-right for English and right-to-left for Arabic).\no Do not use any emoji or funny characters/symbols. Keep the email\nlanguage professional. Email’s subject should be clear and concise, so\nit is easy to find again in inboxes.\no The email should clarify whether it is sent for action or information and\nwhat is expected of the recipient and by when.\no The email should, if any action is required, highlight this in the text,\nstating by whom and when. Use paragraph settings to break ideas,\ninformation, or thoughts.\no Do not change the subject on long email chains/thread.\no Always include the standard email signature in any new emails that you\nsend. Including an email signature in the “Reply to” and “forward” emails\nis not essential unless sent externally.\no It is encouraged to embed links by inserting hyperlinks over relevant text.\n\no All-user emails are tightly regulated and are only sent for issues of\ninstitutional importance. The Executive Director, Communication,\nTechnology, Knowledge and Exchange, Quality Management, Finance\nand Human Resources are the only parties with permission to send all\nemployees, unless the need is set and demanded by the Executive\nDirector.\no Use asterisks * around a word or bold a word to add emphasis, if needed.\no Proofread the email and ensure spell checker is activated.\no Try not to use abbreviations such as TBD (to be decided), especially\nwhen emailing external parties. In business emails these are generally\nnot appropriate.\no Address recipients with “Dear XXX”. Do not use “Dears” without a name\nthat follows. You can use “Dear All” when sending to more than one\nrecipient.\no If multiple and different actions needed in the same email from multiple\nemployees use “@” to assign the task to the relevant person."
+    },
+    {
+      "id": "s02.3.b",
+      "path": "Section 02 > 2.3 Emails > Reply and Forward",
+      "level": 3,
+      "node_type": "leaf",
+      "heading": "Reply and Forward",
+      "next_heading": "Recipients",
+      "own_text": "o Initial replies to emails should be within the same day if received during\nthe official working hours and within 24 hours if sent outside the working\nhours. When action is required from an email, reply by acknowledging\nreceipt of the email and requested action and highlight a timeline for\nsending the requested information. This applies to internal and well as\nexternal emails.\no When replying, do not send a \"reply to all\" unless it is necessary for all\ncopied recipients to know your response.\no If an email is addressed to more than one person, call that other person\nto agree on the reply or action needed.\no When forwarding or replying to emails, follow the same rules as you\nwould for initiating an email, e.g. make clear to whom you are sending\nthe email and what action is needed. Also make sure that the subject is\nan appropriate one.\no Do not use an email with a subject heading to introduce or follow up on\na separate subject. Start a new email with a new subject line.\no When you are out of the office for more than two days, use “out of office\nauto message reply option” and ensure that the message includes the\ndates or times you are unavailable for, and an alternative contact for\nurgent queries.\no Directors, Team Leaders, and Managers leaving the office for annual\nvacations or business leaves for more than two working days inside or\noutside Jordan, are kindly requested to inform GHD|EMPHNET teams\nvia email clearly stating the dates on which they will be absent, and they\nshould also specify who will be acting on their behalf. Also, if applicable,\nTeam Leaders, Directors, and Managers are also requested to delegate\ntheir authority and responsibilities on BAS with this change.\n\no Replying to the emails should be always by direct receiver, anyone on\nthe cc should not reply directly unless direct action from his/her end is\nneeded or if that copied person is the direct manager or in a higher\nhierarchical position. It is preferable to obtain prior approval before\nresponding directly to emails specially if the direct receiver is your direct\nmanager."
+    },
+    {
+      "id": "s02.3.c",
+      "path": "Section 02 > 2.3 Emails > Recipients",
+      "level": 3,
+      "node_type": "leaf",
+      "heading": "Recipients",
+      "next_heading": "Email Size and Security",
+      "own_text": "o Emails should be sent directly to the person they are intended for. Make\nsure that all others are in the cc.\no Do not copy anyone in ‘just in case’. Emails addressed to recipients\nshould always be on a need-to-know basis or requiring action or advice.\nTherefore, emails should be sent \"to\" people who in turn are to take\nsome kind of action while \"cc\" is for people who need to know about this.\no You can always forward an email to a recipient if you need to inform that\nrecipient, rather than copy.\no If an email thread gets long and the information in the email\ncommunication becomes irrelevant to all those being copied, delete\nthose from the cc, or start another thread.\no Copy your direct manager on all emails. When you need to copy other\npeople on an email, it should be clear why they are copied even if it is\nsimply ‘for information’, and if action is required from any recipient that\nthey should be in the ‘To’ address field.\no The Executive Director shall not be kept in the cc of day-to-day work\nemails unless otherwise requested. He shall only be kept in the cc of the\nemails that are on the organization level and in the emails that he should\nbe informed about, Examples for such emails are:\n•\nGeneral announcements by any of the departments.\n•\nWhen the Executive Director is the employee’s Direct Manger, and\nhis approval or information is required.\n•\nSome communication with Donors and partners when the presence\nof the senior management is required.\no If you really need to know if an email has been received and read, ask\nfor confirmation, and/or add read receipt within the email settings.\no It is encouraged to use means other than an email, like phone or team\nchat, when a subject or message does not require follow up or is just for\nclarification.\no Do not circulate emails without checking with the sender and asking\npermission to do so. As a form of communication, emails are considered\nthe property of the person composing them."
+    },
+    {
+      "id": "s02.3.d",
+      "path": "Section 02 > 2.3 Emails > Email Size and Security",
+      "level": 3,
+      "node_type": "leaf",
+      "heading": "Email Size and Security",
+      "next_heading": "2.4. WhatsApp",
+      "own_text": "o Before sending an attachment check whether it may be more effective\nto put the content in the email itself, so that recipients can easily read it.\no If you have to send attachments, identify as clearly as possible which\nattachments are being sent.\n\no If you need to attach large documents, files or images to your email make\nsure they can still be delivered or received. GHD|EMPHNET has set a\nmaximum attachment size of 10Mb when sending or receiving. Files\nlarger than 10Mb still can be shared using Microsoft OneDrive. Caution\non sending large files externally as the recipient might not be able to\nreceive large files.\no Viruses can be contained in attachments to email messages. Malware is\na general term applied to electronic threats often transmitted by email or\nby accessing some internet sites. You should be very careful about\nopening email attachments, particularly if they are not from a known or\ntrusted email source. In addition to attachments, do not click links in\nunsolicited or suspicious emails.\no Any virus incidents should be reported immediately to the Technology\nand Innovative Solutions Department."
+    },
+    {
+      "id": "s02.4",
+      "path": "Section 02 > 2.4 WhatsApp – HQ & Offices Group",
+      "level": 2,
+      "node_type": "leaf",
+      "heading": "2.4. WhatsApp",
+      "next_heading": "Section 03: GHD|EMPHNET Internal Communication Matrix",
+      "own_text": "–HQ & Offices Group\nAudience\nGHD|EMPHNET employees at Headquarters and Country\nOffices.\nPurpose\nThis group is to serve as a convenient way for\nGHD|EMPHNET’s team members to share knowledge,\ncommunicate easily and efficiently regarding work-related\nmatters, and to exchange important and necessary\ninformation related to the latest local, regional, and global\nmatters. This information will provide value and benefit to\nthe organization and its employees. Information shared\nshould fall with GHD|EMPHNET’s social media related\npolicies mentioned in the code of conduct and respecting the\nprivacy of the group members should always be maintained.\nBest For\nExchange important and necessary information in relevant\nto the latest local, regional, and global matters, share\nevents-related\ninformation,\nand\nshare\ngeneral\nannouncements.\nResponsibility\n➢ It is the responsibility of the Human Resources team to\nadd members once they join the organization and\nremove members upon contract end/ resignation.\n➢ It is the responsibility of all employees to share work\nrelated information and to adhere to the WhatsApp\ngroup policy.\n➢ Membership is mandatory for all current members of\nGHD|EMPHNET’s team as this group is a channel of\ninternal communication.\n➢ New members should be added to the group within two\ndays of their employment at GHD|EMPHNET.\n\n➢ Former employee will be removed from the group within\none week of their last working day.\n➢ All members shall be committed to the WhatsApp group\npolicy mentioned below.\nGeneral instructions for GHD|EMPHNET WhatsApp group\nMembers should share work-related content, as well as exchange important\nand necessary information that is relevant to latest local, regional, and global\nmatters. This includes but is not limited to reports, guidelines, news reports, and\nGHD|EMPHNET’s conducted activities with photos (5 to 6 photos maximum per\nevent).\nDo not have a one-on-one conversation in the group, should a one-on-one\nconversation arise, consider continuing to private messages.\nMake sure to avoid sending:\no Jokes.\no Memes.\no Unrelated content.\no Fake news.\no Political or religious opinions.\no Indecent content.\nThe HR team will be solely responsible for sharing and sending social events\nrelated to the team on the WhatsApp group such as:\no Congratulations on academic/career achievements.\no Newborn baby wishes.\no Wedding wishes.\no Condolence messages for first & second-degree relatives only.\nThe discussions will be moderated by the group admin (HR Manager).\nAny inappropriate messages that do not adhere to the group policy will be\nremoved.\nAlternative groups or chats should be used for personal discussions or for organizing\nsocial activities not related to the organization."
+    },
+    {
+      "id": "s03",
+      "path": "Section 03: Internal Communication Matrix",
+      "level": 1,
+      "node_type": "leaf",
+      "heading": "Section 03: GHD|EMPHNET Internal Communication Matrix",
+      "next_heading": "Section 04: GHD|EMPHNET Periodic Internal Meetings",
+      "note": "short pointer section; the actual matrix content lives in Appendix 01",
+      "own_text": "x\nPart of the organizational governance mandate is to set and manage internal\ncommunication and periodic reporting for organization in order to manage its\noperations and processes, take decisions, and control information flow efficiently\nbetween different levels across the organization.\nAppendix 01 provides an Internal Communication Matrix that demonstrates how\nEMPHNET communicates internally, the kind of information that is communicated,\nreports that are shared, and decisions that are disseminated. It also determines\nthe persons with authority to speak/ communicate on behalf of the different teams.\nThe communication matrix defines the following:\n• Audience(s): the target for the communication, generally a function, unit,\nleadership, individual, or group.\n• Key Messages/ Purpose: the message to be shared. Primary messages and\npurpose of the communication.\n• Medium: the mechanism that will be used to deliver the communication, for\nexample, e-mail, newsletter article, Microsoft Teams, quarterly newsletter,\nproject status report, etc.\n• Owner of Communication: who will create the content.\n• Timing/ Frequency: proposed occurrence for planned communication.\nFrequency (if a recurring communication) or number of communications\nrequired."
+    },
+    {
+      "id": "s04",
+      "path": "Section 04: Periodic Internal Meetings",
+      "level": 1,
+      "node_type": "parent",
+      "children": [
+        "s04.a",
+        "s04.b",
+        "s04.c",
+        "s04.d",
+        "s04.e",
+        "s04.f",
+        "s04.g",
+        "s04.h",
+        "s04.i"
+      ],
+      "note": "bullet list of meeting types (arrow-marker headings), not numbered"
+    },
+    {
+      "id": "s04.a",
+      "path": "Section 04 > Departmental and Teams bi-weekly meetings",
+      "level": 2,
+      "node_type": "leaf",
+      "heading": "Departmental and Teams bi-weekly meetings",
+      "next_heading": "Executive Director's bi-weekly meetings",
+      "own_text": "gs\nEach department, country office, team, or different teams across\ndepartments meets on a bi-weekly basis to go over the work progress\nassigned including:\no Description on progress made.\no Description of planned activities for the coming two weeks.\no Risks and issues that might impede progress.\nEmployees at the country offices are to be invited to attend this meeting\nbased on their relevancy to the meeting. Engaging the country offices\nemployees is essential in strengthening the communications between\nHeadquarters and the country.\nMeeting minutes shall be documented using Minutes of Meeting (MoM)\ntemplate (Template 01) by the assigned person within one working day. After\ntaking the Direct Manager’s approval, it shall be shared with the attendees\nkeeping the Executive Director Secretary in the cc. In the upcoming meeting,\naction points from the previous meeting shall be discussed and progress\nshall be updated.\nEach meetings schedule shall be shared with the Executive Office, and it will\nbe subject to monitoring by the Quality Management Unit."
+    },
+    {
+      "id": "s04.b",
+      "path": "Section 04 > Executive Director's bi-weekly meetings",
+      "level": 2,
+      "node_type": "leaf",
+      "heading": "Executive Director’s bi-weekly meetings",
+      "next_heading": "Monthly Technical Day",
+      "own_text": "gs.\nThe Executive Director meets each senior team members who report to him\nindividually on a bi-weekly basis to go through their work progress, discuss\nany issues/risks and raise any pending decision/actions required for the\nrelevant department/ tasks.\nSenior team members shall share the discussion points one day before the\nmeeting and share the MoM one day after the meeting."
+    },
+    {
+      "id": "s04.c",
+      "path": "Section 04 > Monthly Technical Day",
+      "level": 2,
+      "node_type": "leaf",
+      "heading": "Monthly Technical Day",
+      "next_heading": "Quarterly Staff Meeting",
+      "own_text": "ay;\nThis meeting occurs on the first Saturday of each month, where a technical\ntopic is presented by a guest speaker followed by two presentations on\npertinent technical topics from the Center of Excellence for Applied\nEpidemiology (CEAE) and another two topics from the Public Health\nPrograms (PHP). Held virtually, this meeting is attended by all technical team\nmembers, country representatives, and focal points, Project Management\nOffice, Partnership and Resources Mobilization, Media and Communication,\nKnowledge Exchange Team, and is left optional for other employees to\nattend.\nRefer to “ML-EXE-01 Executive Office Management Policies & Procedures\nManual” for more details."
+    },
+    {
+      "id": "s04.d",
+      "path": "Section 04 > Quarterly Staff Meeting",
+      "level": 2,
+      "node_type": "leaf",
+      "heading": "Quarterly Staff Meeting",
+      "next_heading": "EMPHNET Annual Meeting",
+      "own_text": "ng;\n\nThis meeting occurs every three months, to share updates at organizational\nlevel, highlighting achievements, announcing new projects and partnerships,\nwelcoming new staff, providing an overview of the organization’s strategy\nand seeking feedback from staff, and discussing any organization related\nissues that need to be raised. Attending this meeting is mandatory for\nHeadquarters and Country Office employees.\nThe Human Resources team is the task owner for the quarterly staff meeting.\nThey are responsible for the planning, preparation, implementation and\nreporting of the meeting. Invitations shall be shared within two weeks from\nthe meeting and the report shall be shared within two weeks of the meeting\nconducted.\nStaff meeting takes place in March, June and September. Conducting\nEMPHNET Annual Meeting in December substitutes conducting staff\nmeeting."
+    },
+    {
+      "id": "s04.e",
+      "path": "Section 04 > EMPHNET Annual Meeting",
+      "level": 2,
+      "node_type": "leaf",
+      "heading": "EMPHNET Annual Meeting",
+      "next_heading": "Senior Management Team Meeting",
+      "own_text": "ng;\nThis meeting is targeting all employees (Headquarters and Country Offices)\nwhere senior management presents updates about organization’s strategy,\nscope (areas of expertise and working areas), Human Resources and other\ntopics that all staff should be aware of and interested in.\nA committee assigned by the Executive Director will be responsible for\nplanning, preparation, implementation and reporting on the meeting.\nInvitations shall be shared within one month from the meeting and the report\nshall be shared within two weeks of the meeting’s conclusion.\nThe annual meeting takes place in December."
+    },
+    {
+      "id": "s04.f",
+      "path": "Section 04 > Senior Management Team Meeting",
+      "level": 2,
+      "node_type": "leaf",
+      "heading": "Senior Management Team Meeting",
+      "next_heading": "Quarterly Strategy Meeting",
+      "own_text": "ng.\nThe Executive Director meets the senior management team on a bi-weekly\nbasis to discuss high level matters related to strategic project/program,\npartnership, new opportunities, organizational development, etc.\nIn addition, this meeting will be conducted Quarterly where Country Offices\nManagers will be invited. This meeting aims to discuss the high-level matters\nfor related to the Country Offices. This meeting is conducted in March, June,\nSeptember and December.\nThis meeting is planned, prepared and reported on by the Executive Director\nOffice representative."
+    },
+    {
+      "id": "s04.g",
+      "path": "Section 04 > Quarterly Strategy Meeting",
+      "level": 2,
+      "node_type": "leaf",
+      "heading": "Quarterly Strategy Meeting",
+      "next_heading": "Quarterly Management Meeting",
+      "own_text": "ng;\nThis meeting is essential to follow up on the strategy performance and\nprogress, making sure it is a live document and that concerned teams and\ndirectors are working towards achieving their strategic objectives and\napproaches and are committed to the Monitoring and Evaluation plan."
+    },
+    {
+      "id": "s04.h",
+      "path": "Section 04 > Quarterly Management Meeting",
+      "level": 2,
+      "node_type": "leaf",
+      "heading": "Quarterly Management Meeting",
+      "next_heading": "Monthly HQ Country Team and the Country Office Employees' Meeting",
+      "own_text": "ng\nProject Management Office (PMO), technical, and sometimes finance teams\nmeet on a quarterly basis to revise the Gantt chart and deal with any problems\nrelated to the timeline, scope, budget of a project, and they make any\nnecessary changes that have significant or strategic impact on projects."
+    },
+    {
+      "id": "s04.i",
+      "path": "Section 04 > Monthly HQ Country Team and the Country Office Employees' Meeting",
+      "level": 2,
+      "node_type": "leaf",
+      "heading": "Monthly HQ Country Team and the Country Office Employees’ Meeting",
+      "next_heading": "Appendix 01: Internal Communication Matrix",
+      "own_text": "ing;\nIn addition to the technical participation of the country office team in the HQ\nbiweekly meetings, each HQ Country team shall meet with the Country Office\nemployees, on a monthly basis, to discuss administrative and management\nrelated topics, discuss any issues/risks, and raise any pending decision/\nactions required."
+    }
+  ]
+}
