@@ -99,7 +99,7 @@ for turn in st.session_state.chat_history:
         with st.expander(f"Sources ({len(turn['sources'])})", expanded=False):
             for source in turn["sources"]:
                 st.markdown(
-                    f'<div class="source"><strong>{source["path"]}</strong><br>{source["text"]}</div>',
+                    f'<div class="source"><strong>{source["document"]}</strong><br><strong>{source["path"]}</strong><br>{source["text"]}</div>',
                     unsafe_allow_html=True,
                 )
 

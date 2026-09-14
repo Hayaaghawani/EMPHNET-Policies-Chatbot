@@ -153,6 +153,7 @@ venv\Scripts\python.exe -m pytest -q
 
 If a PDF or skeleton changes, rerun `build_skeleton_data.py`. The retriever reads the regenerated enriched nodes at application startup. No vector database rebuild is required.
 
-## Removed legacy path
+## Credits
 
-The old regex chunker, arbitrary text splitter, Chroma database, chunk inspection files, legacy retriever, and legacy generation modules were removed. The project now has one maintained extraction path, one maintained retrieval path, and one maintained generation path.
+Built by Haya Alaghawani as part of her internship at EMPHNET.
+

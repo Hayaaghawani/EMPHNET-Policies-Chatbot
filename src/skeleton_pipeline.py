@@ -213,8 +213,10 @@ class SkeletonCorpus:
     def __init__(self, tree_dir: Path = Path("data/enriched_nodes"), outline_path: Path = Path("data/outline.json")):
         self.outline = json.loads(outline_path.read_text(encoding="utf-8"))
         self.nodes: dict[tuple[str, str], dict[str, Any]] = {}
+        self.document_titles: dict[str, str] = {}
         for tree_path in tree_dir.glob("*.json"):
             tree = json.loads(tree_path.read_text(encoding="utf-8"))
+            self.document_titles[tree["doc_id"]] = tree.get("title") or tree["doc_id"]
             for node in tree.get("nodes", []):
                 self.nodes[(tree["doc_id"], node["id"])] = node
 
@@ -225,7 +227,11 @@ class SkeletonCorpus:
             for node_id in ids:
                 node = self.nodes[(doc_id, node_id)]
                 if node.get("own_text"):
-                    contexts.append({"path": node["path"], "text": node["own_text"]})
+                    contexts.append({
+                        "document": self.document_titles.get(doc_id, doc_id),
+                        "path": node["path"],
+                        "text": node["own_text"],
+                    })
         return contexts
 
     def _descendant_ids(self, doc_id: str, root_id: str) -> list[str]:

@@ -25,6 +25,7 @@ def test_qa_merges_retrieval_and_navigation_context(tmp_path):
     tree_dir.mkdir()
     (tree_dir / "TEST.json").write_text(json.dumps({
         "doc_id": "TEST",
+        "title": "Test Policy Manual",
         "nodes": [{
             "id": "leaf",
             "path": "Policy > Leaf",
@@ -44,5 +45,6 @@ def test_qa_merges_retrieval_and_navigation_context(tmp_path):
     )
 
     assert result["answer"] == "Grounded answer"
+    assert result["sources"][0]["document"] == "Test Policy Manual"
     assert result["sources"][0]["path"] == "Policy > Leaf"
     assert result["retrieval"][0]["id"] == "leaf"
